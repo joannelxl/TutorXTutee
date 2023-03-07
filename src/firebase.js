@@ -1,3 +1,5 @@
+import { initializeApp } from "firebase/app";
+
 const firebaseConfig = {
     apiKey: "AIzaSyArkW1gkON7oQr0XwjDU0S5_0u7xRnXZ8I",
     authDomain: "tutorxtutee.firebaseapp.com",
@@ -8,6 +10,6 @@ const firebaseConfig = {
     measurementId: "G-9WV1LKN1P7"
   };
 
-  firebase.initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
 
   var db = firebase.firestore();
