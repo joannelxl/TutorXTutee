@@ -10,9 +10,6 @@ export default {
 </script>
 <template>
     <Sidebar />
-    <div :style="{ 'margin-left': sidebarWidth }">
-        <router-view />
-    </div>
 </template>
 
 <style>

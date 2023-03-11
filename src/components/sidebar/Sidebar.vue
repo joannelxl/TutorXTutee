@@ -23,7 +23,7 @@ export default {
         </h1>
 
         <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
-            <i class="fa-solid fa-chevrons-left"></i> </span>
+            <i class="fas fa-angle-double-left"></i> </span>
     </div>
 </template>
 
