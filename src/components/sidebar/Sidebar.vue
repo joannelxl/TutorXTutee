@@ -15,12 +15,11 @@ export default {
     <div class="sidebar" :style="{ width: sidebarWidth }">
         <h1>
             <span v-if="collapsed">
-                <div>T</div>
-                <div>x</div>
-                <div>T</div>
             </span>
             <span v-else>TutorXTutee</span>
         </h1>
+
+        <img alt="logo" src="src\assets\logo_transparent.png" />
 
         <br><br>
         <SidebarLink to="/" icon="fas fa-home">Home</SidebarLink>
@@ -35,14 +34,18 @@ export default {
 
         <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
             <i class="fas fa-angle-double-left"></i> </span>
+
+        <br><br>
+        <button>Logout</button>
     </div>
 </template>
+
 
 <style>
 :root {
     --sidebar-bg-color: #800080;
     --sidebar-item-hover: #620562;
-    --sidebar-item-active: #500450;
+    --sidebar-item-active: #620562;
 }
 </style>
 

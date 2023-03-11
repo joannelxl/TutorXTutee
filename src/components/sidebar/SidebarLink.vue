@@ -60,7 +60,7 @@ export default {
     background-color: var(--sidebar-item-hover);
 }
 
-.link:active {
+.link.active {
     background-color: var(--sidebar-item-active);
 }
 
