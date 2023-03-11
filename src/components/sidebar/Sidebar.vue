@@ -42,7 +42,7 @@ export default {
 :root {
     --sidebar-bg-color: #800080;
     --sidebar-item-hover: #620562;
-    --sidebar-item-active: #276749;
+    --sidebar-item-active: #500450;
 }
 </style>
 
