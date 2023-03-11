@@ -1,10 +1,10 @@
 <script>
-// import SidebarLink from './SideBarLink.vue'
+import SidebarLink from './SideBarLink.vue';
 import { collapsed, toggleSidebar, sidebarWidth } from './state'
 
 export default {
     props: {},
-    components: {},
+    components: { SidebarLink, SidebarLink },
     setup() {
         return { collapsed, toggleSidebar, sidebarWidth }
     }
@@ -22,6 +22,17 @@ export default {
             <span v-else>TutorXTutee</span>
         </h1>
 
+        <br><br>
+        <SidebarLink to="/" icon="fas fa-home">Home</SidebarLink>
+        <br>
+        <SidebarLink to="/MyTutees" icon="fas fa-users">My Tutees</SidebarLink>
+        <br>
+        <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
+        <br>
+        <SidebarLink to="/Chats" icon="fas fa-comments">Chats</SidebarLink>
+        <br>
+        <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
+
         <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
             <i class="fas fa-angle-double-left"></i> </span>
     </div>
@@ -30,7 +41,7 @@ export default {
 <style>
 :root {
     --sidebar-bg-color: #800080;
-    --sidebar-item-hover: #38a169;
+    --sidebar-item-hover: #620562;
     --sidebar-item-active: #276749;
 }
 </style>
