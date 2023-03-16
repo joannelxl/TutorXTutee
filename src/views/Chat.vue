@@ -2,14 +2,14 @@
   <div id="chat">
     <div>
       <div v-for="(message, index) in messages" :key="index">
-        {{ message.name }}: {{ message.text }}
+        {{ message.email }}: {{ message.text }}
       </div>
     </div>
     <div id="inputBox">
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 35px; width: 350px"
+          style="height: 35px; width: 450px"
           v-model="newMessage"
           placeholder="Send a message..."/>
         <button id="button" type="submit">Send</button>
@@ -22,15 +22,28 @@
 import firebaseApp from "../firebase.js";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { getAuth } from "firebase/auth"
 const db = getFirestore(firebaseApp);
+
+getAuth().onAuthStateChanged(user => {
+  if (user) {
+    console.log("user is logged in")
+    console.log(user)
+    const emailOfCurrUser = user.email
+    console.log(email)
+  }
+  else {
+    console.log("not signed in")
+  }
+})
 
 
 export default {
   data() {
     return {
       messages: [
-        { name: "Yi Wei", text: "hello!!" },
-        { name: "You", text: "what u want" },
+        { email: "testtutee@gmail.com", text: "hello!!" },
+        { email: "testtutor@gmail.com", text: "what u want" },
       ],
       newMessage: "",
     };
@@ -38,15 +51,15 @@ export default {
   methods: {
     async sendMessage() {
       this.messages.push({
-        name: "You",
+        email: "You",
         text: this.newMessage,
       });
 
       //for the chat collection
       const colRef2 = collection(db, "Chats");
       const chatsObj = {
-        TuteeName: "YiWei",
-        TutorName: "Kelly"
+        TuteeEmail: "testtutee@gmail.com",
+        TutorEmail: "testtutor@gmail.com"
       };
       const docRef2 = await addDoc(colRef2, chatsObj);
 
@@ -54,7 +67,7 @@ export default {
       const colRef = collection(db, "UserMessages");
 
       const messagesObj = {
-        name: "test",
+        Email: "test",
         message: this.newMessage,
         chatId: docRef2.id
       };
@@ -78,7 +91,7 @@ export default {
   position: absolute;
   width: 50%;
   height: 450px;
-  left: 320px;
+  left: 340px;
   top: 60px;
 }
 
@@ -86,7 +99,7 @@ export default {
   position: absolute;
   width: 60%;
   height: 100px;
-  left: 100px;
+  left: 75px;
   bottom: 1px;
 }
 
@@ -94,5 +107,8 @@ export default {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
+  left: 480px;
+  bottom: 70px;
+  
 }
 </style>

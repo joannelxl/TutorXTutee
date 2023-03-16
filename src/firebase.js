@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { onUnmounted } from "vue";
 
 const firebaseConfig = {
     apiKey: "AIzaSyArkW1gkON7oQr0XwjDU0S5_0u7xRnXZ8I",
@@ -15,3 +16,4 @@ const firebaseConfig = {
   //var db = firebase.firestore();
 
   export default firebaseApp;
+
