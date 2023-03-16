@@ -1,13 +1,19 @@
+
 <template>
   <Chat />
 </template>
 
 <script>
 import Chat from './components/Chat.vue';
+import SignUp from '@/views/SignUp.vue'
+import Login from '@/views/Login.vue'
+
 export default {
     name: "App",
     components: {
-        Chat
+        Chat, 
+        SignUp, 
+        Login
     }
 }
 </script>
@@ -40,4 +46,24 @@ export default {
   border-radius: 4px;
   cursor: pointer;
 }
+
+/*<script>
+import SignUp from '@/views/SignUp.vue'
+import Login from '@/views/Login.vue'
+
+export default {
+	name: 'App',
+	components: {
+		SignUp,
+		Login
+	}
+}
+</script>
+
+<template>
+	<router-view/>
+  <Chat />
+</template>
+
+<style scoped>
 </style>
