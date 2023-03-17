@@ -1,7 +1,22 @@
 <script>
+import SignUp from '@/views/SignUp.vue'
+import Login from '@/views/Login.vue'
 import Sidebar from '@/components/sidebar/Sidebar.vue'
 import { sidebarWidth } from '@/components/sidebar/state'
-import Home from './views/Home.vue';
+
+export default {
+    name: 'App',
+    components: {
+        SignUp,
+        Login,
+        Sidebar,
+    },
+    setup() {
+        return { sidebarWidth }
+    }
+}
+    < script >
+
 export default {
     components: { Sidebar },
     setup() {
@@ -23,6 +38,11 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    width: 500px;
+}
+
+body {
+    background: rgba(128, 0, 128, 0.1);
 }
 
 /* nav bar styling */
