@@ -15,15 +15,8 @@ export default {
         return { sidebarWidth }
     }
 }
-    < script >
-
-export default {
-    components: { Sidebar },
-    setup() {
-        return { sidebarWidth }
-    }
-}
 </script>
+
 <template>
     <Sidebar />
     <div :style="{ 'margin-left': sidebarWidth }">
