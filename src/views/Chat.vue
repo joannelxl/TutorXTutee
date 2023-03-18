@@ -20,25 +20,27 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { query, where } from 'firebase/firestore';
 import { getAuth } from "firebase/auth"
 const db = getFirestore(firebaseApp);
 
-getAuth().onAuthStateChanged(user => {
-  if (user) {
-    console.log("user is logged in")
-    console.log(user)
-    const emailOfCurrUser = user.email
-    console.log(email)
-  }
-  else {
-    console.log("not signed in")
-  }
-})
+/*getAuth().onAuthStateChanged(user => {
+    if (user) {
+        console.log("user is logged in")
+        console.log(user)
+        var emailOfCurrUser = user.email
+        console.log(emailOfCurrUser)
+    }
+    else {
+        console.log("not signed in")
+    }
+})*/
 
 
 export default {
+
   data() {
     return {
       messages: [
@@ -51,30 +53,48 @@ export default {
   methods: {
     async sendMessage() {
       this.messages.push({
-        email: "You",
+        email: "testtutor@gmail.com",
         text: this.newMessage,
       });
 
       //for the chat collection
-      const colRef2 = collection(db, "Chats");
+      const chatCollection = collection(db, "Chats");
       const chatsObj = {
         TuteeEmail: "testtutee@gmail.com",
         TutorEmail: "testtutor@gmail.com"
       };
-      const docRef2 = await addDoc(colRef2, chatsObj);
+
+      //getting all documents in the chat collection
+      const querySnapshot = await getDocs(collection(db, "Chats"));
+      var found = false
+      querySnapshot.forEach((doc) => {
+        //for each of the document in the collection
+        //check if there is tutee and tutor pair in chat collection alr
+        if (doc.data().TuteeEmail == "testtutee@gmail.com" && 
+        doc.data().TutorEmail == "testtutor@gmail.com") {
+            found = true
+            //do nothing once found, dn to add document alr 
+        }
+      })
+
+      //if the pair not found, then have to add a new document 
+      if (found == false) {
+        addDoc(chatCollection,chatsObj)
+      }
+
 
       //for the messages collection
-      const colRef = collection(db, "UserMessages");
+      /*const messageCollection = collection(db, "UserMessages");
 
       const messagesObj = {
         Email: "test",
         message: this.newMessage,
-        chatId: docRef2.id
+        chatId: addChat.id
       };
 
-      const docRef = await addDoc(colRef, messagesObj);
+      const addMessage = await addDoc(messageCollection, messagesObj);
 
-      console.log("Document created with ID: ", docRef.id);
+      console.log("Document created with ID: ", addMessage.id);*/
       this.newMessage = '';
     },
   },
