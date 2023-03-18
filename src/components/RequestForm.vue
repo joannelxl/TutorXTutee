@@ -115,27 +115,6 @@ export default {
           console.error("Error adding document: ", error);
         }
 
-        /*         //change to log in user
-        let toStore collection(db, "Requests");
-        let getDocument = await getDoc(user);
-        console.log(getDocument.exists());
-        if (getDocument.exists()) {
-          try {
-            const docRef = await updateDoc(user, {
-              request: arrayUnion(details),
-            });
-            console.log("Exist");
-          } catch (error) {
-            console.error("Error adding document: ", error);
-          }
-        } else {
-          try {
-            const docRef = await setDoc(user, { request: [details] });
-            console.log(docRef);
-          } catch (error) {
-            console.error("Error adding document: ", error);
-          }
-        } */
         this.handleReset();
         this.$emit("added");
         this.handleClose();

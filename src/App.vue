@@ -1,17 +1,16 @@
 <script setup>
+import SignUp from "@/views/SignUp.vue";
+import Login from "@/views/Login.vue";
 import MyRequest from "./views/MyRequest.vue";
 </script>
 
 <template>
-  <MyRequest />
+  <router-view />
 </template>
 
-<style scoped></style>
-<script>
-import SignUp from "@/views/SignUp.vue";
-import Login from "@/views/Login.vue";
+<!-- <script>
 
-export default {
+  export default {
   name: "App",
   components: {
     SignUp,
@@ -20,9 +19,7 @@ export default {
 };
 </script>
 
-<template>
-  <router-view />
-</template>
+ -->
 
 <style>
 #app {
