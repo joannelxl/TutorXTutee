@@ -88,4 +88,20 @@ export default {
     transform: rotate(180deg);
     transition: 0.2s linear;
 }
+
+button {
+    top: 50%;
+    background-color: #c77cc7;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 30px;
+    min-width: 120px;
+}
+
+button:hover {
+    background-color: rgba(128, 0, 128, 0.66);
+    transition: 0.3s;
+}
 </style>
