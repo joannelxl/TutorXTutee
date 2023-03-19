@@ -22,7 +22,7 @@ export default {
         <img alt="logo" src="src\assets\logo_transparent.png" />
 
         <br><br>
-        <SidebarLink to="/" icon="fas fa-home">Home</SidebarLink>
+        <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
         <br>
         <SidebarLink to="/MyTutees" icon="fas fa-users">My Tutees</SidebarLink>
         <br>
