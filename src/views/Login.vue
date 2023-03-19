@@ -55,7 +55,7 @@ export default {
                     console.log("Logged in successfully!");
                     this.clearForm();
                     //redirect to home 
-                    router.push({ path: '/' })
+                    this.$router.push({ path: '/' })
                 })
                 .catch((error) => {
                     console.log(error.message);

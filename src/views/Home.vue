@@ -4,16 +4,20 @@
 
             <p class="welcomeTo">Welcome to</p>
             <p class="TutorXTutee">Tutor X Tutee</p>
-            <img alt="TxT logo" src="@/assets/homepagePic.jpg" />
-
         </div>
-
+        <br><br>
         <div class="aboutUs">
-            <h3>About Us</h3>
-            <p>Tutor x Tutee aims to help tutors better manage and schedule their tutoring sessions with tutees. With this
-                platform, we hope to reduce the barriers to voluntary tutoring and allow tutors to better focus on the
-                tutoring
-                sessions. Tutees will also be able to put up requests anytime they need help.</p>
+            <div class="image-col">
+                <img alt="TxT logo" src="@/assets/homepagePic.jpg" />
+            </div>
+            <div class="text-col">
+                <h3>About Us</h3>
+                <p>Tutor x Tutee aims to help tutors better manage and schedule their tutoring sessions with tutees. With
+                    this
+                    platform, we hope to reduce the barriers to voluntary tutoring and allow tutors to better focus on the
+                    tutoring
+                    sessions. Tutees will also be able to put up requests anytime they need help.</p>
+            </div>
         </div>
     </div>
 </template>
@@ -30,59 +34,63 @@ export default {
 </script>
 
 <style scoped>
-.title .welcomeTo {
-    font-weight: 400px;
-    width: 40%;
-    font-size: 70px;
-    line-height: 55px;
-    margin-top: 3%;
+.homepage {
+    max-width: 1140px;
+}
+
+.welcomeTo {
     color: rgba(128, 0, 128, 0.66);
-    border: 1px solid #FFFFFF;
-    margin-bottom: 2%;
+    font-size: 4.5em;
+    font-weight: 400px;
+    width: 500px;
+    margin-top: 0px;
+    margin-bottom: 1%;
 
 }
 
 .TutorXTutee {
-    width: 80%;
-    height: 0px;
-    margin-top: 3%;
-    font-weight: 400;
-    font-size: 100px;
-    line-height: 78px;
     color: rgba(128, 0, 128, 0.66);
-    border: 1px solid #FFFFFF;
+    font-size: 6em;
+    font-weight: 400px;
+    top: 10px;
+    width: 700px;
+    margin-top: 1%;
+    margin-bottom: 0px;
+    margin-left: 400px;
 }
 
-.title img {
-    width: 45%;
-    float: left;
-    margin-left: 5%;
-    height: auto;
-    max-height: 10%;
-    border: 1px solid #000000;
-    margin-top: 2%;
+img {
+    max-width: 30em;
 }
 
-.aboutUs h3 {
-    float: right;
-    margin-right: 16%;
-    width: 20%;
-    height: 2%;
+.image-col {
+    flex-basis: 40%;
+    margin-left: 200px;
+}
+
+.aboutUs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-col {
+    width: 0px;
+}
+
+.text-col h3 {
+    margin-left: 5em;
     font-weight: 400px;
     font-size: 30px;
-    line-height: 5%;
-    color: #000000;
+    width: 200px;
+
 }
 
-.aboutUs p {
-    float: right;
-    margin-right: 10%;
-    width: 32%;
-    top: 1%;
+.text-col p {
     font-weight: 400px;
     font-size: 20px;
     line-height: 200%;
-    color: #000000;
-
+    width: 500px;
+    margin-left: 200%;
 }
 </style>
