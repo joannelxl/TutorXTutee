@@ -36,7 +36,9 @@ export default {
             <i class="fas fa-angle-double-left"></i> </span>
 
         <br><br>
-        <button>Logout</button>
+        <div v-if="!collapsed">
+            <button>Logout</button>
+        </div>
     </div>
 </template>
 
