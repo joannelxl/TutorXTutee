@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-    <Sidebar />
+    <Sidebar v-if="!$route.meta.hideNavbar" />
     <div :style="{ 'margin-left': sidebarWidth }">
         <router-view />
     </div>

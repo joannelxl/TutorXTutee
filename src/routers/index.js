@@ -13,6 +13,9 @@ const routes = [
     path: "/",
     name: "Login",
     component: Login,
+    meta: {
+      hideNavbar: true,
+    },
   },
   {
     path: "/Home",
