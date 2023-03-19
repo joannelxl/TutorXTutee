@@ -216,7 +216,7 @@ export default {
 #button {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
-
+  border-radius: 100%;
   left: 480px;
   bottom: 70px; 
 }
