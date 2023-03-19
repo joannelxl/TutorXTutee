@@ -19,6 +19,9 @@ import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 const db = getFirestore(firebaseApp);
 const auth = getAuth();
 
@@ -51,6 +54,8 @@ export default {
                 .then((userCredential) => {
                     console.log("Logged in successfully!");
                     this.clearForm();
+                    //redirect to home 
+                    router.push({ path: '/' })
                 })
                 .catch((error) => {
                     console.log(error.message);
