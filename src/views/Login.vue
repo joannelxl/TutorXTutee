@@ -52,7 +52,7 @@ export default {
                 .then((userCredential) => {
                     console.log("Logged in successfully!");
                     this.clearForm();
-                    this.$router.push("/Chat")
+                    this.$router.push("/AllChats")
 
                 })
                 .catch((error) => {

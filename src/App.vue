@@ -2,13 +2,15 @@
 import SignUp from '@/views/SignUp.vue'
 import Login from '@/views/Login.vue'
 import Chat from '@/views/Chat.vue'
+import AllChats from '@/views/AllChats.vue'
 
 export default {
 	name: 'App',
 	components: {
 		SignUp,
 		Login,
-        Chat
+        Chat,
+        AllChats
 	}
 }
 </script>
