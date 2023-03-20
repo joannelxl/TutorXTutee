@@ -33,7 +33,6 @@ export default {
     },
     methods: {
         clearForm() {
-            this.email = "";
             this.password = "";
         },
         async login() {
@@ -110,10 +109,18 @@ input {
 }
 
 button {
-    height: 40px;
+    height: 30px;
+    width: 80px;
     border-radius: 4px;
     border: 1px solid gray;
     font-size: 0.9em;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+button:active {
+  background-color:gainsboro;
+  box-shadow: 0 1px lightgray;
+  transform: translateY(1px);
+}
+
 </style>
