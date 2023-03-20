@@ -14,19 +14,19 @@
             <div class="modal-body">
               <label class="required">Subject:</label>
               <input type="text" v-model="subject" />
-              <br />
+              <br /><br />
 
               <label class="required">Level:</label>
               <input type="text" v-model="level" />
-              <br />
+              <br /><br />
 
               <label class="required">Preferred Days:</label>
               <input type="text" v-model="preferredDays" />
               <br />
-
+              <br />
               <label class="required">Preferred Time:</label>
               <input type="text" v-model="preferredTime" />
-              <br />
+              <br /><br />
 
               <label class="required">Location:</label>
               <select v-model="location">
@@ -35,18 +35,18 @@
                 <option value="South">South</option>
                 <option value="West">West</option>
               </select>
-              <br />
+              <br /><br />
 
               <label class="required">Address:</label>
               <textarea type="text" v-model="address"></textarea>
-              <br />
+              <br /><br />
 
               <label>Remarks:</label>
               <textarea type="text" id="remarks" v-model="remarks"> </textarea>
-              <br />
+              <br /><br />
 
               <div class="error" v-if="formError">{{ formError }}</div>
-              <br />
+              <br /><br />
 
               <button class="cancel-button" @click="handleClose">Cancel</button>
               <button class="add-button" @click="handleSubmit">Add!</button>
@@ -155,9 +155,9 @@ export default {
 }
 
 .modal-container {
-  width: 40%;
+  width: 20%;
   margin: auto;
-  padding: 20px 30px;
+  padding: 50px 50px;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -191,6 +191,7 @@ form {
 
 textarea {
   resize: none;
+  padding: 5px;
 }
 
 .add-button {
@@ -208,6 +209,14 @@ textarea {
   padding-bottom: 10px;
 }
 
+#show-modal {
+  position: fixed;
+  left: 1000px;
+  top: 600px;
+  border-radius: 50%;
+  padding: 100px;
+  font-size: 50px;
+}
 .modal-enter-from {
   opacity: 0;
 }

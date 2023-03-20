@@ -7,7 +7,7 @@
       <div class="modal-title">
         <h1>Edit your request</h1>
       </div>
-      <form id="requestform" @submit.prevent="handleEdit(requestId)">
+      <form id="requestform" @submit.prevent="">
         <div class="modal-body">
           <label class="required">Subject:</label>
           <input type="text" :placeholder="subject" v-model="newSubject" />
@@ -61,7 +61,7 @@
           <br />
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
-          <button class="edit-button">Edit!</button>
+          <button class="edit-button" @click="handleEdit">Edit!</button>
         </div>
       </form>
     </div>
@@ -187,7 +187,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;
