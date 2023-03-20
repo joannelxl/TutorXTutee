@@ -11,25 +11,34 @@
           type="text"
           style="height: 35px; width: 450px"
           v-model="newMessage"
-          placeholder="Send a message..."/>
+          placeholder="Send a message..." />
         <button id="button" type="submit">Send</button>
       </form>
     </div>
   </div>
 
   <div>
-    <img class="deleteIcon" src="@/assets/dustbin.png" alt="" v-on:click = "deleteChat">
-    <confirm-dialogue ref = "confirmDialogue"></confirm-dialogue>
+    <img
+      class="deleteIcon"
+      src="@/assets/dustbin.png"
+      alt=""
+      v-on:click="deleteChat" />
+    <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
   </div>
-
 </template>
 
 <script>
 import firebaseApp from "../firebase.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
-import { query, where } from 'firebase/firestore';
-import { getAuth } from "firebase/auth"
+import { query, where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 import ConfirmDialogue from "../components/ConfirmDialogue.vue";
 
@@ -45,7 +54,6 @@ import ConfirmDialogue from "../components/ConfirmDialogue.vue";
     }
 })*/
 
-
 export default {
   components: { ConfirmDialogue },
 
@@ -60,135 +68,139 @@ export default {
   },
   methods: {
     async sendMessage() {
-      this.messages.push({
-        email: "testtutor@gmail.com",
-        text: this.newMessage,
-      });
+      if (this.newMessage) {
+        this.messages.push({
+          email: "testtutor@gmail.com",
+          text: this.newMessage,
+        });
 
-      //for the chat collection
-      const chatCollection = collection(db, "Chats");
-      const chatsObj = {
-        TuteeEmail: "testtutee@gmail.com",
-        TutorEmail: "testtutor@gmail.com"
-      };
+        //for the chat collection
+        const chatCollection = collection(db, "Chats");
+        const chatsObj = {
+          TuteeEmail: "testtutee@gmail.com",
+          TutorEmail: "testtutor@gmail.com",
+        };
 
-      //getting all documents in the chat collection
-      const querySnapshot = await getDocs(collection(db, "Chats"));
-      //retrieve chatid for messages to use
-      var corresChatId;
-      var found = false
-      querySnapshot.forEach((doc) => {
-        //for each of the document in the collection
-        //check if there is tutee and tutor pair in chat collection alr
-        if (doc.data().TuteeEmail == "testtutee@gmail.com" && 
-        doc.data().TutorEmail == "testtutor@gmail.com") {
-            found = true;
-            corresChatId = doc.id
-            //do nothing once found, dn to add document alr 
-        }
-      })
-
-      //if the pair not found, then have to add a new document 
-      if (found == false) {
-        addDoc(chatCollection,chatsObj)
+        //getting all documents in the chat collection
         const querySnapshot = await getDocs(collection(db, "Chats"));
+        //retrieve chatid for messages to use
+        var corresChatId;
+        var found = false;
         querySnapshot.forEach((doc) => {
-            if (doc.data().TuteeEmail == "testtutee@gmail.com" &&
-            doc.data().TutorEmail == "testtutor@gmail.com") {
-                corresChatId = doc.id
+          //for each of the document in the collection
+          //check if there is tutee and tutor pair in chat collection alr
+          if (
+            doc.data().TuteeEmail == "testtutee@gmail.com" &&
+            doc.data().TutorEmail == "testtutor@gmail.com"
+          ) {
+            found = true;
+            corresChatId = doc.id;
+            //do nothing once found, dn to add document alr
+          }
+        });
+
+        //if the pair not found, then have to add a new document
+        if (found == false) {
+          addDoc(chatCollection, chatsObj);
+          const querySnapshot = await getDocs(collection(db, "Chats"));
+          querySnapshot.forEach((doc) => {
+            if (
+              doc.data().TuteeEmail == "testtutee@gmail.com" &&
+              doc.data().TutorEmail == "testtutor@gmail.com"
+            ) {
+              corresChatId = doc.id;
             }
-        })
-        console.log("a new chat document has been added")
+          });
+          console.log("a new chat document has been added");
         }
-      
 
-      //for the messages collection
-      const messageCollection = collection(db, "UserMessages");
+        //for the messages collection
+        const messageCollection = collection(db, "UserMessages");
 
-      const messagesObj = {
-        Email: "test",
-        message: [this.newMessage],
-        chatId: corresChatId
-      };
+        const messagesObj = {
+          Email: "test",
+          message: [this.newMessage],
+          chatId: corresChatId,
+        };
 
-      //getting all documents in the messages collection
-      const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
-      var found = false
+        //getting all documents in the messages collection
+        const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
+        var found = false;
 
-      querySnapshot2.forEach((document) => {
-        //for each of the document in the collection
-        //check if the chat id exists
-        if (document.data().chatId == corresChatId) {
-            found = true
+        querySnapshot2.forEach((document) => {
+          //for each of the document in the collection
+          //check if the chat id exists
+          if (document.data().chatId == corresChatId) {
+            found = true;
             //once found, add to messages
-            const currMessage = document.data().message
-            console.log(currMessage)
-            const updatedMessage = currMessage + ", " + this.newMessage
-            console.log(updatedMessage)
+            const currMessage = document.data().message;
+            console.log(currMessage);
+            const updatedMessage = currMessage + ", " + this.newMessage;
+            console.log(updatedMessage);
 
-            const docRef = doc(db, "UserMessages", document.id)
+            const docRef = doc(db, "UserMessages", document.id);
             const data = {
-                message: updatedMessage
+              message: updatedMessage,
             };
 
-            updateDoc(docRef, data)
-            .then(docRef => {
-                console.log("message has been added to database")
-            })
+            updateDoc(docRef, data).then((docRef) => {
+              console.log("message has been added to database");
+            });
+          }
+        });
 
-            }
-        })
-    
-      if (found == false) {
-        addDoc(messageCollection, messagesObj)
-        console.log("a new UserMessage document has been added")
-      };
+        if (found == false) {
+          addDoc(messageCollection, messagesObj);
+          console.log("a new UserMessage document has been added");
+        }
 
-      this.newMessage = '';
+        this.newMessage = "";
+      }
+    },
 
-    }, 
-    
     async deleteChat() {
-    const ok = await this.$refs.confirmDialogue.show({
+      const ok = await this.$refs.confirmDialogue.show({
         title: "Delete Chat",
-        message: "Are you sure you want to delete the chat? This action cannot be undone.",
+        message:
+          "Are you sure you want to delete the chat? This action cannot be undone.",
         okButton: "Delete",
-    })
+      });
 
-    if (ok) {
+      if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));
         //retrieve chatid for messages to use
         var corresChatId;
 
         querySnapshot.forEach((document) => {
-            //for each of the document in the collection
-            //check if there is tutee and tutor pair in chat collection alr
-            if (document.data().TuteeEmail == "testtutee@gmail.com" && 
-            document.data().TutorEmail == "testtutor@gmail.com") {
-                const docRef = doc(db, "Chats", document.id)
-                deleteDoc(docRef)
-                corresChatId = document.id
-                console.log("successfully deleted chats doc")
-            }
-        })
+          //for each of the document in the collection
+          //check if there is tutee and tutor pair in chat collection alr
+          if (
+            document.data().TuteeEmail == "testtutee@gmail.com" &&
+            document.data().TutorEmail == "testtutor@gmail.com"
+          ) {
+            const docRef = doc(db, "Chats", document.id);
+            deleteDoc(docRef);
+            corresChatId = document.id;
+            console.log("successfully deleted chats doc");
+          }
+        });
 
         const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
 
         querySnapshot2.forEach((document) => {
-            if (document.data().chatId == corresChatId) {
-                const docRef2 = doc(db, "UserMessages", document.id)
-                deleteDoc(docRef2)
-                console.log("successfully deleted userMessage doc")
-            }
-        })
-        this.$router.push("/AllChats")
-    }
-    else {
-        this.$router.push("/Chat")
-    }
-}
-}
-}
+          if (document.data().chatId == corresChatId) {
+            const docRef2 = doc(db, "UserMessages", document.id);
+            deleteDoc(docRef2);
+            console.log("successfully deleted userMessage doc");
+          }
+        });
+        this.$router.push("/AllChats");
+      } else {
+        this.$router.push("/Chat");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -218,15 +230,11 @@ export default {
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
   left: 480px;
-  bottom: 70px; 
+  bottom: 70px;
 }
 
 .deleteIcon {
-    width: 15%;
-    height: 20%;
-
+  width: 15%;
+  height: 20%;
 }
-
-
-
 </style>
