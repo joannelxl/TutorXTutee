@@ -16,6 +16,16 @@
         <h2>Joanne Lim</h2>
         <h4>Are you able to start this week?</h4>
     </button>
+
+    <button id = "yiwei">
+        <h2>Ng Yi Wei</h2>
+        <h4>I want to cancel our lesson cause I don't like your teaching.</h4>
+    </button>
+
+    <button id = "sinler">
+        <h2>Tan Sin Ler</h2>
+        <h4>I'm not coming for class today I am tired.</h4>
+    </button>
   </div>
 </template>
 
@@ -44,11 +54,11 @@
     top: 60px;
 }
 
-.kelly, #teresa, #joanne {
+.kelly, #teresa, #joanne, #yiwei, #sinler {
     background-color: #f3ddb0;
     text-align: center;
     border-color: white;
-    border-width: 2px;  
+    border-width: 1px;  
     width: 100%
 }
 
