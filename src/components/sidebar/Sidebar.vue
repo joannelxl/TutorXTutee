@@ -1,12 +1,19 @@
 <script>
 import SidebarLink from './SideBarLink.vue';
 import { collapsed, toggleSidebar, sidebarWidth } from './state'
+import { useRouter } from 'vue-router';
+
 
 export default {
     props: {},
     components: { SidebarLink, SidebarLink },
     setup() {
         return { collapsed, toggleSidebar, sidebarWidth }
+    },
+    methods: {
+        redirectHomepage() {
+            this.$router.push({ path: '/Home' })
+        }
     }
 }
 </script>
@@ -15,8 +22,8 @@ export default {
     <div class="sidebar" :style="{ width: sidebarWidth }">
 
         <br><br>
-        <img alt="logo" src="src\assets\logo_transparent.png" />
 
+        <img @click="redirectHomepage" alt="logo" src="src\assets\logo_transparent.png" />
         <div class="links">
             <br><br><br><br>
             <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
