@@ -13,27 +13,26 @@ export default {
 
 <template>
     <div class="sidebar" :style="{ width: sidebarWidth }">
-        <h1>
-            <span v-if="collapsed">
-            </span>
-            <span v-else>TutorXTutee</span>
-        </h1>
-
-        <img alt="logo" src="src\assets\logo_transparent.png" />
 
         <br><br>
-        <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
-        <br>
-        <SidebarLink to="/MyTutees" icon="fas fa-users">My Tutees</SidebarLink>
-        <br>
-        <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
-        <br>
-        <SidebarLink to="/Chats" icon="fas fa-comments">Chats</SidebarLink>
-        <br>
-        <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
+        <img alt="logo" src="src\assets\logo_transparent.png" />
+
+        <div class="links">
+            <br><br><br><br>
+            <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
+            <br>
+            <SidebarLink to="/MyTutees" icon="fas fa-users">My Tutees</SidebarLink>
+            <br>
+            <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
+            <br>
+            <SidebarLink to="/Chats" icon="fas fa-comments">Chats</SidebarLink>
+            <br>
+            <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
+        </div>
 
         <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
             <i class="fas fa-angle-double-left"></i> </span>
+
 
         <br><br>
         <div v-if="!collapsed">
@@ -53,9 +52,8 @@ export default {
 
 <style scoped>
 .sidebar {
-    color: white;
+    color: black;
     background-color: var(--sidebar-bg-color);
-
     float: left;
     position: fixed;
     z-index: 1;
@@ -79,7 +77,7 @@ export default {
     bottom: 0;
     padding: 0.75em;
 
-    color: rgba(255, 255, 255, 0.7);
+    color: black;
 
     transition: 0.2s linear;
 }
@@ -92,7 +90,7 @@ export default {
 button {
     top: 50%;
     background-color: #c77cc7;
-    color: #fff;
+    color: black;
     border: none;
     border-radius: 10px;
     padding: 15px;

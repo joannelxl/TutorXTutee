@@ -52,7 +52,7 @@ export default {
     border-radius: 0.25em;
     height: 1.5em;
 
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
