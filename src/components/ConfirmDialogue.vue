@@ -69,26 +69,37 @@ export default {
 }
 
 .ok-btn {
-    padding: 0.5em 1em;
+    padding: 0.5em 0.5em;
     background-color: darksalmon;
     color:crimson;
     border: 2px solid rosybrown;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 13px;
     text-transform: uppercase;
     cursor: pointer;
 }
 
 .cancel-btn {
-    padding: 0.5em 1em;
+    padding: 0.5em 0.5em;
     background-color: #d5eae7;
     color: #35907f;
     border: 2px solid #0ec5a4;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 12px;
     text-transform: uppercase;
     cursor: pointer;
 }
+
+
+.cancel-btn:hover {background-color: #d5eae7}
+
+.cancel-btn:active {
+  background-color: #d5eae7;
+  box-shadow: 0 2px lightgray;
+  transform: translateY(4px);
+}
+
+
 </style>

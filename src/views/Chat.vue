@@ -18,7 +18,7 @@
   </div>
 
   <div>
-    <img id="deleteIcon" src="@/assets/dustbin.png" alt="" v-on:click = "deleteChat">
+    <img class="deleteIcon" src="@/assets/dustbin.png" alt="" v-on:click = "deleteChat">
     <confirm-dialogue ref = "confirmDialogue"></confirm-dialogue>
   </div>
 
@@ -221,9 +221,12 @@ export default {
   bottom: 70px; 
 }
 
-#deleteIcon {
+.deleteIcon {
     width: 15%;
     height: 20%;
 
 }
+
+
+
 </style>
