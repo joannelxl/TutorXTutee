@@ -11,25 +11,34 @@
           type="text"
           style="height: 35px; width: 450px"
           v-model="newMessage"
-          placeholder="Send a message..."/>
+          placeholder="Send a message..." />
         <button id="button" type="submit">Send</button>
       </form>
     </div>
   </div>
 
   <div>
-    <img class="deleteIcon" src="@/assets/dustbin.png" alt="" v-on:click = "deleteChat">
-    <confirm-dialogue ref = "confirmDialogue"></confirm-dialogue>
+    <img
+      class="deleteIcon"
+      src="@/assets/dustbin.png"
+      alt=""
+      v-on:click="deleteChat" />
+    <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
   </div>
-
 </template>
 
 <script>
 import firebaseApp from "../firebase.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
-import { query, where } from 'firebase/firestore';
-import { getAuth } from "firebase/auth"
+import { query, where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 import ConfirmDialogue from "../components/ConfirmDialogue.vue";
 
@@ -44,7 +53,6 @@ import ConfirmDialogue from "../components/ConfirmDialogue.vue";
         console.log("not signed in")
     }
 })*/
-
 
 export default {
   components: { ConfirmDialogue },
@@ -69,45 +77,48 @@ export default {
         text: this.newMessage,
       });
 
-      //for the chat collection
-      const chatCollection = collection(db, "Chats");
-      const chatsObj = {
-        TuteeEmail: "testtutee@gmail.com",
-        TutorEmail: "testtutor@gmail.com"
-      };
+        //for the chat collection
+        const chatCollection = collection(db, "Chats");
+        const chatsObj = {
+          TuteeEmail: "testtutee@gmail.com",
+          TutorEmail: "testtutor@gmail.com",
+        };
 
-      //getting all documents in the chat collection
-      const querySnapshot = await getDocs(collection(db, "Chats"));
-      //retrieve chatid for messages to use
-      var corresChatId;
-      var found = false
-      querySnapshot.forEach((doc) => {
-        //for each of the document in the collection
-        //check if there is tutee and tutor pair in chat collection alr
-        if (doc.data().TuteeEmail == "testtutee@gmail.com" && 
-        doc.data().TutorEmail == "testtutor@gmail.com") {
-            found = true;
-            corresChatId = doc.id
-            //do nothing once found, dn to add document alr 
-        }
-      })
-
-      //if the pair not found, then have to add a new document 
-      if (found == false) {
-        addDoc(chatCollection,chatsObj)
+        //getting all documents in the chat collection
         const querySnapshot = await getDocs(collection(db, "Chats"));
+        //retrieve chatid for messages to use
+        var corresChatId;
+        var found = false;
         querySnapshot.forEach((doc) => {
-            if (doc.data().TuteeEmail == "testtutee@gmail.com" &&
-            doc.data().TutorEmail == "testtutor@gmail.com") {
-                corresChatId = doc.id
-            }
-        })
-        console.log("a new chat document has been added")
-        }
-      
+          //for each of the document in the collection
+          //check if there is tutee and tutor pair in chat collection alr
+          if (
+            doc.data().TuteeEmail == "testtutee@gmail.com" &&
+            doc.data().TutorEmail == "testtutor@gmail.com"
+          ) {
+            found = true;
+            corresChatId = doc.id;
+            //do nothing once found, dn to add document alr
+          }
+        });
 
-      //for the messages collection
-      const messageCollection = collection(db, "UserMessages");
+        //if the pair not found, then have to add a new document
+        if (found == false) {
+          addDoc(chatCollection, chatsObj);
+          const querySnapshot = await getDocs(collection(db, "Chats"));
+          querySnapshot.forEach((doc) => {
+            if (
+              doc.data().TuteeEmail == "testtutee@gmail.com" &&
+              doc.data().TutorEmail == "testtutor@gmail.com"
+            ) {
+              corresChatId = doc.id;
+            }
+          });
+          console.log("a new chat document has been added");
+        }
+
+        //for the messages collection
+        const messageCollection = collection(db, "UserMessages");
 
       var today = new Date();
       var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -123,51 +134,52 @@ export default {
       console.log("a new UserMessage document has been added")
     
 
-      this.newMessage = '';
+        this.newMessage = "";
+      }
+    },
 
-    }, 
-    
     async deleteChat() {
-    const ok = await this.$refs.confirmDialogue.show({
+      const ok = await this.$refs.confirmDialogue.show({
         title: "Delete Chat",
-        message: "Are you sure you want to delete the chat? This action cannot be undone.",
+        message:
+          "Are you sure you want to delete the chat? This action cannot be undone.",
         okButton: "Delete",
-    })
+      });
 
-    if (ok) {
+      if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));
         //retrieve chatid for messages to use
         var corresChatId;
 
         querySnapshot.forEach((document) => {
-            //for each of the document in the collection
-            //check if there is tutee and tutor pair in chat collection alr
-            if (document.data().TuteeEmail == "testtutee@gmail.com" && 
-            document.data().TutorEmail == "testtutor@gmail.com") {
-                const docRef = doc(db, "Chats", document.id)
-                deleteDoc(docRef)
-                corresChatId = document.id
-                console.log("successfully deleted chats doc")
-            }
-        })
+          //for each of the document in the collection
+          //check if there is tutee and tutor pair in chat collection alr
+          if (
+            document.data().TuteeEmail == "testtutee@gmail.com" &&
+            document.data().TutorEmail == "testtutor@gmail.com"
+          ) {
+            const docRef = doc(db, "Chats", document.id);
+            deleteDoc(docRef);
+            corresChatId = document.id;
+            console.log("successfully deleted chats doc");
+          }
+        });
 
         const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
 
         querySnapshot2.forEach((document) => {
-            if (document.data().chatId == corresChatId) {
-                const docRef2 = doc(db, "UserMessages", document.id)
-                deleteDoc(docRef2)
-                console.log("successfully deleted userMessage doc")
-            }
-        })
-        this.$router.push("/AllChats")
-    }
-    else {
-        this.$router.push("/Chat")
-    }
-}
-}
-}
+          if (document.data().chatId == corresChatId) {
+            const docRef2 = doc(db, "UserMessages", document.id);
+            deleteDoc(docRef2);
+            console.log("successfully deleted userMessage doc");
+          }
+        });
+        this.$router.push("/AllChats");
+      } else {
+        this.$router.push("/Chat");
+      }
+    },
+};
 </script>
 
 <style scoped>
@@ -197,15 +209,11 @@ export default {
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
   left: 480px;
-  bottom: 70px; 
+  bottom: 70px;
 }
 
 .deleteIcon {
-    width: 15%;
-    height: 20%;
-
+  width: 15%;
+  height: 20%;
 }
-
-
-
 </style>
