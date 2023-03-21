@@ -60,8 +60,12 @@ export default {
   },
   methods: {
     async sendMessage() {
+
+      const auth = getAuth();
+      const userEmail = auth.currentUser.email;
+
       this.messages.push({
-        email: "testtutor@gmail.com",
+        email: userEmail,
         text: this.newMessage,
       });
 
@@ -105,44 +109,19 @@ export default {
       //for the messages collection
       const messageCollection = collection(db, "UserMessages");
 
+      var today = new Date();
+      var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
       const messagesObj = {
-        Email: "test",
-        message: [this.newMessage],
-        chatId: corresChatId
+        chatId: corresChatId,
+        message: this.newMessage,
+        sender: userEmail,
+        time: sendTime
       };
 
-      //getting all documents in the messages collection
-      const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
-      var found = false
-
-      querySnapshot2.forEach((document) => {
-        //for each of the document in the collection
-        //check if the chat id exists
-        if (document.data().chatId == corresChatId) {
-            found = true
-            //once found, add to messages
-            const currMessage = document.data().message
-            console.log(currMessage)
-            const updatedMessage = currMessage + ", " + this.newMessage
-            console.log(updatedMessage)
-
-            const docRef = doc(db, "UserMessages", document.id)
-            const data = {
-                message: updatedMessage
-            };
-
-            updateDoc(docRef, data)
-            .then(docRef => {
-                console.log("message has been added to database")
-            })
-
-            }
-        })
+      addDoc(messageCollection, messagesObj)
+      console.log("a new UserMessage document has been added")
     
-      if (found == false) {
-        addDoc(messageCollection, messagesObj)
-        console.log("a new UserMessage document has been added")
-      };
 
       this.newMessage = '';
 
