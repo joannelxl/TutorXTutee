@@ -28,7 +28,7 @@ const routes = [
     component: () => import("../views/MyTutees.vue"),
   },
   {
-    path: "/MuTutors",
+    path: "/MyTutors",
     name: "MyTutors",
     component: () => import("../views/MyTutors.vue"),
   },

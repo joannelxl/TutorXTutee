@@ -11,7 +11,7 @@ export default {
         return {
             user: false,
             email: false,
-            tutee: '',
+            role: '',
             dataLoaded: false,
         }
     },
@@ -32,7 +32,6 @@ export default {
         if (this.user) {
             const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.user.email));
             this.role = verifiedUser.data().role
-            console.log(this.role)
             this.dataLoaded = true
         }
     }
@@ -49,7 +48,7 @@ export default {
             <br><br><br><br>
             <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
             <br>
-            <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role==='tutee'">My Tutees</SidebarLink>
+            <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role === 'tutor'">My Tutees</SidebarLink>
             <SidebarLink to="/MyTutors" icon="fas fa-users" v-else>My Tutors</SidebarLink>
             <br>
             <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
