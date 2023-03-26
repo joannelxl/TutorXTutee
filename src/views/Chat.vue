@@ -1,8 +1,8 @@
 <template>
   <div id="chat">
     <div>
-      <div v-for="(message, index) in messages" :key="index">
-        {{ message.email }}: {{ message.text }}
+      <div id = "senderMessages" v-for="message in messages" :key="index">
+        {{ message.text }}
       </div>
     </div>
     <div id="inputBox">
@@ -18,11 +18,7 @@
   </div>
 
   <div>
-    <img
-      class="deleteIcon"
-      src="@/assets/dustbin.png"
-      alt=""
-      v-on:click="deleteChat" />
+    <img class="deleteIcon" src="@/assets/dustbin.png" alt="" @click="doDelete" />
     <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
   </div>
 </template>
@@ -41,27 +37,16 @@ import { query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 import ConfirmDialogue from "../components/ConfirmDialogue.vue";
+import PreviousChat from "../components/PreviousChat.vue";
 
-/*getAuth().onAuthStateChanged(user => {
-    if (user) {
-        console.log("user is logged in")
-        console.log(user)
-        var emailOfCurrUser = user.email
-        console.log(emailOfCurrUser)
-    }
-    else {
-        console.log("not signed in")
-    }
-})*/
 
 export default {
-  components: { ConfirmDialogue },
+  components: { ConfirmDialogue, PreviousChat },
 
   data() {
     return {
-      messages: [
-        { email: "testtutee@gmail.com", text: "hello!!" },
-        { email: "testtutor@gmail.com", text: "what u want" },
+    messages: [
+        {text:""},
       ],
       newMessage: "",
     };
@@ -73,8 +58,7 @@ export default {
       const userEmail = auth.currentUser.email;
 
       this.messages.push({
-        email: userEmail,
-        text: this.newMessage,
+        text: this.newMessage
       });
 
         //for the chat collection
@@ -135,16 +119,14 @@ export default {
     
 
         this.newMessage = "";
-      }
     },
 
-    async deleteChat() {
+    async doDelete() {
       const ok = await this.$refs.confirmDialogue.show({
         title: "Delete Chat",
-        message:
-          "Are you sure you want to delete the chat? This action cannot be undone.",
+        message:"Are you sure you want to delete the chat? This action cannot be undone.",
         okButton: "Delete",
-      });
+      })
 
       if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));
@@ -179,6 +161,7 @@ export default {
         this.$router.push("/Chat");
       }
     },
+  }
 };
 </script>
 
@@ -216,4 +199,12 @@ export default {
   width: 15%;
   height: 20%;
 }
+
+#senderMessages {
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap;
+    width: 1100px;
+}
 </style>
+
