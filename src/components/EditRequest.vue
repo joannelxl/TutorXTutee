@@ -1,5 +1,5 @@
 <template>
-  <button id="show-modal" @click="getData">Edit Request</button>
+  <button class="update-button" @click="getData">Update Request</button>
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
@@ -11,11 +11,11 @@
         <div class="modal-body">
           <label class="required">Subject:</label>
           <input type="text" :placeholder="subject" v-model="newSubject" />
-          <br />
+          <br /><br />
 
           <label class="required">Level:</label>
           <input type="text" :placeholder="level" v-model="newLevel" />
-          <br />
+          <br /><br />
 
           <label class="required">Preferred Days:</label>
           <input
@@ -23,7 +23,7 @@
             :placeholder="preferredDays"
             v-model="newPreferredDays"
           />
-          <br />
+          <br /><br />
 
           <label class="required">Preferred Time:</label>
           <input
@@ -31,7 +31,7 @@
             :placeholder="preferredTime"
             v-model="newPreferredTime"
           />
-          <br />
+          <br /><br />
 
           <label class="required">Location:</label>
           <select v-model="location">
@@ -39,16 +39,19 @@
             <option value="East">East</option>
             <option value="South">South</option>
             <option value="West">West</option>
+            <option value="Central">Central</option>
+            <option value="Virtual">Virtual</option>
           </select>
-          <br />
+          <br /><br />
 
           <label class="required">Address:</label>
           <textarea
             type="text"
             :placeholder="address"
             v-model="newAddress"
+            rows="3"
           ></textarea>
-          <br />
+          <br /><br />
 
           <label>Remarks:</label>
           <textarea
@@ -56,12 +59,13 @@
             id="remarks"
             :placeholder="remarks"
             v-model="newRemarks"
+            rows="5"
           >
           </textarea>
-          <br />
+          <br /><br />
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
-          <button class="edit-button" @click="handleEdit">Edit!</button>
+          <button class="edit-button" @click="handleEdit">Edit Request!</button>
         </div>
       </form>
     </div>
@@ -79,7 +83,6 @@ import {
   where,
   doc,
 } from "firebase/firestore";
-import EditRequest from "./EditRequest.vue";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -119,6 +122,14 @@ export default {
       this.location = docSnap.data().Location;
       this.address = docSnap.data().Address;
       this.remarks = docSnap.data().Remarks;
+
+      this.newSubject = docSnap.data().Subject;
+      this.newLevel = docSnap.data().Level;
+      this.newPreferredDays = docSnap.data().PreferredDays;
+      this.newPreferredTime = docSnap.data().PreferredTime;
+      this.newLocation = docSnap.data().Location;
+      this.newAddress = docSnap.data().Address;
+      this.newRemarks = docSnap.data().Remarks;
     },
 
     async handleEdit() {
@@ -126,41 +137,39 @@ export default {
       const docRef = doc(db, "Requests", this.requestId);
       console.log(this.requestId);
       console.log((await getDoc(docRef)).data());
-      if (this.newSubject !== null) {
+      if (this.newSubject) {
         await updateDoc(docRef, {
           Subject: this.newSubject,
         });
       }
 
-      if (this.newLevel !== null) {
+      if (this.newLevel) {
         await updateDoc(docRef, {
           Level: this.newLevel,
         });
       }
 
-      if (this.newPreferredDays !== null) {
+      if (this.newPreferredDays) {
         await updateDoc(docRef, {
           PreferredDays: this.newPreferredDays,
         });
       }
 
-      if (this.newPreferredTime !== null) {
+      if (this.newPreferredTime) {
         await updateDoc(docRef, {
           PreferredTime: this.newPreferredTime,
         });
       }
 
-      if (this.newAddress !== null) {
+      if (this.newAddress) {
         await updateDoc(docRef, {
           Address: this.newAddress,
         });
       }
 
-      if (this.newRemarks !== null) {
-        await updateDoc(docRef, {
-          Remarks: this.newRemarks,
-        });
-      }
+      await updateDoc(docRef, {
+        Remarks: this.newRemarks,
+      });
 
       await updateDoc(docRef, {
         Location: this.location,
@@ -188,6 +197,16 @@ export default {
 </script>
 
 <style scoped>
+.update-button {
+  background-color: #d9d9d9;
+  padding: 10px 10px;
+  border-radius: 4px;
+  font-size: medium;
+}
+.update-button:hover {
+  background-color: #a7a5a5;
+  cursor: pointer;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -201,10 +220,10 @@ export default {
 }
 
 .modal-container {
-  width: 40%;
+  width: 30%;
   margin: auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  padding: 50px 50px;
+  background-color: #ebdfeb;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
@@ -212,11 +231,14 @@ export default {
 
 .close-button {
   float: right;
+  margin-top: -30px;
+  margin-right: -30px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .modal-title {
   margin-top: 0;
-  color: #42b983;
   text-align: center;
 }
 
@@ -229,10 +251,34 @@ select {
   width: 58%;
 }
 
+label {
+  margin-right: 10px;
+}
+
+input {
+  height: 15px;
+}
+
 form {
   text-align: center;
   align-items: center;
   margin: auto;
+}
+
+.edit-button {
+  text-align: center;
+  background: #e7e5aa;
+  border: 1px solid #000000;
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.cancel-button {
+  text-align: center;
+  background: #d9d9d9;
+  border: 1px solid #000000;
+  font-size: 20px;
+  margin-left: 50px;
 }
 
 textarea {

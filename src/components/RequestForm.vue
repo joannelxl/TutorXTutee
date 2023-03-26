@@ -1,75 +1,74 @@
 <template>
   <!-- Button to add request -->
-  <button id="show-modal" @click="showModal = true">+</button>
+  <button id="show-modal" @click="showModal = true"><strong>+</strong></button>
 
-  <Teleport to="body">
-    <Transition name="modal">
-      <div v-if="showModal" class="modal-mask">
-        <div class="modal-container">
-          <button class="close-button" @click="handleClose">x</button>
-          <div class="modal-title">
-            <h1>Fill in your request here!</h1>
-          </div>
-          <form id="requestform" @submit.prevent="">
-            <div class="modal-body">
-              <label class="required">Subject:</label>
-              <input type="text" v-model="subject" />
-              <br /><br />
-
-              <label class="required">Level:</label>
-              <input type="text" v-model="level" />
-              <br /><br />
-
-              <label class="required">Preferred Days:</label>
-              <input type="text" v-model="preferredDays" />
-              <br />
-              <br />
-              <label class="required">Preferred Time:</label>
-              <input type="text" v-model="preferredTime" />
-              <br /><br />
-
-              <label class="required">Location:</label>
-              <select v-model="location">
-                <option value="North">North</option>
-                <option value="East">East</option>
-                <option value="South">South</option>
-                <option value="West">West</option>
-              </select>
-              <br /><br />
-
-              <label class="required">Address:</label>
-              <textarea type="text" v-model="address"></textarea>
-              <br /><br />
-
-              <label>Remarks:</label>
-              <textarea type="text" id="remarks" v-model="remarks"> </textarea>
-              <br /><br />
-
-              <div class="error" v-if="formError">{{ formError }}</div>
-              <br /><br />
-
-              <button class="cancel-button" @click="handleClose">Cancel</button>
-              <button class="add-button" @click="handleSubmit">Add!</button>
-            </div>
-          </form>
-        </div>
+  <div v-if="showModal" class="modal-mask">
+    <div class="modal-container">
+      <button class="close-button" @click="handleClose">x</button>
+      <div class="modal-title">
+        <h1><strong>Fill in your request here!</strong></h1>
       </div>
-    </Transition>
-    <!-- <RequestForm :showModal="showModal" @close="showModal = false" /> -->
-  </Teleport>
+      <form id="requestform" @submit.prevent="">
+        <div class="modal-body">
+          <label class="required">Subject:</label>
+          <input type="text" v-model="subject" />
+          <br /><br />
+
+          <label class="required">Level:</label>
+          <input type="text" v-model="level" />
+          <br /><br />
+
+          <label class="required">Preferred Days:</label>
+          <input type="text" v-model="preferredDays" />
+          <br />
+          <br />
+          <label class="required">Preferred Time:</label>
+          <input type="text" v-model="preferredTime" />
+          <br /><br />
+
+          <label class="required">Location:</label>
+          <select v-model="location">
+            <option value="North">North</option>
+            <option value="East">East</option>
+            <option value="South">South</option>
+            <option value="West">West</option>
+            <option value="Central">Central</option>
+            <option value="Virtual">Virtual</option>
+          </select>
+          <br /><br />
+
+          <label class="required">Address:</label>
+          <textarea rows="3" type="text" v-model="address"></textarea>
+          <br /><br />
+
+          <label>Remarks:</label>
+          <textarea rows="5" type="text" id="remarks" v-model="remarks">
+          </textarea>
+          <br /><br />
+
+          <div class="error" v-if="formError">{{ formError }}</div>
+          <br /><br />
+
+          <button class="cancel-button" @click="handleClose">Cancel</button>
+          <button class="add-button" @click="handleSubmit">Add Request!</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>
 import firebaseApp from "../firebase.js";
 import { collection, getFirestore } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
   data() {
     return {
       //Fake email
-      userID: "testtutee@gmail.com",
+      useremail: "",
       subject: "",
       level: "",
       preferredDays: "",
@@ -99,7 +98,7 @@ export default {
         this.formError = "Please fill in all required fields!";
       } else {
         let details = {
-          User: this.userID,
+          User: this.useremail,
           Subject: this.subject,
           Level: this.level,
           PreferredDays: this.preferredDays,
@@ -138,6 +137,12 @@ export default {
         (this.formError = "");
     },
   },
+
+  mounted() {
+    const auth = getAuth();
+    this.useremail = auth.currentUser.email;
+    console.log(this.useremail);
+  },
 };
 </script>
 
@@ -155,10 +160,10 @@ export default {
 }
 
 .modal-container {
-  width: 20%;
+  width: 30%;
   margin: auto;
   padding: 50px 50px;
-  background-color: #fff;
+  background-color: #ebdfeb;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
@@ -166,11 +171,14 @@ export default {
 
 .close-button {
   float: right;
+  margin-top: -30px;
+  margin-right: -30px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .modal-title {
   margin-top: 0;
-  color: #42b983;
   text-align: center;
 }
 
@@ -191,11 +199,29 @@ form {
 
 textarea {
   resize: none;
-  padding: 5px;
 }
 
+label {
+  margin-right: 10px;
+}
+
+input {
+  height: 15px;
+}
 .add-button {
   text-align: center;
+  background: #e7e5aa;
+  border: 1px solid #000000;
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.cancel-button {
+  text-align: center;
+  background: #d9d9d9;
+  border: 1px solid #000000;
+  font-size: 20px;
+  margin-left: 50px;
 }
 
 .required:after {
@@ -211,11 +237,18 @@ textarea {
 
 #show-modal {
   position: fixed;
-  left: 1000px;
-  top: 600px;
+  right: 100px;
+  bottom: 0;
   border-radius: 50%;
-  padding: 100px;
-  font-size: 50px;
+  padding: 40px;
+  font-size: 30px;
+  font-weight: 200;
+  background-color: rgba(240, 51, 51, 0.56);
+}
+
+#show-modal:hover {
+  background-color: rgba(177, 36, 36, 0.56);
+  cursor: pointer;
 }
 .modal-enter-from {
   opacity: 0;

@@ -1,4 +1,12 @@
 <template>
+  <div class="intro">
+    <h1>Tutor X Tutee</h1>
+    <h5>All your tuition requests are listed here</h5>
+
+    <h1 class="empty" v-if="userRequests.length == 0">
+      You do not have any request now. To add please click the + button
+    </h1>
+  </div>
   <div class="requests">
     <div class="req" v-for="request in userRequests">
       <!-- <h2>{{ index }}{{ request[1] }}</h2> -->
@@ -6,14 +14,24 @@
         <div class="container">
           <h1>{{ request[1].Subject }}</h1>
 
-          <p>Level: {{ request[1].Level }}</p>
-          <p>Preferred Days: {{ request[1].PreferredDays }}</p>
-          <p>Preferred Time: {{ request[1].PreferredTime }}</p>
-          <p>Location: {{ request[1].Location }}</p>
-          <p>Address: {{ request[1].Address }}</p>
-          <p>Remarks: {{ request[1].Remarks }}</p>
+          <p><strong>Level:</strong> {{ request[1].Level }}</p>
+          <p><strong>Preferred Days:</strong> {{ request[1].PreferredDays }}</p>
+          <p><strong>Preferred Time: </strong>{{ request[1].PreferredTime }}</p>
+          <p><strong>Location: </strong>{{ request[1].Location }}</p>
+          <p v-if="request[1].Address.length < 20">
+            <strong>Address: </strong>{{ request[1].Address }}
+          </p>
+          <p v-else>
+            <strong>Address: </strong
+            >{{ request[1].Address.substring(0, 20) }}...
+          </p>
+          <p class="remarks">
+            <strong>Remarks: </strong>{{ request[1].Remarks }}
+          </p>
 
-          <button @click="handleDelete(request[0])">Delete Request</button>
+          <button class="delete-button" @click="handleDelete(request[0])">
+            Delete Request
+          </button>
           <EditRequest :requestId="request[0]" />
         </div>
       </div>
@@ -33,14 +51,14 @@ import {
   doc,
 } from "firebase/firestore";
 import EditRequest from "./EditRequest.vue";
+import { getAuth } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
   data() {
     return {
       userRequests: [],
-      userID: "testtutee@gmail.com",
-
+      useremail: "",
       showModal: false,
     };
   },
@@ -51,7 +69,7 @@ export default {
     async display() {
       this.userRequests = [];
       const requestsRef = collection(db, "Requests");
-      const q = query(requestsRef, where("User", "==", this.userID));
+      const q = query(requestsRef, where("User", "==", this.useremail));
       const querySnapshot = await getDocs(q);
       console.log("displayed");
       querySnapshot.forEach((doc) => {
@@ -66,22 +84,40 @@ export default {
     },
   },
   mounted() {
+    const auth = getAuth();
+    this.useremail = auth.currentUser.email;
+    console.log(this.useremail);
     this.display();
   },
 };
 </script>
 
-<style>
+<style scoped>
+.intro {
+  text-align: center;
+  width: 1500px;
+}
+
+.empty {
+  padding-top: 200px;
+}
 .card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: left;
-  width: 300px;
+  width: 320px;
   margin: 20px;
   background-color: #f3ddb0;
-  height: 400px;
+  height: 420px;
   padding-top: 30px;
+}
+
+.remarks {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .container {
@@ -93,5 +129,20 @@ export default {
   grid-template-columns: auto auto auto;
   row-gap: 5px;
   column-gap: 30px;
+}
+
+.delete-button {
+  background-color: #f7a588;
+  padding: 10px 10px;
+  border-radius: 4px;
+  font-size: medium;
+  margin-left: -5px;
+  margin-right: 5px;
+  margin-top: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c27f66;
+  cursor: pointer;
 }
 </style>
