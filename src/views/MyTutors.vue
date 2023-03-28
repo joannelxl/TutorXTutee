@@ -1,44 +1,52 @@
 <script>
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
 export default {
-	data() {
+    data() {
         return {
             user: false,
             email: false,
             role: '',
             dataLoaded: false,
-			account: null,
+            account: null,
         }
     },
-	async mounted() {
+    async mounted() {
         const auth = getAuth();
         const db = getFirestore(firebaseApp);
-        this.user = auth.currentUser
+        //this.user = auth.currentUser
+        onAuthStateChanged(auth, (user) => {
+            console.log(user)
+            if (user) {
+                this.user = user
+            }
+        })
         if (this.user) {
+            this.user = user
             const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.user.email));
             this.role = verifiedUser.data().role
-			this.email = this.user.email
-			var collection = "Tutees";
+            this.email = this.user.email
+            var collection = "Tutees";
             if (this.role == "tutor") {
                 collection = "Tutors";
             }
             const account = await getDoc(doc(db, collection, this.email));
-			this.account = account.data()
-			console.log(this.account.dateOfBirth)
-			this.dataLoaded = true
+            this.account = account.data()
+            console.log(this.account.dateOfBirth)
+            this.dataLoaded = true
         }
     }
 }
-	
+
 </script>
 
 <template>
-	<div>
-		<h1>Tutor x Tutee</h1>
-	</div>
-	
+    <div>
+        <h1>Tutor x Tutee</h1>
+    </div>
 </template>
+
+<Chat :key/>

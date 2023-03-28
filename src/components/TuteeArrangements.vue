@@ -4,8 +4,10 @@ import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
 import { doc, getDocs, getDoc, orderBy, deleteDoc } from "firebase/firestore";
+import ConfirmDialogue from '../components/ConfirmDialogue.vue'
 
 export default {
+	components: { ConfirmDialogue },
 	data() {
 		return {
 			user: false,
@@ -24,26 +26,45 @@ export default {
 				const q1 = query(collection(db, "TutoringArrangements"), where("tutorEmail", "==", this.user.email), orderBy("tuteeEmail"));
 				(await getDocs(q1)).forEach(async (document) => {
 					var arrangement = document.data()
+					arrangement.id = document.id
+
+					// getting the tuteeName to use later
 					var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
 					arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
-					arrangement.id = document.id
+
+					// getting the chat Id corresponding to this tutor and tutee
+					const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
+					(await getDocs(q2)).forEach((chat) => {
+						arrangement.chatId = chat.id
+					})
 					this.arrangements.push(arrangement)
-					this.arrangements.push(arrangement)
-					this.arrangements.push(arrangement)
+					this.email = this.user.email
+					this.dataLoaded = true
 				})
-				this.email = this.user.email
-				this.dataLoaded = true
+
 			}
 		})
 	},
 	methods: {
 		async endSession(id, tuteeName) {
+			/*const confirm = await (this.$refs.confirmDialogue).show({
+				title: "End Session",
+				message: "Are you sure you want to end the session with " + tuteeName + "?\nThis action cannot be undone.",
+				okButton: "Confirm",
+			})
+			if (confirm) {
+				console.log("delete")
+			}
+			*/
 			if (confirm("Are you sure you want to end the session with " + tuteeName + "?\nThis action cannot be undone.")) {
 				const db = getFirestore(firebaseApp);
 				await deleteDoc(doc(db, "TutoringArrangements", id))
 
 				this.$emit("ended")
 			}
+		}, 
+		redirectToChat(chatId) {
+			this.$router.push({name: "Chat", params: {id: chatId}})
 		}
 	}
 }
@@ -65,10 +86,11 @@ export default {
 					Time: {{ arrangement.preferredTime }}
 				</div>
 				<div class="buttons">
-					<button class="chatbutton">Chat</button><br>
+					<button class="chatbutton" @click="redirectToChat(arrangement.chatId)">Chat</button><br>
 					<button class="progressbutton">Progress</button><br>
 					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)">End
 						Session</button>
+					<confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 				</div>
 			</div>
 		</div>

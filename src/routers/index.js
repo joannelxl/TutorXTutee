@@ -39,15 +39,25 @@ const routes = [
   },
 
   {
-    path: "/Chat",
+    path: "/Chat/:id",
     name: "Chat",
     component: () => import("../views/Chat.vue"),
+    params: true
   },
   {
     path: "/MyProfile",
     name: "MyProfile",
     component: () => import("../views/MyProfile.vue"),
   },
+  {
+    path: "/Progress",
+    name: "Progress",
+    component: () => import("../views/Progress.vue"),
+  },
+  {
+    path: "",
+    redirectTo: '/'
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),
