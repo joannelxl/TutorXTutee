@@ -71,14 +71,14 @@ export default {
 </script>
 
 <template>
-	<div id="tuteearrangements">
+	<div id="tuteearrangements" v-if="dataLoaded">
 		<div id="noarrangements" v-if="arrangements.length == 0">
 			<h3>You do not have any tutees currently.</h3>
 		</div>
-		<div id="arrangements" v-if="dataLoaded">
+		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
 				<div class="information">
-					<strong style="font-size: larger;">{{ arrangement.tuteeName }} </strong><br>
+					<p><strong style="font-size: x-large;">{{ arrangement.tuteeName }} </strong></p>
 					Level: {{ arrangement.level }} <br>
 					Subject: {{ arrangement.subject }} <br>
 					Address: {{ arrangement.address }} <br>
@@ -99,6 +99,7 @@ export default {
 
 <style scoped>
 #tuteearrangements {
+	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 	display: inline-block;
 }
@@ -112,15 +113,19 @@ export default {
 	border-radius: 10px;
 	padding: 10px;
 	margin: 20px;
-	width: 600px;
+	width: 750px;
 	display: block;
 }
 
 .information {
 	text-align: left;
-	width: 500px;
+	width: 600px;
 	display: inline-block;
 	vertical-align: middle;
+	overflow-wrap: break-word;
+	padding-right: 10px;
+	line-height: 3ex;
+	font-size: medium;
 }
 
 .buttons {
@@ -132,16 +137,28 @@ export default {
 button {
 	border-radius: 5px;
 	padding: 5px;
-	width: 100px;
+	width: 120px;
 	text-align: left;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	border: none;
-	height: 30px;
+	height: 40px;
+	font-size: large;
+	cursor: pointer;
+	box-shadow: 2px 2px gray;
+}
+
+button:hover {
+	background-color: white;
+}
+
+button:active {
+	transform: translate(1px, 1px);
 }
 
 .chatbutton {
 	background-color: #8CD7E8;
+
 }
 
 .progressbutton {
