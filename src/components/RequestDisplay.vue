@@ -1,7 +1,7 @@
 <template>
   <div class="intro">
     <h1>Tutor X Tutee</h1>
-    <h5>All your tuition requests are listed here</h5>
+    <h4>All your tuition requests are listed here</h4>
 
     <h1 class="empty" v-if="userRequests.length == 0">
       You do not have any request now. To add please click the + button
@@ -41,7 +41,7 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { deleteDoc, getFirestore, updateDoc } from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -51,7 +51,7 @@ import {
   doc,
 } from "firebase/firestore";
 import EditRequest from "./EditRequest.vue";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -83,11 +83,14 @@ export default {
       this.display();
     },
   },
-  mounted() {
+  async mounted() {
     const auth = getAuth();
-    this.useremail = auth.currentUser.email;
-    console.log(this.useremail);
-    this.display();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.useremail = user.email;
+        this.display();
+      }
+    });
   },
 };
 </script>

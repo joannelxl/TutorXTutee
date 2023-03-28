@@ -65,4 +65,8 @@ body {
 #nav a.router-link-exact-active {
   color: #620562;
 }
+
+button {
+  cursor: pointer;
+}
 </style>

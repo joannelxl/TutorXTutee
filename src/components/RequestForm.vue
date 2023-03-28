@@ -1,6 +1,6 @@
 <template>
   <!-- Button to add request -->
-  <button id="show-modal" @click="showModal = true"><strong>+</strong></button>
+  <button id="show-modal" @click="showModal = true"></button>
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
@@ -61,7 +61,7 @@
 import firebaseApp from "../firebase.js";
 import { collection, getFirestore } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -113,7 +113,6 @@ export default {
         } catch (error) {
           console.error("Error adding document: ", error);
         }
-
         this.handleReset();
         this.$emit("added");
         this.handleClose();
@@ -138,10 +137,13 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
     const auth = getAuth();
-    this.useremail = auth.currentUser.email;
-    console.log(this.useremail);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.useremail = user.email;
+      }
+    });
   },
 };
 </script>
@@ -239,10 +241,13 @@ input {
   position: fixed;
   right: 100px;
   bottom: 0;
+  width: 10em;
+  height: 10em;
   border-radius: 50%;
-  padding: 40px;
-  font-size: 30px;
-  font-weight: 200;
+  background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
+  background-position: center;
+  background-size: 50% 0.5em, 0.5em 50%;
+  background-repeat: no-repeat;
   background-color: rgba(240, 51, 51, 0.56);
 }
 
