@@ -1,7 +1,7 @@
 <script>
 import SidebarLink from '@/components/sidebar/SideBarLink.vue';
 import { collapsed, toggleSidebar, sidebarWidth } from './state'
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
@@ -28,12 +28,15 @@ export default {
     async mounted() {
         const auth = getAuth();
         const db = getFirestore(firebaseApp);
-        this.user = auth.currentUser
-        if (this.user) {
-            const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.user.email));
-            this.role = verifiedUser.data().role
-            this.dataLoaded = true
-        }
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                this.user = user
+                const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.user.email));
+                this.role = verifiedUser.data().role
+                this.dataLoaded = true
+            }
+        })
+        
     }
 }
 </script>

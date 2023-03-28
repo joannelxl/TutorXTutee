@@ -1,5 +1,5 @@
 <script>
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
@@ -18,19 +18,23 @@ export default {
 	async mounted() {
 		const auth = getAuth();
 		const db = getFirestore(firebaseApp);
-		this.user = auth.currentUser
-		if (this.user) {
-			const q1 = query(collection(db, "TutoringArrangements"), where("tutorEmail", "==", this.user.email), orderBy("tuteeEmail"));
-			(await getDocs(q1)).forEach(async (document) => {
-				var arrangement = document.data()
-				var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
-				arrangement.tuteeName = account.data().lastName + " " + account.data().firstName
-				arrangement.id = document.id
-				this.arrangements.push(arrangement)
-			})
-			this.email = this.user.email
-			this.dataLoaded = true
-		}
+		onAuthStateChanged(auth, async (user) => {
+			if (user) {
+				this.user = user
+				const q1 = query(collection(db, "TutoringArrangements"), where("tutorEmail", "==", this.user.email), orderBy("tuteeEmail"));
+				(await getDocs(q1)).forEach(async (document) => {
+					var arrangement = document.data()
+					var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
+					arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
+					arrangement.id = document.id
+					this.arrangements.push(arrangement)
+					this.arrangements.push(arrangement)
+					this.arrangements.push(arrangement)
+				})
+				this.email = this.user.email
+				this.dataLoaded = true
+			}
+		})
 	},
 	methods: {
 		async endSession(id, tuteeName) {
@@ -39,14 +43,18 @@ export default {
 				await deleteDoc(doc(db, "TutoringArrangements", id))
 
 				this.$emit("ended")
-			} 
+			}
 		}
 	}
 }
 </script>
 
 <template>
-	<div id="arrangements" v-if="dataLoaded">
+	<div id="tuteearrangements">
+		<div id="noarrangements" v-if="arrangements.length == 0">
+			<h3>You do not have any tutees currently.</h3>
+		</div>
+		<div id="arrangements" v-if="dataLoaded">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
 				<div class="information">
 					<strong style="font-size: larger;">{{ arrangement.tuteeName }} </strong><br>
@@ -59,39 +67,47 @@ export default {
 				<div class="buttons">
 					<button class="chatbutton">Chat</button><br>
 					<button class="progressbutton">Progress</button><br>
-					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)">End Session</button>
+					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)">End
+						Session</button>
 				</div>
-				<br>
 			</div>
 		</div>
+	</div>
 </template>
 
-<style scoped> 
- #arrangements {
-	padding-left: 20px;
- } 
+<style scoped>
+#tuteearrangements {
+	text-align: center;
+	display: inline-block;
+}
 
- .arrangement {
- 	background-color: #f3ddb0;
- 	border-radius: 10px;
- 	padding: 10px;
-	display: flex;
+#noarrangements {
+	text-align: center;
+}
+
+.arrangement {
+	background-color: #f3ddb0;
+	border-radius: 10px;
+	padding: 10px;
 	margin: 20px;
- }
-
- .information {
-	text-align: left;
 	width: 600px;
-	float: left;
- }
+	display: block;
+}
 
- .buttons {
+.information {
+	text-align: left;
+	width: 500px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.buttons {
 	text-align: right;
-	width: 100px;
-	float: right;
- }
+	display: inline-block;
+	vertical-align: middle;
+}
 
- button {
+button {
 	border-radius: 5px;
 	padding: 5px;
 	width: 100px;
@@ -99,11 +115,12 @@ export default {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	border: none;
- }
+	height: 30px;
+}
 
- .chatbutton {
+.chatbutton {
 	background-color: #8CD7E8;
- }
+}
 
 .progressbutton {
 	background-color: #a3cb7b;

@@ -29,13 +29,13 @@ export default {
 </template>
 
 <style scoped> 
+
 #mytutees {
 	text-align: center;
-	align-items: center;
-	width: 800px;
+	width: 90vw;
 }
 .heading {
  	text-align: center;
- 	align-items: center;
+
  }
 </style>
