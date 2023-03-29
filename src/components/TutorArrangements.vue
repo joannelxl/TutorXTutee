@@ -82,11 +82,11 @@ export default {
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
 				<div class="information">
 					<p><strong style="font-size: x-large;">{{ arrangement.tutorName }} </strong></p>
-					Level: {{ arrangement.level }} <br>
-					Subject: {{ arrangement.subject }} <br>
-					Address: {{ arrangement.address }} <br>
-					Day: {{ arrangement.preferredDays }} <br>
-					Time: {{ arrangement.preferredTime }}
+					<text style="font-weight: bold;">Level: </text> {{ arrangement.level }} <br>
+					<text style="font-weight: bold;">Subject: </text> {{ arrangement.subject }} <br>
+					<text style="font-weight: bold;">Address: </text> {{ arrangement.address }} <br>
+					<text style="font-weight: bold;">Day: </text> {{ arrangement.preferredDays }} <br>
+					<text style="font-weight: bold;">Time: </text> {{ arrangement.preferredTime }}
 				</div>
 				<div class="buttons">
 					<button class="chatbutton" @click="redirectToChat(arrangement.chatId)">Chat</button><br>

@@ -8,6 +8,9 @@ const routes = [
     path: "/SignUp",
     name: "SignUp",
     component: SignUp,
+    meta: {
+      hideNavbar: true,
+    },
   },
   {
     path: "/",
@@ -46,7 +49,6 @@ const routes = [
     path: "/Chat",
     name: "Chat",
     component: () => import("../views/Chat.vue"),
-    params: true
   },
   {
     path: "/InChat/:id",
