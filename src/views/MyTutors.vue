@@ -22,7 +22,7 @@ export default {
 	<div id="mytutees">
 		<div class="heading">
 			<h1>Tutor x Tutee</h1>
-			<h4> All your tutees are listed here.</h4>
+			<h4> All your tutors are listed here.</h4>
 		</div>
 		<TutorArrangements :key="refreshComp" @ended="update"/>
 	</div>
