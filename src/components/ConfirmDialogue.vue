@@ -1,7 +1,7 @@
 <template>
     <popup-modal ref="popup">
-        <h2 style="margin-top: 0">{{ title }}</h2>
-        <p>{{ message }}</p>
+        <h2 style="margin-top: 10px">{{ title }}</h2>
+        <p style = "font-size: 20px;">{{ message }}</p>
         <div class="btns">
             <button class="cancel-btn" @click="_cancel">{{ cancelButton }}</button>
             <span class="ok-btn" @click="_confirm">{{ okButton }}</span>
@@ -75,9 +75,11 @@ export default {
     border: 2px solid rosybrown;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 20px;
     text-transform: uppercase;
     cursor: pointer;
+    margin: 20px;
+    margin-right: 50px;
 }
 
 .ok-btn:hover {background-color: darksalmon}
@@ -95,9 +97,10 @@ export default {
     border: 2px solid #0ec5a4;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 20px;
     text-transform: uppercase;
     cursor: pointer;
+    margin: 20px 50px ;
 }
 
 

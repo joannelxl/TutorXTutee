@@ -7,6 +7,14 @@
     >Back to Chat</router-link
   >
   <div id="chat">
+    <div>
+      <img
+        class="deleteIcon"
+        src="@/assets/dustbin.png"
+        alt=""
+        @click="doDelete" />
+      <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+    </div>
     <div id="receiver">
       <h3>{{ receiverEmail }}</h3>
     </div>
@@ -33,15 +41,6 @@
         <button id="button" type="submit">Send</button>
       </form>
     </div>
-  </div>
-
-  <div>
-    <img
-      class="deleteIcon"
-      src="@/assets/dustbin.png"
-      alt=""
-      @click="doDelete" />
-    <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
   </div>
 </template>
 
@@ -249,8 +248,10 @@ export default {
 }
 
 .deleteIcon {
-  width: 15%;
-  height: 20%;
+    float:right;
+    margin-top: 1px;
+    width: 70px;
+    height: 80px;
 }
 
 #receiverMessages {
