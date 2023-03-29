@@ -129,6 +129,11 @@ button {
     min-width: 120px;
 }
 
+img:hover {
+    background-color: #c09bc0;
+    cursor: pointer;
+}
+
 button:hover {
     background-color: rgba(128, 0, 128, 0.66);
     transition: 0.3s;
