@@ -203,17 +203,17 @@ export default {
   text-align: center;
 
   position: absolute;
-  width: 50%;
+  width: 700px;
   height: 450px;
-  left: 480px;
+  left: 550px;
   top: 150px;
 }
 
 #inputBox {
   position: absolute;
-  width: 60%;
+  width: 80%;
   height: 100px;
-  left: 75px;
+  left: 40px;
   bottom: 1px;
 }
 
@@ -221,7 +221,7 @@ export default {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
-  left: 480px;
+  left: 540px;
   bottom: 70px;
 }
 
