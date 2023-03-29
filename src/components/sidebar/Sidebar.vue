@@ -32,7 +32,7 @@ export default {
             <br>
             <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
             <br>
-            <SidebarLink to="/Chats" icon="fas fa-comments">Chats</SidebarLink>
+            <SidebarLink to="/Chat" icon="fas fa-comments">Chat</SidebarLink>
             <br>
             <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
         </div>

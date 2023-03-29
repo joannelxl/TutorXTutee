@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
-import AllChats from '@/views/AllChats.vue';
+import InChat from '@/views/InChat.vue'
+import Chat from '@/views/Chat.vue'
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
     name: "MyProfile",
     component: () => import("../views/MyProfile.vue"),
   },
+  {
+    path: "/InChat",
+    name: "InChat",
+    component: () => import("../views/InChat.vue")
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),

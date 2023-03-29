@@ -3,9 +3,11 @@ import Sidebar from '@/components/sidebar/Sidebar.vue'
 import { sidebarWidth } from '@/components/sidebar/state'
 import SignUp from '@/views/SignUp.vue'
 import Login from '@/views/Login.vue'
-import AllChats from '@/views/AllChats.vue'
+import InChat from '@/views/InChat.vue'
 import ConfirmDialogue from './components/ConfirmDialogue.vue'
 import PopupModal from './components/PopupModal.vue'
+import Chat from './views/Chat.vue'
+import prevMessages from './components/prevMessages.vue'
 
 export default {
     name: 'App',
@@ -13,11 +15,11 @@ export default {
         SignUp,
         Login,
         Sidebar,
-        Signup,
-        Login,
-        AllChats,
+        InChat,
         ConfirmDialogue, 
-        PopupModal
+        PopupModal,
+        Chat,
+        prevMessages
     },
     setup() {
         return { sidebarWidth }
