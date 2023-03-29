@@ -47,7 +47,12 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { deleteDoc, getFirestore } from "firebase/firestore";
+import {
+  deleteDoc,
+  getFirestore,
+  onSnapshot,
+  snapshotEqual,
+} from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -56,6 +61,8 @@ import {
   query,
   where,
   doc,
+  orderBy,
+  serverTimestamp,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
@@ -63,7 +70,7 @@ import ConfirmDialogue from "./ConfirmDialogue.vue";
 
 export default {
   name: "prevMessages",
-  components: {ConfirmDialogue},
+  components: { ConfirmDialogue },
   data() {
     return {
       allMessages: [],
@@ -85,6 +92,7 @@ export default {
   },
   methods: {
     async display() {
+      this.allMessages = [];
       console.log("chat id is: " + this.chatId);
       var receiverEmail;
 
@@ -106,8 +114,16 @@ export default {
       console.log("current user is: " + this.userEmail);
       console.log("receiver's email is: " + receiverEmail);
 
-      const querySnapshot = await getDocs(collection(db, "UserMessages"));
-      querySnapshot.forEach((doc) => {
+      const msgRef = collection(db, "UserMessages");
+      console.log(this.chatId);
+      const querySnapshot = query(
+        msgRef,
+        where("chatId", "==", this.chatId),
+        orderBy("sentAt")
+      );
+
+      //const querySnapshot = await getDocs(collection(db, "UserMessages"));
+      /*querySnapshot.forEach((doc) => {
         if (doc.data().chatId == this.chatId) {
           //checking if the message it sent by current user
           //if it is, 1st index is true
@@ -118,8 +134,19 @@ export default {
             this.allMessages.push([doc.data().message, false]);
           }
         }
-      });
+      });*/
 
+      onSnapshot(querySnapshot, (snapShot) => {
+        this.allMessages = [];
+        snapShot.docs.forEach((doc) => {
+          if (doc.data().sender == this.userEmail) {
+            this.allMessages.push([doc.data().message, true]);
+          } else {
+            this.allMessages.push([doc.data().message, false]);
+            console.log(snapShot.message);
+          }
+        });
+      });
       //get all documents that correspond to the chat id and sender = email of the receiver
       //sort all these documents according to date and time, then push the messages into receiverMessages array
     },
@@ -133,18 +160,15 @@ export default {
 
       const messageCollection = collection(db, "UserMessages");
 
-      var today = new Date();
-      var sendTime =
-        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var sendDate =
-        today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
+      //var today = new Date();
+      //var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      //var sendDate = today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
 
       const messagesObj = {
         chatId: this.chatId,
         message: this.newMessage,
         sender: this.userEmail,
-        time: sendTime,
-        date: sendDate,
+        sentAt: serverTimestamp(),
       };
 
       addDoc(messageCollection, messagesObj);
@@ -154,17 +178,16 @@ export default {
     async doDelete() {
       const ok = await this.$refs.confirmDialogue.show({
         title: "Delete Chat",
-        message:"Are you sure you want to delete the chat? This action cannot be undone.",
+        message:
+          "Are you sure you want to delete the chat? This action cannot be undone.",
         okButton: "Delete",
       });
       if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));
 
-
-            const docRef = doc(db, "Chats", this.chatId);
-            deleteDoc(docRef);
-            console.log("successfully deleted chats doc");
-
+        const docRef = doc(db, "Chats", this.chatId);
+        deleteDoc(docRef);
+        console.log("successfully deleted chats doc");
 
         const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
 
@@ -203,15 +226,15 @@ export default {
   text-align: center;
 
   position: absolute;
-  width: 700px;
-  height: 450px;
-  left: 550px;
+  width: 800px;
+  height: 550px;
+  left: 500px;
   top: 150px;
 }
 
 #inputBox {
   position: absolute;
-  width: 80%;
+  width: 550px;
   height: 100px;
   left: 40px;
   bottom: 1px;
@@ -221,7 +244,7 @@ export default {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
-  left: 540px;
+  left: 600px;
   bottom: 70px;
 }
 
