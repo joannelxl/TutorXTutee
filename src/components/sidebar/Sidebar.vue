@@ -1,7 +1,6 @@
 <script>
 import SidebarLink from './SideBarLink.vue';
 import { collapsed, toggleSidebar, sidebarWidth } from './state'
-import { useRouter } from 'vue-router';
 
 
 export default {
