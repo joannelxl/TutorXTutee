@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
+import ProgressNotes from "@/views/ProgressNotes.vue";
+import MyTutees from "@/views/MyTutees.vue";
+import MyTutors from "@/views/MyTutors.vue";
 
 const routes = [
   {
@@ -23,9 +26,19 @@ const routes = [
     component: Home,
   },
   {
+    path: "/ProgressNotes",
+    name: "ProgressNotes",
+    component: ProgressNotes,
+  },
+  {
     path: "/MyTutees",
     name: "MyTutees",
-    component: () => import("../views/MyTutees.vue"),
+    component: MyTutees,
+  },
+  {
+    path: "/MyTutors",
+    name: "MyTutors",
+    component: MyTutors,
   },
 
   {
