@@ -8,7 +8,7 @@
   >
   <div id="chat">
     <div id = "receiver">
-        {{ receiverEmail }}
+        <h3>{{ receiverEmail }}</h3>
     </div>
     <div>
       <!--need to display this on the left eventually-->
@@ -55,14 +55,12 @@ const db = getFirestore(firebaseApp);
 
 export default {
     name: 'prevMessages',
-    props: {
-        receiverEmail: String,
-    },
     data() {
         return {
             receiverMessages: [],
-            //receiverEMAIL: this.receiverEmail,
             userEmail: "",
+            chatId: "",
+            receiverEmail: "",
             showModal: false,
         }
     },
@@ -71,18 +69,46 @@ export default {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.userEmail = user.email;
+                this.chatId = this.$route.params.id;
                 this.display();
             }
         })
     }, 
     methods: {
         async display() {
-            console.log(this.receiverEmail);
+            console.log("chat id is: " + this.chatId);
+            var receiverEmail;
             
-            //find a way to get the email of the chat u just clicked into
+            //get the document that corresponds to the chatId
+            const docRef = doc(db, "Chats", this.chatId);
+            const docSnap = await getDoc(docRef);
+            
+            //get the role of the current user
+            const usersRef = doc(db, "VerifiedUsers", this.userEmail);
+            const userSnap = await getDoc(usersRef);
+            this.userRole = userSnap.data().role;
+
+           //get the receiver email in the chat collection
+            if (this.userRole == "tutor") {
+                receiverEmail = docSnap.data().TuteeEmail;
+            } else {
+                receiverEmail = docSnap.data().TutorEmail;
+            }
+            console.log("current user is: " + this.userEmail);
+            console.log("receiver's email is: " + receiverEmail)
+
+
+            const querySnapshot = await getDocs(collection(db, "UserMessages"));
+            querySnapshot.forEach((doc) => {
+                if (doc.data().chatId == this.chatId && doc.data().sender == receiverEmail) {
+                    this.receiverMessages.push(doc.data().message);
+                }
+            })
+            
+
             //get all documents that correspond to the chat id and sender = email of the receiver
             //sort all these documents according to date and time, then push the messages into receiverMessages array
-        }
+        },
     }
 }
 
@@ -136,10 +162,10 @@ export default {
   height: 20%;
 }
 
-#senderMessages {
+#receiverMessages {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 1100px;
+  width: 300px;
 }
 </style>

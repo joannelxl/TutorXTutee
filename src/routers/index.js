@@ -47,9 +47,9 @@ const routes = [
     component: () => import("../views/MyProfile.vue"),
   },
   {
-    path: "/InChat",
+    path: "/InChat/:id",
     name: "InChat",
-    component: () => import("../views/InChat.vue")
+    component: InChat,
   }
 ];
 const router = createRouter({
