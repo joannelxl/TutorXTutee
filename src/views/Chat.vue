@@ -93,7 +93,6 @@ export default {
 .container {
   background-color: #f3ddb0;
   text-align: center;
-  justify-content: center;
   border: 1px solid;
   padding: 20px 90px;
   display: inline-block;

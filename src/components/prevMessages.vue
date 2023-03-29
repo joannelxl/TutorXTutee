@@ -15,21 +15,24 @@
         @click="doDelete" />
       <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
     </div>
-    <div id="receiver">
+    <div id="displayname">
       <h3>{{ receiverEmail }}</h3>
     </div>
     <div>
       <!--need to display this on the left eventually-->
+      <div id = "display" v-if="allMessages">
       <div id="allMessages" v-for="message in allMessages" :key="index">
         <div id="senderMessages">
-          <div id = "sender" v-if="message[1]" style="color: blue; margin-left: 500px">
+          <div id = "sender" v-if="message[1]">
             <h4>{{ message[0] }}</h4>
           </div>
-          <div id = "receiver" v-else style="color: red; margin-left: -500px">
+          <div id = "receiver" v-else>
             <h4>{{ message[0] }}</h4>
           </div>
         </div>
+        </div>
       </div>
+      
     </div>
     <div id="inputBox">
       <form @submit.prevent="sendMessage">
@@ -136,7 +139,7 @@ export default {
       });*/
 
       onSnapshot(querySnapshot, (snapShot) => {
-        this.allMessages = [];
+        //this.allMessages = [];
         snapShot.docs.forEach((doc) => {
           if (doc.data().sender == this.userEmail) {
             this.allMessages.push([doc.data().message, true]);
@@ -243,14 +246,16 @@ export default {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
-  left: 600px;
+  left: 550px;
   bottom: 70px;
 }
 
 .deleteIcon {
     float:right;
+    position: absolute;
     margin-top: 1px;
     width: 70px;
+    right: 0px;
     height: 80px;
 }
 
@@ -261,7 +266,31 @@ export default {
   width: 300px;
 }
 
-sender {
-    background-color: white;
+#sender {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    text-align: right;
+    block-size: fit-content;
+    right: 0px;
+    height: 12%;
+    margin-left: 370px;
+    margin-right: 40px;
+    padding: 0px 10px;
 }
+
+#receiver {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    text-align: left;
+    block-size: fit-content;
+    right: 0px;
+    height: 12%;
+    margin-left: 40px;
+    margin-right: 370px;
+    padding: 0px 10px;
+}
+
+
 </style>
