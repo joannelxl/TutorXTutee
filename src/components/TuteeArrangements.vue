@@ -39,8 +39,8 @@ export default {
 					})
 					this.arrangements.push(arrangement)
 					this.email = this.user.email
-					this.dataLoaded = true
 				})
+				this.dataLoaded = true
 
 			}
 		})
@@ -77,6 +77,7 @@ export default {
 	<div id="tuteearrangements" v-if="dataLoaded">
 		<div id="noarrangements" v-if="arrangements.length == 0">
 			<h3>You do not have any tutees currently.</h3>
+			<h3>Go and accept a request!</h3>
 		</div>
 		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
@@ -108,7 +109,10 @@ export default {
 }
 
 #noarrangements {
-	text-align: center;
+	text-align: left;
+	background-color: #f3ddb0;
+	padding: 5px 10px;
+	border-radius: 10px;
 }
 
 .arrangement {
