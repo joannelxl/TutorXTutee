@@ -65,6 +65,9 @@ export default {
 		}, 
 		redirectToChat(chatId) {
 			this.$router.push({name: "Chat", params: {id: chatId}})
+		},
+		redirectToProgress(progressId) {
+			this.$router.push({name: "Progress", params: {id: progressId}})
 		}
 	}
 }
@@ -87,7 +90,7 @@ export default {
 				</div>
 				<div class="buttons">
 					<button class="chatbutton" @click="redirectToChat(arrangement.chatId)">Chat</button><br>
-					<button class="progressbutton">Progress</button><br>
+					<button class="progressbutton" @click="redirectToProgress(arrangement.id)">Progress</button><br>
 					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)">End
 						Session</button>
 					<confirm-dialogue ref="confirmDialogue"></confirm-dialogue>

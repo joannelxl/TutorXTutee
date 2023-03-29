@@ -50,9 +50,10 @@ const routes = [
     component: () => import("../views/MyProfile.vue"),
   },
   {
-    path: "/Progress",
+    path: "/Progress/:id",
     name: "Progress",
     component: () => import("../views/Progress.vue"),
+    params: true
   },
   {
     path: "",
