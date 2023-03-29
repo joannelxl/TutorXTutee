@@ -51,10 +51,11 @@ export default {
             <br><br><br><br>
             <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
             <br>
-            <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role === 'tutor'">My Tutees</SidebarLink>
+            <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role == 'tutor'">My Tutees</SidebarLink>
             <SidebarLink to="/MyTutors" icon="fas fa-users" v-else>My Tutors</SidebarLink>
             <br>
-            <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
+            <SidebarLink to="/Requests" icon="fas fa-user-plus" v-if="role == 'tutor'">Requests</SidebarLink>
+            <SidebarLink to="/MyRequests" icon="fas fa-user-plus" v-else>My Requests</SidebarLink>
             <br>
             <SidebarLink to="/Chat" icon="fas fa-comments">Chats</SidebarLink>
             <br>

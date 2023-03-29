@@ -38,6 +38,11 @@ const routes = [
     component: () => import("../views/Requests.vue"),
   },
   {
+    path: "/MyRequests",
+    name: "MyRequests",
+    component: () => import("../views/MyRequests.vue"),
+  },
+  {
     path: "/Chat",
     name: "Chat",
     component: () => import("../views/Chat.vue"),
