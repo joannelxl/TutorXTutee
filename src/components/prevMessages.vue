@@ -7,13 +7,20 @@
     >Back to Chat</router-link
   >
   <div id="chat">
-    <div id = "receiver">
-        <h3>{{ receiverEmail }}</h3>
+    <div id="receiver">
+      <h3>{{ receiverEmail }}</h3>
     </div>
     <div>
       <!--need to display this on the left eventually-->
-      <div id="receiverMessages" v-for="message in receiverMessages" :key="index">
-        {{ message }}
+      <div id="allMessages" v-for="message in allMessages" :key="index">
+        <div id="senderMessages">
+          <div v-if="message[1]" style="color: blue; margin-left: 500px">
+            <h4>{{ message[0] }}</h4>
+          </div>
+          <div v-else style="color: red; margin-left: -500px">
+            <h4>{{ message[0] }}</h4>
+          </div>
+        </div>
       </div>
     </div>
     <div id="inputBox">
@@ -38,7 +45,6 @@
   </div>
 </template>
 
-
 <script>
 import firebaseApp from "../firebase.js";
 import { deleteDoc, getFirestore } from "firebase/firestore";
@@ -46,75 +52,137 @@ import {
   collection,
   getDocs,
   getDoc,
+  addDoc,
   query,
   where,
   doc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
+import ConfirmDialogue from "./ConfirmDialogue.vue";
 
 export default {
-    name: 'prevMessages',
-    data() {
-        return {
-            receiverMessages: [],
-            userEmail: "",
-            chatId: "",
-            receiverEmail: "",
-            showModal: false,
+  name: "prevMessages",
+  components: {ConfirmDialogue},
+  data() {
+    return {
+      allMessages: [],
+      userEmail: "",
+      chatId: "",
+      receiverEmail: "",
+      showModal: false,
+    };
+  },
+  async mounted() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.userEmail = user.email;
+        this.chatId = this.$route.params.id;
+        this.display();
+      }
+    });
+  },
+  methods: {
+    async display() {
+      console.log("chat id is: " + this.chatId);
+      var receiverEmail;
+
+      //get the document that corresponds to the chatId
+      const docRef = doc(db, "Chats", this.chatId);
+      const docSnap = await getDoc(docRef);
+
+      //get the role of the current user
+      const usersRef = doc(db, "VerifiedUsers", this.userEmail);
+      const userSnap = await getDoc(usersRef);
+      this.userRole = userSnap.data().role;
+
+      //get the receiver email in the chat collection
+      if (this.userRole == "tutor") {
+        receiverEmail = docSnap.data().TuteeEmail;
+      } else {
+        receiverEmail = docSnap.data().TutorEmail;
+      }
+      console.log("current user is: " + this.userEmail);
+      console.log("receiver's email is: " + receiverEmail);
+
+      const querySnapshot = await getDocs(collection(db, "UserMessages"));
+      querySnapshot.forEach((doc) => {
+        if (doc.data().chatId == this.chatId) {
+          //checking if the message it sent by current user
+          //if it is, 1st index is true
+          //allMessages[1] = true will be displayed on the right
+          if (doc.data().sender == this.userEmail) {
+            this.allMessages.push([doc.data().message, true]);
+          } else {
+            this.allMessages.push([doc.data().message, false]);
+          }
         }
+      });
+
+      //get all documents that correspond to the chat id and sender = email of the receiver
+      //sort all these documents according to date and time, then push the messages into receiverMessages array
     },
-    async mounted() {
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                this.userEmail = user.email;
-                this.chatId = this.$route.params.id;
-                this.display();
-            }
-        })
-    }, 
-    methods: {
-        async display() {
-            console.log("chat id is: " + this.chatId);
-            var receiverEmail;
-            
-            //get the document that corresponds to the chatId
+
+    async sendMessage() {
+      this.allMessages.push([this.newMessage, true]);
+
+      //add to firebase
+      //dont need to add to the chat collection since being able to come to this page
+      //means that the chat exists between sender and receiver
+
+      const messageCollection = collection(db, "UserMessages");
+
+      var today = new Date();
+      var sendTime =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var sendDate =
+        today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
+
+      const messagesObj = {
+        chatId: this.chatId,
+        message: this.newMessage,
+        sender: this.userEmail,
+        time: sendTime,
+        date: sendDate,
+      };
+
+      addDoc(messageCollection, messagesObj);
+      console.log("a new UserMessage document has been added");
+      this.newMessage = "";
+    },
+    async doDelete() {
+      const ok = await this.$refs.confirmDialogue.show({
+        title: "Delete Chat",
+        message:"Are you sure you want to delete the chat? This action cannot be undone.",
+        okButton: "Delete",
+      });
+      if (ok) {
+        const querySnapshot = await getDocs(collection(db, "Chats"));
+
+
             const docRef = doc(db, "Chats", this.chatId);
-            const docSnap = await getDoc(docRef);
-            
-            //get the role of the current user
-            const usersRef = doc(db, "VerifiedUsers", this.userEmail);
-            const userSnap = await getDoc(usersRef);
-            this.userRole = userSnap.data().role;
-
-           //get the receiver email in the chat collection
-            if (this.userRole == "tutor") {
-                receiverEmail = docSnap.data().TuteeEmail;
-            } else {
-                receiverEmail = docSnap.data().TutorEmail;
-            }
-            console.log("current user is: " + this.userEmail);
-            console.log("receiver's email is: " + receiverEmail)
+            deleteDoc(docRef);
+            console.log("successfully deleted chats doc");
 
 
-            const querySnapshot = await getDocs(collection(db, "UserMessages"));
-            querySnapshot.forEach((doc) => {
-                if (doc.data().chatId == this.chatId && doc.data().sender == receiverEmail) {
-                    this.receiverMessages.push(doc.data().message);
-                }
-            })
-            
+        const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
 
-            //get all documents that correspond to the chat id and sender = email of the receiver
-            //sort all these documents according to date and time, then push the messages into receiverMessages array
-        },
-    }
-}
-
+        querySnapshot2.forEach((document) => {
+          if (document.data().chatId == this.chatId) {
+            const docRef2 = doc(db, "UserMessages", document.id);
+            deleteDoc(docRef2);
+            console.log("successfully deleted userMessage doc");
+          }
+        });
+        this.$router.push("/Chat");
+      } else {
+        this.$router.push("/InChat/this.chatId");
+      }
+    },
+  },
+};
 </script>
-
-
 
 <style scoped>
 #Heading {
