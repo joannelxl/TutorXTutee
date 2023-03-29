@@ -37,11 +37,16 @@ const routes = [
     name: "Requests",
     component: () => import("../views/Requests.vue"),
   },
-
   {
-    path: "/Chat/:id",
+    path: "/Chat",
     name: "Chat",
     component: () => import("../views/Chat.vue"),
+    params: true
+  },
+  {
+    path: "/InChat/:id",
+    name: "InChat",
+    component: () => import("../views/InChat.vue"),
     params: true
   },
   {
