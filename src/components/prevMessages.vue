@@ -22,10 +22,10 @@
       <!--need to display this on the left eventually-->
       <div id="allMessages" v-for="message in allMessages" :key="index">
         <div id="senderMessages">
-          <div v-if="message[1]" style="color: blue; margin-left: 500px">
+          <div id = "sender" v-if="message[1]" style="color: blue; margin-left: 500px">
             <h4>{{ message[0] }}</h4>
           </div>
-          <div v-else style="color: red; margin-left: -500px">
+          <div id = "receiver" v-else style="color: red; margin-left: -500px">
             <h4>{{ message[0] }}</h4>
           </div>
         </div>
@@ -209,13 +209,13 @@ export default {
 <style scoped>
 #Heading {
   color: black;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: 400px;
   top: 10px;
   width: 700px;
   margin-top: 40px;
   margin-bottom: 0px;
-  margin-left: 340px;
+  margin-left: 190px;
 }
 
 #chat {
@@ -225,10 +225,10 @@ export default {
   text-align: center;
 
   position: absolute;
-  width: 800px;
-  height: 550px;
-  left: 500px;
-  top: 150px;
+  width: 700px;
+  height: 480px;
+  left: 390px;
+  top: 100px;
 }
 
 #inputBox {
@@ -259,5 +259,9 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   width: 300px;
+}
+
+sender {
+    background-color: white;
 }
 </style>

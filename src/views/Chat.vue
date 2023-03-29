@@ -95,7 +95,7 @@ export default {
   text-align: center;
   justify-content: center;
   border: 1px solid;
-  padding: 30px 100px;
+  padding: 20px 90px;
   display: inline-block;
   width: 300px;
   height: 30px;
