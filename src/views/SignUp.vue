@@ -1,8 +1,9 @@
 <template>
     <div>
         <br><br>
-        <router-link id="router" to="/" style="font-family: Arial, Helvetica, sans-serif">Back to login page</router-link>
         <div id="signuppage">
+            <div style="text-align: left;"><router-link id="router" to="/" style="font-family: Arial, Helvetica, sans-serif">Back to login page</router-link><br></div>
+            
             <div id="signup">
                 <img id="logo" src="@/assets/logo.png" alt="">
                 <h2>Sign Up</h2>
@@ -118,47 +119,43 @@ form {
     display: inline-block;
 }
 
-div {
-    text-align: center;
-}
-
-#signuppage {
-    background: white;
-    border: 2px solid lightgray;
-    margin: 0;
-    padding: 10px;
+#signuppage{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
 
 #signup {
+    background: white;
+    border: 2px solid lightgray;
+    padding: 10px;
+    margin-top: 10px;
     text-align: center;
     align-items: center;
-    width: 500px;
-    font-size: 1.2em;
+    width: 400px;
+    font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 label {
-    height: 40px;
-    width: 150px;
+    height: 30px;
+    width: 120px;
     padding-right: 5px;
 }
 
 input {
-    height: 40px;
-    width: 350px;
+    height: 30px;
+    width: 280px;
     border: 1px solid lightgray;
     border-radius: 4px;
     padding-left: 5px;
     padding-right: 5px;
-    font-size: 0.9em;
+    font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 #logo {
-    width: 350px;
+    width: 280px;
 }
 
 button {
