@@ -3,25 +3,19 @@
     <div id="login">
         <img id="logo" src="@/assets/logo.png" alt="" />
         <h2>Login</h2>
-        <form>
+        <form id="loginform" @submit="(e) => login(e)">
             <label>Email:</label>
             <input type="email" v-model="email" required=""><br><br>
             <label>Password:</label>
             <input type="password" v-model="password" required=""><br><br>
+            <button type="submit">Login</button><br><br>
         </form>
-        <button type="button" v-on:click="login">Login</button><br><br>
         <router-link to="/signup">Create your account here</router-link>
     </div>
 </template>
 
 <script>
-import firebaseApp from "@/firebase.js";
-import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from 'vue-router';
-
-const router = useRouter()
-const db = getFirestore(firebaseApp);
 const auth = getAuth();
 
 export default {
@@ -36,11 +30,9 @@ export default {
         clearForm() {
             this.password = "";
         },
-        async login() {
-            if (this.email == "" || this.password == "") {
-                alert("Please fill in all the fields.")
-            } else {
-                signInWithEmailAndPassword(auth, this.email, this.password)
+        async login(e) {
+            e.preventDefault()
+            signInWithEmailAndPassword(auth, this.email, this.password)
                 .then((userCredential) => {
                     console.log("Logged in successfully!");
                     this.clearForm();
@@ -52,7 +44,6 @@ export default {
                     alert("Invalid email/password. Please try again.");
                     this.clearForm();
                 });
-            }
         },
     },
 };
@@ -82,6 +73,7 @@ form {
     text-align: right;
     align-items: center;
     display: inline-block;
+    padding-bottom: 10px;
 }
 
 label {
@@ -108,5 +100,8 @@ button {
     border: 1px solid gray;
     font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>

@@ -7,7 +7,7 @@
             <div id="signup">
                 <img id="logo" src="@/assets/logo.png" alt="">
                 <h2>Sign Up</h2>
-                <form id="signupform">
+                <form id="signupform" @submit="(e) => signup(e)">
                     <label>First Name:</label>
                     <input type="text" v-model="firstName" required="" placeholder="Enter your first name"><br /><br>
                     <label>Last Name:</label>
@@ -19,8 +19,8 @@
                     <input type="email" v-model="email" required="" placeholder="Enter your email"><br><br>
                     <label>Password:</label>
                     <input type="password" v-model="password" required="" placeholder="Enter your password"><br><br>
+                    <button id="signupbutton" type="submit">Sign up</button>
                 </form>
-                <button id="signupbutton" type="button" v-on:click="signup">Sign up</button>
             </div>
         </div>
     </div>
@@ -54,16 +54,9 @@ export default {
             this.password = "";
             this.dateOfBirth = null;
         },
-        async signup() {
-            if (
-                this.firstName == "" ||
-                this.lastName == "" ||
-                this.email == "" ||
-                this.password == "" ||
-                this.dateOfBirth == null
-            ) {
-                alert("Please fill in all the fields.");
-            } else if (new Date(this.dateOfBirth) > Date.now()) {
+        async signup(e) {
+            e.preventDefault()
+            if (new Date(this.dateOfBirth) > Date.now()) {
                 alert("Please select a valid date.");
             } else {
                 const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.email));
@@ -117,6 +110,7 @@ form {
     text-align: right;
     align-items: center;
     display: inline-block;
+    padding-bottom: 40px;
 }
 
 #signuppage{
@@ -164,5 +158,8 @@ button {
     border: 1px solid gray;
     font-size: 0.9em;
     font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
 }
 </style>
