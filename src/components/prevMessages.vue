@@ -179,7 +179,7 @@ export default {
         title: "Delete Chat",
         message:
           "Are you sure you want to delete the chat? This action cannot be undone.",
-        okButton: "Delete",
+        okButton: "Yes",
       });
       if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));

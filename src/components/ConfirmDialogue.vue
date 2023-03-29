@@ -1,7 +1,7 @@
 <template>
     <popup-modal ref="popup">
         <h2 style="margin-top: 10px">{{ title }}</h2>
-        <p style = "font-size: 20px;">{{ message }}</p>
+        <p style = "font-size: 17px; color: red;">{{ message }}</p>
         <div class="btns">
             <button class="cancel-btn" @click="_cancel">{{ cancelButton }}</button>
             <span class="ok-btn" @click="_confirm">{{ okButton }}</span>
@@ -22,7 +22,7 @@ export default {
         title: undefined,
         message: undefined, // Main text content
         okButton: undefined, // Text for confirm button; leave it empty because we don't know what we're using it for
-        cancelButton: 'Go Back', // text for cancel button
+        cancelButton: 'No', // text for cancel button
         
         // Private variables
         resolvePromise: undefined,
@@ -69,13 +69,13 @@ export default {
 }
 
 .ok-btn {
-    padding: 0.5em 0.5em;
+    padding: 0.5em 2em;
     background-color:lightsalmon;
     color:crimson;
     border: 2px solid rosybrown;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     text-transform: uppercase;
     cursor: pointer;
     margin: 20px;
@@ -91,13 +91,13 @@ export default {
 }
 
 .cancel-btn {
-    padding: 0.5em 0.5em;
+    padding: 0.5em 2em;
     background-color: #d5eae7;
     color: #35907f;
     border: 2px solid #0ec5a4;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     text-transform: uppercase;
     cursor: pointer;
     margin: 20px 50px ;
