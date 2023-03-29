@@ -19,7 +19,9 @@ import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 const db = getFirestore(firebaseApp);
 const auth = getAuth();
 
@@ -51,8 +53,8 @@ export default {
                 .then((userCredential) => {
                     console.log("Logged in successfully!");
                     this.clearForm();
-                    this.$router.push("/AllChats")
-
+                    //redirect to home 
+                    this.$router.push({ path: '/Home' })
                 })
                 .catch((error) => {
                     console.log(error.message);
