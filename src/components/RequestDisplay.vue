@@ -87,7 +87,7 @@ export default {
         message:
           "Are you sure you want to delete this request? This action cannot be undone.",
         okButton: "Confirm deletion",
-        cancelButton: "No, I have changed my mind",
+        cancelButton: "Go Back",
       });
       if (ok) {
         await deleteDoc(doc(db, "Requests", requestId));
