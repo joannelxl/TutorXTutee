@@ -3,11 +3,13 @@
 
     <!-- Back to tutoring arrangement  -->
     <div v-if="role == 'tutor'">
+        <br>
         <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutees</router-link>
         <button id="show-modal" @click="navigateProgressNotes"></button>
     </div>
 
     <div v-if="role == 'tutee'">
+        <br>
         <router-link to="/MyTutors" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutors</router-link>
     </div>
 
