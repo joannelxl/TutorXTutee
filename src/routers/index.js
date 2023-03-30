@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
+import Home from "../views/Home.vue";
 
 const routes = [
   {
@@ -20,6 +20,7 @@ const routes = [
       hideNavbar: true,
     },
   },
+
   {
     path: "/Home",
     name: "Home",
@@ -54,7 +55,7 @@ const routes = [
     path: "/InChat/:id",
     name: "InChat",
     component: () => import("../views/InChat.vue"),
-    params: true
+    params: true,
   },
   {
     path: "/MyProfile",
@@ -65,12 +66,17 @@ const routes = [
     path: "/Progress/:id",
     name: "Progress",
     component: () => import("../views/Progress.vue"),
-    params: true
+    params: true,
   },
   {
     path: "",
-    redirectTo: '/'
-  }
+    redirectTo: "/",
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
