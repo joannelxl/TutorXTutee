@@ -16,7 +16,7 @@
       <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
     </div>
     <div id="displayname">
-      <h3>{{ receiverEmail }}</h3>
+      <h3>{{ displayName[0] }}</h3>
     </div>
     <div id="messagesOnly">
       <!--need to display this on the left eventually-->
@@ -76,6 +76,7 @@ export default {
   components: { ConfirmDialogue },
   data() {
     return {
+      displayName: "",
       allMessages: [],
       userEmail: "",
       chatId: "",
@@ -143,13 +144,20 @@ export default {
         this.allMessages = [];
         snapShot.docs.forEach((doc) => {
           if (doc.data().sender == this.userEmail) {
-            this.allMessages.push([doc.data().message, true]);
+            this.allMessages.push([
+              doc.data().message,
+              true,
+            ]);
           } else {
-            this.allMessages.push([doc.data().message, false]);
+            this.allMessages.push([
+              doc.data().message,
+              false,
+            ]);
             console.log(snapShot.message);
           }
         });
       });
+      this.displayName = receiverEmail.split("@");
       //get all documents that correspond to the chat id and sender = email of the receiver
       //sort all these documents according to date and time, then push the messages into receiverMessages array
     },
@@ -301,5 +309,6 @@ export default {
 
 #scrollable {
   overflow-y: scroll;
+  height: 320px;
 }
 </style>

@@ -90,7 +90,7 @@ export default {
 		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
 				<div class="information">
-					<p><strong style="font-size: x-large;">{{ arrangement.tutorName }} </strong></p>
+					<p><strong style="font-size: x-large;">{{ arrangement.tuteeName }} </strong></p>
 					<text style="font-weight: bold;">Level: </text> {{ arrangement.level }} <br>
 					<text style="font-weight: bold;">Subject: </text> {{ arrangement.subject }} <br>
 					<div v-if="arrangement.location != 'Virtual'">
