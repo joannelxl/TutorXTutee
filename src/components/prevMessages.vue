@@ -183,8 +183,8 @@ export default {
         title: "Delete Chat",
         message:
           "Are you sure you want to delete the chat? This action cannot be undone.",
-        okButton: "Yes",
-        cancelButton: "No",
+        okButton: "Delete",
+        cancelButton: "Cancel",
       });
       if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));
@@ -300,6 +300,6 @@ export default {
 }
 
 #scrollable {
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>

@@ -69,7 +69,7 @@ export default {
 }
 
 .ok-btn {
-    padding: 0.5em 2em;
+    padding: 0.5em 1em;
     background-color:lightsalmon;
     color:crimson;
     border: 2px solid rosybrown;
@@ -91,7 +91,7 @@ export default {
 }
 
 .cancel-btn {
-    padding: 0.5em 2em;
+    padding: 0.5em 1em;
     background-color: lightgrey;
     color: grey;
     border: 2px solid darkgrey;
@@ -100,7 +100,7 @@ export default {
     font-size: 16px;
     text-transform: uppercase;
     cursor: pointer;
-    margin: 20px 50px ;
+    margin: 20px 45px ;
 }
 
 
