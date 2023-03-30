@@ -283,5 +283,6 @@ form {
 
 textarea {
   resize: none;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 </style>

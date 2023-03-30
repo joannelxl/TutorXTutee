@@ -8,6 +8,7 @@
     </h1>
   </div>
   <div class="requests">
+    <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
     <div class="req" v-for="request in userRequests">
       <!-- <h2>{{ index }}{{ request[1] }}</h2> -->
       <div class="card">
@@ -32,6 +33,7 @@
           <button class="delete-button" @click="handleDelete(request[0])">
             Delete Request
           </button>
+
           <EditRequest :requestId="request[0]" />
         </div>
       </div>
@@ -52,6 +54,7 @@ import {
 } from "firebase/firestore";
 import EditRequest from "./EditRequest.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import ConfirmDialogue from "./ConfirmDialogue.vue";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -64,6 +67,7 @@ export default {
   },
   components: {
     EditRequest,
+    ConfirmDialogue,
   },
   methods: {
     async display() {
@@ -78,9 +82,17 @@ export default {
     },
 
     async handleDelete(requestId) {
-      await deleteDoc(doc(db, "Requests", requestId));
-      alert("Confirm delete");
-      this.display();
+      const ok = await this.$refs.confirmDialogue.show({
+        title: "Delete Request",
+        message:
+          "Are you sure you want to delete this request? This action cannot be undone.",
+        okButton: "Confirm deletion",
+        cancelButton: "No, I have changed my mind",
+      });
+      if (ok) {
+        await deleteDoc(doc(db, "Requests", requestId));
+        this.display();
+      }
     },
   },
   async mounted() {

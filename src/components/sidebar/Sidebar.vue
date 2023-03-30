@@ -1,75 +1,85 @@
 <script>
-import SidebarLink from '@/components/sidebar/SideBarLink.vue';
-import { collapsed, toggleSidebar, sidebarWidth } from './state'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import SidebarLink from "@/components/sidebar/SideBarLink.vue";
+import { collapsed, toggleSidebar, sidebarWidth } from "./state";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
 export default {
-    data() {
-        return {
-            user: false,
-            email: false,
-            role: '',
-            dataLoaded: false,
-        }
+  data() {
+    return {
+      user: false,
+      email: false,
+      role: "",
+      dataLoaded: false,
+    };
+  },
+  props: {},
+  components: { SidebarLink, SidebarLink },
+  setup() {
+    return { collapsed, toggleSidebar, sidebarWidth };
+  },
+  methods: {
+    redirectHomepage() {
+      this.$router.push({ path: "/Home" });
     },
-    props: {},
-    components: { SidebarLink, SidebarLink },
-    setup() {
-        return { collapsed, toggleSidebar, sidebarWidth }
+
+    signOut() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      signOut(auth, user);
+      console.log("Successfully Signed out");
+      this.$router.push({ path: "/" });
     },
-    methods: {
-        redirectHomepage() {
-            this.$router.push({ path: '/Home' })
-        }
-    },
-    async mounted() {
-        const auth = getAuth();
-        const db = getFirestore(firebaseApp);
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                this.user = user
-                const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.user.email));
-                this.role = verifiedUser.data().role
-                this.dataLoaded = true
-            }
-        })
-        
-    }
-}
+  },
+  async mounted() {
+    const auth = getAuth();
+    const db = getFirestore(firebaseApp);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        this.user = user;
+        const verifiedUser = await getDoc(
+          doc(db, "VerifiedUsers", this.user.email)
+        );
+        this.role = verifiedUser.data().role;
+        this.dataLoaded = true;
+      }
+    });
+  },
+};
 </script>
 
 <template>
-    <div class="sidebar" :style="{ width: sidebarWidth }" v-if="dataLoaded">
+  <div class="sidebar" :style="{ width: sidebarWidth }" v-if="dataLoaded">
+    <br /><br />
 
-        <br><br>
-
-        <img @click="redirectHomepage" alt="logo" src="src\assets\logo_transparent.png" />
-        <div class="links">
-            <br><br><br><br>
-            <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
-            <br>
-            <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role == 'tutor'">My Tutees</SidebarLink>
-            <SidebarLink to="/MyTutors" icon="fas fa-users" v-else>My Tutors</SidebarLink>
-            <br>
-            <SidebarLink to="/Requests" icon="fas fa-user-plus" v-if="role == 'tutor'">Requests</SidebarLink>
-            <SidebarLink to="/MyRequests" icon="fas fa-user-plus" v-else>My Requests</SidebarLink>
-            <br>
-            <SidebarLink to="/Chat" icon="fas fa-comments">Chats</SidebarLink>
-            <br>
-            <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
-        </div>
-
-        <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar">
-            <i class="fas fa-angle-double-left"></i> </span>
-
-
-        <br><br>
-        <div v-if="!collapsed">
-            <button>Logout</button>
-        </div>
+    <img
+      @click="redirectHomepage"
+      alt="logo"
+      src="src\assets\logo_transparent.png"
+    />
+    <div class="links">
+      <br /><br /><br /><br />
+      <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
+      <br />
+      <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role == 'tutor'"
+        >My Tutees</SidebarLink
+      >
+      <SidebarLink to="/MyTutors" icon="fas fa-users" v-else
+        >My Tutors</SidebarLink
+      >
+      <br />
+      <SidebarLink to="/Requests" icon="fas fa-user-plus" v-if="role == 'tutor'"
+        >Requests</SidebarLink
+      >
+      <SidebarLink to="/MyRequests" icon="fas fa-user-plus" v-else
+        >My Requests</SidebarLink
+      >
+      <br />
+      <SidebarLink to="/Chat" icon="fas fa-comments">Chats</SidebarLink>
+      <br />
+      <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
     </div>
 
     <span
@@ -144,8 +154,8 @@ button {
 }
 
 img:hover {
-    background-color: #c09bc0;
-    cursor: pointer;
+  background-color: #c09bc0;
+  cursor: pointer;
 }
 
 button:hover {
