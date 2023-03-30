@@ -18,16 +18,18 @@
     <div id="displayname">
       <h3>{{ receiverEmail }}</h3>
     </div>
-    <div>
+    <div id="messagesOnly">
       <!--need to display this on the left eventually-->
       <div id="display" v-if="allMessages">
-        <div id="allMessages" v-for="message in allMessages" :key="index">
-          <div id="senderMessages">
-            <div id="sender" v-if="message[1]">
-              <h4>{{ message[0] }}</h4>
-            </div>
-            <div id="receiver" v-else>
-              <h4>{{ message[0] }}</h4>
+        <div id="scrollable">
+          <div id="allMessages" v-for="message in allMessages" :key="index">
+            <div id="senderMessages">
+              <div id="sender" v-if="message[1]">
+                <h4>{{ message[0] }}</h4>
+              </div>
+              <div id="receiver" v-else>
+                <h4>{{ message[0] }}</h4>
+              </div>
             </div>
           </div>
         </div>
@@ -293,7 +295,11 @@ export default {
 }
 
 #router {
-    margin-left: -100px;
-    margin-top: -10px
+  margin-left: -100px;
+  margin-top: -10px;
+}
+
+#scrollable {
+  overflow: scroll;
 }
 </style>
