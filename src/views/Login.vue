@@ -3,26 +3,19 @@
     <div id="login">
         <img id="logo" src="@/assets/logo.png" alt="" />
         <h2>Login</h2>
-        <form>
+        <form id="loginform" @submit="(e) => login(e)">
             <label>Email:</label>
             <input type="email" v-model="email" required=""><br><br>
             <label>Password:</label>
             <input type="password" v-model="password" required=""><br><br>
+            <button type="submit">Login</button><br><br>
         </form>
-        <button type="button" v-on:click="login">Login</button><br><br>
         <router-link to="/signup">Create your account here</router-link>
     </div>
 </template>
 
 <script>
-import firebaseApp from "@/firebase.js";
-import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from 'vue-router';
-
-const router = useRouter()
-const db = getFirestore(firebaseApp);
 const auth = getAuth();
 
 export default {
@@ -37,18 +30,8 @@ export default {
         clearForm() {
             this.password = "";
         },
-        async login() {
-            const verifiedUser = await getDoc(
-                doc(db, "VerifiedUsers", this.email)
-            );
-            if (verifiedUser.exists()) {
-                var collection = "Tutees";
-                if (verifiedUser.data().role == "tutor") {
-                    collection = "Tutors";
-                }
-                const account = await getDoc(doc(db, collection, this.email));
-            }
-
+        async login(e) {
+            e.preventDefault()
             signInWithEmailAndPassword(auth, this.email, this.password)
                 .then((userCredential) => {
                     console.log("Logged in successfully!");
@@ -68,14 +51,14 @@ export default {
 
 <style scoped>
 #login {
-    width: 500px;
+    width: 400px;
     border: 2px solid lightgray;
     background: white;
     text-align: center;
     align-items: center;
-    font-size: 1.2em;
     font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
+    font-size: 1em;
+    margin-top: 10px;
     padding: 10px;
     position: absolute;
     left: 50%;
@@ -83,28 +66,29 @@ export default {
 }
 
 #logo {
-    width: 350px;
+    width: 280px;
 }
 
 form {
     text-align: right;
     align-items: center;
     display: inline-block;
+    padding-bottom: 10px;
 }
 
 label {
-
-    height: 40px;
-    width: 150px;
+    height: 30px;
+    width: 120px;
     padding-right: 5px;
+    font-size: 1em;
 }
 
 input {
-    width: 350px;
-    height: 40px;
+    width: 280px;
+    height: 30px;
     border-radius: 4px;
     border: 1px solid gray;
-    font-size: 0.9em;
+    font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 5px;
     padding-right: 5px;
@@ -115,8 +99,11 @@ button {
     width: 80px;
     border-radius: 4px;
     border: 1px solid gray;
-    font-size: 0.9em;
+    font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 button:active {
