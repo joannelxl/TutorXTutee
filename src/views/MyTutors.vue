@@ -1,29 +1,40 @@
-<template>
-    <DisplayProgress :key="refreshComp" />
-    {{ id }}
-</template>
-  
 <script>
-import DisplayProgress from "../components/DisplayProgress.vue";
+import TutorArrangements from '@/components/TutorArrangements.vue'
+
 export default {
-    components: {
-        DisplayProgress,
-    },
-    data() {
-        return {
-            refreshComp: 0,
-            id: null,
-        };
-    },
-    methods: {
-        change() {
-            this.refreshComp += 1;
-        },
-    },
-    mounted() {
-        this.id = this.$route.params.id;
-    }
-};
+	data() {
+		return {
+			refreshComp: 0,
+		}
+	},
+	components: {
+		TutorArrangements
+	},
+	methods: {
+		update() {
+			this.refreshComp += 1
+		}
+	}
+}
 </script>
-  
-<style></style>
+
+<template>
+	<div id="mytutees">
+		<div class="heading">
+			<h1>Tutor x Tutee</h1>
+			<h4> All your tutors are listed here.</h4>
+		</div>
+		<TutorArrangements :key="refreshComp" @ended="update" />
+	</div>
+</template>
+
+<style scoped> #mytutees {
+ 	text-align: center;
+ 	width: 90vw;
+ }
+
+ .heading {
+ 	text-align: center;
+
+ }
+</style>

@@ -1,5 +1,6 @@
 <template>
     <AddProgressNotes @added="change" />
+    {{ id }}
 </template>
   
 <script>
@@ -11,7 +12,11 @@ export default {
     data() {
         return {
             refreshComp: 0,
+            id: null,
         };
+    },
+    mounted() {
+        this.id = this.$route.params.id
     },
     methods: {
         change() {
