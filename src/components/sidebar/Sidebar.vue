@@ -1,10 +1,20 @@
 <script>
-import SidebarLink from './SideBarLink.vue';
+import SidebarLink from '@/components/sidebar/SideBarLink.vue';
 import { collapsed, toggleSidebar, sidebarWidth } from './state'
-import { useRouter } from 'vue-router';
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import firebaseApp from "@/firebase.js";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 export default {
+    data() {
+        return {
+            user: false,
+            email: false,
+            role: '',
+            dataLoaded: false,
+        }
+    },
     props: {},
     components: { SidebarLink, SidebarLink },
     setup() {
@@ -14,12 +24,25 @@ export default {
         redirectHomepage() {
             this.$router.push({ path: '/Home' })
         }
+    },
+    async mounted() {
+        const auth = getAuth();
+        const db = getFirestore(firebaseApp);
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                this.user = user
+                const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.user.email));
+                this.role = verifiedUser.data().role
+                this.dataLoaded = true
+            }
+        })
+        
     }
 }
 </script>
 
 <template>
-    <div class="sidebar" :style="{ width: sidebarWidth }">
+    <div class="sidebar" :style="{ width: sidebarWidth }" v-if="dataLoaded">
 
         <br><br>
 
@@ -28,11 +51,13 @@ export default {
             <br><br><br><br>
             <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
             <br>
-            <SidebarLink to="/MyTutees" icon="fas fa-users">My Tutees</SidebarLink>
+            <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role == 'tutor'">My Tutees</SidebarLink>
+            <SidebarLink to="/MyTutors" icon="fas fa-users" v-else>My Tutors</SidebarLink>
             <br>
-            <SidebarLink to="/Requests" icon="fas fa-user-plus">Requests</SidebarLink>
+            <SidebarLink to="/Requests" icon="fas fa-user-plus" v-if="role == 'tutor'">Requests</SidebarLink>
+            <SidebarLink to="/MyRequests" icon="fas fa-user-plus" v-else>My Requests</SidebarLink>
             <br>
-            <SidebarLink to="/Chats" icon="fas fa-comments">Chats</SidebarLink>
+            <SidebarLink to="/Chat" icon="fas fa-comments">Chats</SidebarLink>
             <br>
             <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
         </div>
@@ -103,6 +128,11 @@ button {
     padding: 15px;
     min-height: 30px;
     min-width: 120px;
+}
+
+img:hover {
+    background-color: #c09bc0;
+    cursor: pointer;
 }
 
 button:hover {
