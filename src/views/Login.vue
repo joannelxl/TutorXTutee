@@ -1,4 +1,5 @@
 <template>
+    <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
     <br><br><br>
     <div id="login">
         <img id="logo" src="@/assets/logo.png" alt="" />
@@ -16,9 +17,11 @@
 
 <script>
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AcknowledgeDialogue from "@/components/AcknowledgeDialogue.vue"
 const auth = getAuth();
 
 export default {
+    components: { AcknowledgeDialogue },
     name: "Login",
     data() {
         return {
@@ -39,9 +42,11 @@ export default {
                     //redirect to home 
                     this.$router.push({ path: '/Home' })
                 })
-                .catch((error) => {
+                .catch(async (error) => {
                     console.log(error.message);
-                    alert("Invalid email/password. Please try again.");
+                    await(this.$refs.acknowledgeDialogue).show({
+                        message: "Invalid email/password. Please try again.",
+                    })
                     this.clearForm();
                 });
         },
