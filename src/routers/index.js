@@ -9,6 +9,9 @@ const routes = [
     path: "/SignUp",
     name: "SignUp",
     component: SignUp,
+    meta: {
+      hideNavbar: true,
+    },
   },
   {
     path: "/",
@@ -34,23 +37,47 @@ const routes = [
     name: "MyTutees",
     component: () => import("../views/MyTutees.vue"),
   },
-
+  {
+    path: "/MyTutors",
+    name: "MyTutors",
+    component: () => import("../views/MyTutors.vue"),
+  },
   {
     path: "/Requests",
     name: "Requests",
     component: () => import("../views/Requests.vue"),
   },
-
+  {
+    path: "/MyRequests",
+    name: "MyRequests",
+    component: () => import("../views/MyRequests.vue"),
+  },
   {
     path: "/Chat",
     name: "Chat",
     component: () => import("../views/Chat.vue"),
   },
   {
+    path: "/InChat/:id",
+    name: "InChat",
+    component: () => import("../views/InChat.vue"),
+    params: true
+  },
+  {
     path: "/MyProfile",
     name: "MyProfile",
     component: () => import("../views/MyProfile.vue"),
   },
+  {
+    path: "/Progress/:id",
+    name: "Progress",
+    component: () => import("../views/Progress.vue"),
+    params: true
+  },
+  {
+    path: "",
+    redirectTo: '/'
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),
