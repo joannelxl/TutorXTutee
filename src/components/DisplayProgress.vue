@@ -19,7 +19,7 @@
 
         <!-- if tutee -->
         <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
-            <h3>Your tutor have not added any progress note.</h3>
+            <h3>Your tutor has not added any progress note.</h3>
             <h3>Progress Notes will be displayed here once he/she writes one.</h3>
         </div>
 
@@ -96,11 +96,9 @@ export default {
             const progressRef = collection(db, "ProgressNotes");
             const q = query(progressRef, orderBy("Lesson", 'desc'), where("Id", "==", this.id));
             const querySnapshot = await getDocs(q);
-            console.log("displayed");
             querySnapshot.forEach((doc) => {
                 this.progressNotes.push([doc.id, doc.data()]);
             });
-            console.log(this.id)
         },
         async handleDelete(requestId) {
             const ok = await this.$refs.confirmDialogue.show({

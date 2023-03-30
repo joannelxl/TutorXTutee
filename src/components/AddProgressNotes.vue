@@ -60,7 +60,7 @@ export default {
     emits: ["added"],
     methods: {
         async handleSubmit() {
-            console.log(this.subject);
+
             //check if location is chosen
             if (
                 this.lesson.length == 0 ||
