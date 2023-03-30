@@ -1,9 +1,9 @@
 <template>
-    <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif">back</router-link>
+    <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
     <div class="modal-mask">
         <div class="form-container">
             <h1>Tutor X Tutee</h1>
-            <h4>Keep track of your tutee's progress here.</h4>
+            <h4>Keep track of {{ tuteeName }}'s progress here.</h4>
 
             <div class="modal-container">
                 <form id="requestform" @submit.prevent="">
@@ -25,6 +25,7 @@
                         <br /><br />
 
                         <button class="add-button" @click="handleSubmit">Add Progress Note!</button>
+
                     </div>
                 </form>
             </div>
@@ -34,7 +35,7 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { collection, getFirestore } from "firebase/firestore";
+import { collection, getFirestore, doc, getDoc } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
@@ -46,7 +47,8 @@ export default {
             lesson: "",
             remarks: "",
             formError: "",
-            tuteeName: 'Test',
+            tuteeName: "",
+            id: this.id,
         };
     },
     emits: ["added"],
@@ -65,7 +67,9 @@ export default {
                     Lesson: this.lesson,
                     Date: new Date(),
                     Remarks: this.remarks,
+                    Id: this.id,
                 };
+
                 try {
                     const docRef = await addDoc(collection(db, "ProgressNotes"), details);
                 } catch (error) {
@@ -74,7 +78,7 @@ export default {
                 this.handleReset();
                 this.$emit("added");
                 this.handleClose();
-                this.$router.push({ path: '/MyTutees' })
+                this.$router.push({ name: "Progress", params: { id: this.id } })
 
             }
         },
@@ -91,27 +95,37 @@ export default {
         },
     },
     async mounted() {
+
+        this.id = this.$route.params.id;
         const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
+        const db = getFirestore(firebaseApp);
+
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 this.useremail = user.email;
+                const docRef = doc(db, "TutoringArrangements", this.id);
+                try {
+                    const docSnap = await getDoc(docRef);
+                    var account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
+                    this.tuteeName = account.data().firstName + " " + account.data().lastName
+                } catch (error) {
+                    console.log(error)
+                }
+                this.dataLoaded = true
+
             }
-        });
+        })
     },
 };
 </script>
 
 <style scoped>
 .modal-mask {
-    /* position: fixed; */
     z-index: 9998;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    /* display: flex; */
-    /* transition: opacity 0.3s ease; */
 }
 
 .form-container {
@@ -136,14 +150,6 @@ export default {
     transition: all 0.3s ease;
     border-radius: 25px;
 }
-
-/* .close-button {
-    float: right;
-    margin-top: -30px;
-    margin-right: -30px;
-    font-size: 20px;
-    cursor: pointer;
-} */
 
 .modal-title {
     text-align: center;
@@ -197,8 +203,22 @@ input {
 .add-button {
     float: right;
     background: rgba(3, 131, 0, 0.64);
-    border: 1px solid #000000;
-    font-size: 20px;
+    border-radius: 5px;
+    width: 160px;
+    text-align: left;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 9px;
+    border: none;
+    height: 30px;
+    font-size: medium;
+    cursor: pointer;
+    box-shadow: 2px 2px gray;
+}
+
+.add-button:hover {
+    cursor: pointer;
+    background-color: white;
 }
 
 .cancel-button {
