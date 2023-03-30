@@ -27,26 +27,26 @@ export default {
 				var size = (await getDocs(q1)).size
 				if (size > 0) {
 					var count = 0;
-						(await getDocs(q1)).forEach(async (document) => {
-							count += 1
-							var arrangement = document.data()
-							arrangement.id = document.id
+					(await getDocs(q1)).forEach(async (document) => {
+						count += 1
+						var arrangement = document.data()
+						arrangement.id = document.id
 
-							// getting the tutorName to use later
-							var account = await getDoc(doc(db, "Tutors", document.data().tutorEmail))
-							arrangement.tutorName = account.data().firstName + " " + account.data().lastName
+						// getting the tutorName to use later
+						var account = await getDoc(doc(db, "Tutors", document.data().tutorEmail))
+						arrangement.tutorName = account.data().firstName + " " + account.data().lastName
 
-							// getting the chat Id corresponding to this tutor and tutee
-							const q2 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.user.email), where("TutorEmail", "==", document.data().tutorEmail));
-							(await getDocs(q2)).forEach((chat) => {
-								arrangement.chatId = chat.id
-							})
-							this.arrangements.push(arrangement)
-							this.email = this.user.email
-							if (count == size) {
-								this.dataLoaded = true
-							}
+						// getting the chat Id corresponding to this tutor and tutee
+						const q2 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.user.email), where("TutorEmail", "==", document.data().tutorEmail));
+						(await getDocs(q2)).forEach((chat) => {
+							arrangement.chatId = chat.id
 						})
+						this.arrangements.push(arrangement)
+						this.email = this.user.email
+						if (count == size) {
+							this.dataLoaded = true
+						}
+					})
 				} else {
 					this.dataLoaded = true
 				}
