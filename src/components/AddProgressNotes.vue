@@ -19,7 +19,7 @@
                         </div>
 
                         <label class=" required">Lesson Number:</label>
-                        <input type="number" v-model="lesson" />
+                        <input min="1" type="number" v-model="lesson" />
                         <br /><br />
 
                         <label class="required">Remarks:</label>
@@ -50,7 +50,7 @@ export default {
         return {
             //Fake email
             useremail: "",
-            lesson: "",
+            lesson: '',
             remarks: "",
             formError: "",
             tuteeName: "",
