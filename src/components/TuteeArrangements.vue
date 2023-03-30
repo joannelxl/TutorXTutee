@@ -69,13 +69,6 @@ export default {
 
 				this.$emit("ended")
 			}
-			/*
-			if (confirm("Are you sure you want to end the session with " + tuteeName + "?\nThis action cannot be undone.")) {
-				const db = getFirestore(firebaseApp);
-				await deleteDoc(doc(db, "TutoringArrangements", id))
-
-				this.$emit("ended")
-			}*/
 		},
 		redirectToChat(chatId) {
 			this.$router.push({ name: "InChat", params: { id: chatId } })
