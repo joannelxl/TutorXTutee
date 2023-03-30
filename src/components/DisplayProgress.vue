@@ -227,10 +227,10 @@ export default {
 
 #show-modal {
     position: fixed;
-    right: 40px;
+    right: 100px;
     bottom: 0;
-    width: 10em;
-    height: 10em;
+    width: 6em;
+    height: 6em;
     border-radius: 50%;
     background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
     background-position: center;
