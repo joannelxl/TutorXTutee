@@ -1,8 +1,11 @@
 <template>
     <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
-    <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
     <div class="modal-mask">
+
         <div class="form-container">
+            <div style="float:left">
+                <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
+            </div>
             <h1>Tutor X Tutee</h1>
             <h4>Keep track of {{ tuteeName }}'s progress here.</h4>
 

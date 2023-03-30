@@ -1,19 +1,18 @@
 <template>
     <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 
-    <!-- Back to tutoring arrangement  -->
-    <div v-if="role == 'tutor'">
-        <br>
-        <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutees</router-link>
-        <button id="show-modal" @click="navigateProgressNotes"></button>
-    </div>
-
-    <div v-if="role == 'tutee'">
-        <br>
-        <router-link to="/MyTutors" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutors</router-link>
-    </div>
-
     <div class="main-container">
+        <!-- Back to tutoring arrangement  -->
+        <div style="float:left" v-if="role == 'tutor'">
+            <br>
+            <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutees</router-link>
+            <button id="show-modal" @click="navigateProgressNotes"></button>
+        </div>
+
+        <div style="float:left" v-if="role == 'tutee'">
+            <br>
+            <router-link to="/MyTutors" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutors</router-link>
+        </div>
         <h1>Tutor X Tutee</h1>
         <h4>All your written progress for {{ tuteeName }} are listed here.</h4>
 
