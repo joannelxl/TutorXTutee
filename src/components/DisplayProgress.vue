@@ -192,6 +192,7 @@ export default {
     margin-left: 16px;
     overflow: auto;
     justify-content: baseline;
+    padding-right: 20px;
 }
 
 .container {
