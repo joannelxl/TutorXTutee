@@ -20,19 +20,18 @@
     </div>
     <div>
       <!--need to display this on the left eventually-->
-      <div id = "display" v-if="allMessages">
-      <div id="allMessages" v-for="message in allMessages" :key="index">
-        <div id="senderMessages">
-          <div id = "sender" v-if="message[1]">
-            <h4>{{ message[0] }}</h4>
+      <div id="display" v-if="allMessages">
+        <div id="allMessages" v-for="message in allMessages" :key="index">
+          <div id="senderMessages">
+            <div id="sender" v-if="message[1]">
+              <h4>{{ message[0] }}</h4>
+            </div>
+            <div id="receiver" v-else>
+              <h4>{{ message[0] }}</h4>
+            </div>
           </div>
-          <div id = "receiver" v-else>
-            <h4>{{ message[0] }}</h4>
-          </div>
-        </div>
         </div>
       </div>
-      
     </div>
     <div id="inputBox">
       <form @submit.prevent="sendMessage">
@@ -183,6 +182,7 @@ export default {
         message:
           "Are you sure you want to delete the chat? This action cannot be undone.",
         okButton: "Yes",
+        cancelButton: "No",
       });
       if (ok) {
         const querySnapshot = await getDocs(collection(db, "Chats"));
@@ -251,12 +251,12 @@ export default {
 }
 
 .deleteIcon {
-    float:right;
-    position: absolute;
-    margin-top: 1px;
-    width: 70px;
-    right: 0px;
-    height: 80px;
+  float: right;
+  position: absolute;
+  margin-top: 1px;
+  width: 70px;
+  right: 0px;
+  height: 80px;
 }
 
 #receiverMessages {
@@ -267,30 +267,33 @@ export default {
 }
 
 #sender {
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    text-align: right;
-    block-size: fit-content;
-    right: 0px;
-    height: 12%;
-    margin-left: 370px;
-    margin-right: 40px;
-    padding: 0px 10px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  text-align: right;
+  block-size: fit-content;
+  right: 0px;
+  height: 12%;
+  margin-left: 370px;
+  margin-right: 40px;
+  padding: 0px 10px;
 }
 
 #receiver {
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    text-align: left;
-    block-size: fit-content;
-    right: 0px;
-    height: 12%;
-    margin-left: 40px;
-    margin-right: 370px;
-    padding: 0px 10px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  text-align: left;
+  block-size: fit-content;
+  right: 0px;
+  height: 12%;
+  margin-left: 40px;
+  margin-right: 370px;
+  padding: 0px 10px;
 }
 
-
+#router {
+    margin-left: -100px;
+    margin-top: -10px
+}
 </style>

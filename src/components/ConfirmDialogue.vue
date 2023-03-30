@@ -22,7 +22,7 @@ export default {
         title: undefined,
         message: undefined, // Main text content
         okButton: undefined, // Text for confirm button; leave it empty because we don't know what we're using it for
-        cancelButton: 'No', // text for cancel button
+        cancelButton: undefined, // text for cancel button
         
         // Private variables
         resolvePromise: undefined,
@@ -92,9 +92,9 @@ export default {
 
 .cancel-btn {
     padding: 0.5em 2em;
-    background-color: #d5eae7;
-    color: #35907f;
-    border: 2px solid #0ec5a4;
+    background-color: lightgrey;
+    color: grey;
+    border: 2px solid darkgrey;
     border-radius: 5px;
     font-weight: bold;
     font-size: 16px;
@@ -107,7 +107,7 @@ export default {
 .cancel-btn:hover {background-color: lightblue}
 
 .cancel-btn:active {
-  background-color: lightblue;
+  background-color: slategray;
   box-shadow: 0 2px lightgray;
   transform: translateY(4px);
 }
