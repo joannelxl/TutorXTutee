@@ -138,7 +138,7 @@ export default {
       });*/
 
       onSnapshot(querySnapshot, (snapShot) => {
-        //this.allMessages = [];
+        this.allMessages = [];
         snapShot.docs.forEach((doc) => {
           if (doc.data().sender == this.userEmail) {
             this.allMessages.push([doc.data().message, true]);
