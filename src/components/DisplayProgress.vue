@@ -1,4 +1,6 @@
 <template>
+    <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+
     <!-- Back to tutoring arrangement  -->
     <div v-if="role == 'tutor'">
         <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutees</router-link>
@@ -63,11 +65,16 @@ import {
 } from "firebase/firestore";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import ConfirmDialogue from "./ConfirmDialogue.vue";
+
 
 const db = getFirestore(firebaseApp);
 export default {
     props: {
         id: String
+    },
+    components: {
+        ConfirmDialogue,
     },
     data() {
         return {
@@ -94,9 +101,17 @@ export default {
             console.log(this.id)
         },
         async handleDelete(requestId) {
-            await deleteDoc(doc(db, "ProgressNotes", requestId));
-            alert("Confirm delete");
-            this.display();
+            const ok = await this.$refs.confirmDialogue.show({
+                title: "Delete Progress Note",
+                message:
+                    "Are you sure you want to delete this Progress Note? This action cannot be undone.",
+                okButton: "Confirm deletion",
+                cancelButton: "Go Back",
+            });
+            if (ok) {
+                await deleteDoc(doc(db, "ProgressNotes", requestId));
+                this.display();
+            }
         },
     },
     async mounted() {
