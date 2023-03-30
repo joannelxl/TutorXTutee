@@ -1,4 +1,5 @@
 <template>
+    <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
     <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
     <div class="modal-mask">
         <div class="form-container">
@@ -38,6 +39,8 @@ import firebaseApp from "../firebase.js";
 import { collection, getFirestore, doc, getDoc } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import ConfirmDialogue from "./ConfirmDialogue.vue";
+
 const db = getFirestore(firebaseApp);
 export default {
     data() {
@@ -50,6 +53,9 @@ export default {
             tuteeName: "",
             id: this.id,
         };
+    },
+    components: {
+        ConfirmDialogue,
     },
     emits: ["added"],
     methods: {
@@ -71,19 +77,28 @@ export default {
                 };
 
                 try {
-                    const docRef = await addDoc(collection(db, "ProgressNotes"), details);
+                    const ok = await this.$refs.confirmDialogue.show({
+                        title: "Add Progress Note",
+                        message:
+                            "Add Progress Note",
+                        okButton: "Confirm Add",
+                        cancelButton: "Go Back",
+                    });
+                    if (ok) {
+                        const docRef = await addDoc(collection(db, "ProgressNotes"), details);
+                    }
                 } catch (error) {
                     console.error("Error adding document: ", error);
                 }
                 this.handleReset();
                 this.$emit("added");
                 this.handleClose();
+
                 this.$router.push({ name: "Progress", params: { id: this.id } })
 
             }
         },
         async handleClose() {
-            console.log("close??");
             this.showModal = false;
             this.handleReset();
         },
