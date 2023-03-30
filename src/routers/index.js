@@ -2,9 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
-import ProgressNotes from "@/views/ProgressNotes.vue";
-import MyTutees from "@/views/MyTutees.vue";
-import MyTutors from "@/views/MyTutors.vue";
 
 const routes = [
   {
@@ -29,19 +26,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/ProgressNotes",
-    name: "ProgressNotes",
-    component: ProgressNotes,
-  },
-  {
     path: "/MyTutees",
     name: "MyTutees",
-    component: MyTutees,
-  },
-  {
-    path: "/MyTutors",
-    name: "MyTutors",
-    component: MyTutors,
+    component: () => import("../views/MyTutees.vue"),
   },
   {
     path: "/MyTutors",
@@ -67,7 +54,7 @@ const routes = [
     path: "/InChat/:id",
     name: "InChat",
     component: () => import("../views/InChat.vue"),
-    params: true
+    params: true,
   },
   {
     path: "/MyProfile",
@@ -78,12 +65,19 @@ const routes = [
     path: "/Progress/:id",
     name: "Progress",
     component: () => import("../views/Progress.vue"),
-    params: true
+    params: true,
+  },
+  {
+    path: "/AddProgress/:id",
+    name: "AddProgress",
+    component: () => import("../views/AddProgress.vue"),
+    props: true,
+    params: true,
   },
   {
     path: "",
-    redirectTo: '/'
-  }
+    redirectTo: "/",
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
