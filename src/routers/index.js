@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
+import Home from "../views/Home.vue";
 
 const routes = [
   {
@@ -20,6 +20,7 @@ const routes = [
       hideNavbar: true,
     },
   },
+
   {
     path: "/Home",
     name: "Home",
@@ -77,6 +78,11 @@ const routes = [
   {
     path: "",
     redirectTo: "/",
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 const router = createRouter({

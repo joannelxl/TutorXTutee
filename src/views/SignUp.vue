@@ -1,9 +1,11 @@
 <template>
+    <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
     <div>
         <br><br>
         <div id="signuppage">
-            <div style="text-align: left;"><router-link id="router" to="/" style="font-family: Arial, Helvetica, sans-serif">Back to login page</router-link><br></div>
-            
+            <div style="text-align: left;"><router-link id="router" to="/"
+                    style="font-family: Arial, Helvetica, sans-serif">Back to login page</router-link><br></div>
+
             <div id="signup">
                 <img id="logo" src="@/assets/logo.png" alt="">
                 <h2>Sign Up</h2>
@@ -31,12 +33,13 @@ import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import AcknowledgeDialogue from "@/components/AcknowledgeDialogue.vue"
 const db = getFirestore(firebaseApp);
 const auth = getAuth();
 
 export default {
     name: "SignUp",
-    components: {},
+    components: { AcknowledgeDialogue },
     data() {
         return {
             firstName: "",
@@ -57,14 +60,16 @@ export default {
         async signup(e) {
             e.preventDefault()
             if (new Date(this.dateOfBirth) > Date.now()) {
-                alert("Please select a valid date.");
+                await (this.$refs.acknowledgeDialogue).show({
+                    message: "Please select a valid date.",
+                })
             } else {
                 const verifiedUser = await getDoc(doc(db, "VerifiedUsers", this.email));
                 if (!verifiedUser.exists()) {
                     this.clearForm();
-                    alert(
-                        "Unverified credentials. Please contact the organisation directly to verify your email address if you have not done so."
-                    );
+                    await (this.$refs.acknowledgeDialogue).show({
+                        message: "Unverified credentials. Please contact the organisation directly to verify your email address if you have not done so.",
+                    })
                 } else {
                     var collection = "Tutees";
                     if (verifiedUser.data().role == "tutor") {
@@ -75,9 +80,9 @@ export default {
                     );
                     if (account.exists()) {
                         this.clearForm();
-                        alert(
-                            "This email is already in use. Please log in directly."
-                        );
+                        await (this.$refs.acknowledgeDialogue).show({
+                            message: "This email is already in use. Please log in directly.",
+                        })
                         this.$router.push("/");
                     } else {
                         createUserWithEmailAndPassword(
@@ -93,9 +98,9 @@ export default {
                             dateOfBirth: this.dateOfBirth,
                         });
                         this.clearForm();
-                        alert(
-                            "Your account has been created successfully. Please log in."
-                        );
+                        await (this.$refs.acknowledgeDialogue).show({
+                            message: "Your account has been created successfully. Please log in.",
+                        })
                         this.$router.push("/");
                     }
                 }
@@ -113,7 +118,7 @@ form {
     padding-bottom: 40px;
 }
 
-#signuppage{
+#signuppage {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
