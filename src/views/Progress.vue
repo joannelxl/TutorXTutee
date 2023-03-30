@@ -1,13 +1,13 @@
 <template>
-    <AddProgressNotes @added="change" />
-    {{ id }}
+    <DisplayProgress :key="refreshComp" :id="id" />
 </template>
-  
+
 <script>
-import AddProgressNotes from "../components/AddProgressNotes.vue";
+import DisplayProgress from "../components/DisplayProgress.vue";
+
 export default {
     components: {
-        AddProgressNotes,
+        DisplayProgress,
     },
     data() {
         return {
@@ -23,7 +23,8 @@ export default {
             this.refreshComp += 1;
         },
     },
+
 };
 </script>
-  
+
 <style></style>
