@@ -24,55 +24,62 @@ export default {
 			if (user) {
 				this.user = user
 				const q1 = query(collection(db, "TutoringArrangements"), where("tuteeEmail", "==", this.user.email), orderBy("tutorEmail"));
-				(await getDocs(q1)).forEach(async (document) => {
-					var arrangement = document.data()
-					arrangement.id = document.id
+				var size = (await getDocs(q1)).size
+				if (size > 0) {
+					var count = 0;
+						(await getDocs(q1)).forEach(async (document) => {
+							count += 1
+							var arrangement = document.data()
+							arrangement.id = document.id
 
-					// getting the tutorName to use later
-					var account = await getDoc(doc(db, "Tutors", document.data().tutorEmail))
-					arrangement.tutorName = account.data().firstName + " " + account.data().lastName
+							// getting the tutorName to use later
+							var account = await getDoc(doc(db, "Tutors", document.data().tutorEmail))
+							arrangement.tutorName = account.data().firstName + " " + account.data().lastName
 
-					// getting the chat Id corresponding to this tutor and tutee
-					const q2 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.user.email), where("TutorEmail", "==", document.data().tutorEmail));
-					(await getDocs(q2)).forEach((chat) => {
-						arrangement.chatId = chat.id
-					})
-					this.arrangements.push(arrangement)
-					this.email = this.user.email
-				})
-				this.dataLoaded = true
+							// getting the chat Id corresponding to this tutor and tutee
+							const q2 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.user.email), where("TutorEmail", "==", document.data().tutorEmail));
+							(await getDocs(q2)).forEach((chat) => {
+								arrangement.chatId = chat.id
+							})
+							this.arrangements.push(arrangement)
+							this.email = this.user.email
+							if (count == size) {
+								this.dataLoaded = true
+							}
+						})
+				} else {
+					this.dataLoaded = true
+				}
 			}
 		})
 	},
 	methods: {
 		async endSession(id, tutorName) {
-			/*const confirm = await (this.$refs.confirmDialogue).show({
+			const confirm = await (this.$refs.confirmDialogue).show({
 				title: "End Session",
-				message: "Are you sure you want to end the session with " + tuteeName + "?\nThis action cannot be undone.",
+				message: "Are you sure you want to end the session with " + tutorName + "?\nThis action cannot be undone.",
 				okButton: "Confirm",
+				cancelButton: "Cancel",
 			})
 			if (confirm) {
-				console.log("delete")
-			}
-			*/
-			if (confirm("Are you sure you want to end the session with " + tutorName + "?\nThis action cannot be undone.")) {
 				const db = getFirestore(firebaseApp);
 				await deleteDoc(doc(db, "TutoringArrangements", id))
 
 				this.$emit("ended")
 			}
-		}, 
+		},
 		redirectToChat(chatId) {
-			this.$router.push({name: "InChat", params: {id: chatId}})
+			this.$router.push({ name: "InChat", params: { id: chatId } })
 		},
 		redirectToProgress(progressId) {
-			this.$router.push({name: "Progress", params: {id: progressId}})
+			this.$router.push({ name: "Progress", params: { id: progressId } })
 		}
 	}
 }
 </script>
 
 <template>
+	<confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 	<div id="tutorarrangements" v-if="dataLoaded">
 		<div id="noarrangements" v-if="arrangements.length == 0">
 			<h3>You do not have any tutors currently.</h3>
@@ -84,7 +91,12 @@ export default {
 					<p><strong style="font-size: x-large;">{{ arrangement.tutorName }} </strong></p>
 					<text style="font-weight: bold;">Level: </text> {{ arrangement.level }} <br>
 					<text style="font-weight: bold;">Subject: </text> {{ arrangement.subject }} <br>
-					<text style="font-weight: bold;">Address: </text> {{ arrangement.address }} <br>
+					<div v-if="arrangement.location != 'Virtual'">
+						<text style="font-weight: bold;">Address: </text> {{ arrangement.address }} <br>
+					</div>
+					<div v-else>
+						<text style="font-weight: bold;">Location: </text> {{ arrangement.location }} <br>
+					</div>
 					<text style="font-weight: bold;">Day: </text> {{ arrangement.preferredDays }} <br>
 					<text style="font-weight: bold;">Time: </text> {{ arrangement.preferredTime }}
 				</div>
@@ -93,7 +105,6 @@ export default {
 					<button class="progressbutton" @click="redirectToProgress(arrangement.id)">Progress</button><br>
 					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tutorName)">End
 						Session</button>
-					<confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 				</div>
 			</div>
 		</div>
