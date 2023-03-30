@@ -5,7 +5,7 @@
     <div class="modal-container">
       <button class="close-button" @click="handleClose">x</button>
       <div class="modal-title">
-        <h1>Edit your request</h1>
+        <h1>Update your request</h1>
       </div>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
@@ -50,6 +50,7 @@
             :placeholder="address"
             v-model="newAddress"
             rows="3"
+            cols="27"
           ></textarea>
           <br /><br />
 
@@ -60,12 +61,15 @@
             :placeholder="remarks"
             v-model="newRemarks"
             rows="5"
+            cols="27"
           >
           </textarea>
           <br /><br />
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
-          <button class="edit-button" @click="handleEdit">Edit Request!</button>
+          <button class="edit-button" @click="handleEdit">
+            Update Request!
+          </button>
         </div>
       </form>
     </div>
@@ -176,6 +180,9 @@ export default {
       });
       /* this.handleClose();*/
       this.$parent.display();
+      setTimeout(function () {
+        alert("Request successfully updated!");
+      }, 150);
     },
     async handleClose() {
       console.log("close??");
@@ -252,11 +259,14 @@ select {
 }
 
 label {
-  margin-right: 10px;
+  float: left;
+  margin-right: 30px;
 }
 
 input {
+  float: right;
   height: 15px;
+  width: 180px;
 }
 
 form {
@@ -271,6 +281,7 @@ form {
   border: 1px solid #000000;
   font-size: 20px;
   margin-left: 50px;
+  float: right;
 }
 
 .cancel-button {
@@ -278,7 +289,7 @@ form {
   background: #d9d9d9;
   border: 1px solid #000000;
   font-size: 20px;
-  margin-left: 50px;
+  float: left;
 }
 
 textarea {

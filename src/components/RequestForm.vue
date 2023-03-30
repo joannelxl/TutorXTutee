@@ -11,19 +11,23 @@
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
           <label class="required">Subject:</label>
-          <input type="text" v-model="subject" />
+          <input type="text" placeholder="e.g. English" v-model="subject" />
           <br /><br />
 
           <label class="required">Level:</label>
-          <input type="text" v-model="level" />
+          <input type="text" placeholder="e.g. Secondary 1" v-model="level" />
           <br /><br />
 
           <label class="required">Preferred Days:</label>
-          <input type="text" v-model="preferredDays" />
+          <input
+            type="text"
+            placeholder="e.g. Tuesday"
+            v-model="preferredDays"
+          />
           <br />
           <br />
           <label class="required">Preferred Time:</label>
-          <input type="text" v-model="preferredTime" />
+          <input type="text" placeholder="e.g. 4pm" v-model="preferredTime" />
           <br /><br />
 
           <label class="required">Location:</label>
@@ -38,11 +42,24 @@
           <br /><br />
 
           <label class="required">Address:</label>
-          <textarea rows="3" type="text" v-model="address"></textarea>
+          <textarea
+            rows="3"
+            cols="27"
+            type="text"
+            placeholder="e.g. Computing drive 117417"
+            v-model="address"
+          ></textarea>
           <br /><br />
 
           <label>Remarks:</label>
-          <textarea rows="5" type="text" id="remarks" v-model="remarks">
+          <textarea
+            rows="5"
+            cols="27"
+            type="text"
+            id="remarks"
+            placeholder="e.g. I am having troubles writing essays"
+            v-model="remarks"
+          >
           </textarea>
           <br /><br />
 
@@ -116,6 +133,9 @@ export default {
         this.handleReset();
         this.$emit("added");
         this.handleClose();
+        setTimeout(function () {
+          alert("Request successfully created!");
+        }, 150);
       }
     },
 
@@ -205,18 +225,21 @@ textarea {
 }
 
 label {
-  margin-right: 10px;
+  float: left;
+  margin-right: 30px;
 }
 
 input {
+  float: right;
   height: 15px;
+  width: 180px;
 }
 .add-button {
   text-align: center;
   background: #e7e5aa;
   border: 1px solid #000000;
   font-size: 20px;
-  margin-left: 50px;
+  float: right;
 }
 
 .cancel-button {
@@ -224,7 +247,7 @@ input {
   background: #d9d9d9;
   border: 1px solid #000000;
   font-size: 20px;
-  margin-left: 50px;
+  float: left;
 }
 
 .required:after {

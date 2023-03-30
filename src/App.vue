@@ -2,7 +2,6 @@
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
 import Sidebar from "@/components/sidebar/Sidebar.vue";
-import MyRequest from "./views/MyRequest.vue";
 import { sidebarWidth } from "@/components/sidebar/state";
 
 export default {

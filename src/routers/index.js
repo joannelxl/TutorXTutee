@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
-import MyRequest from "@/views/MyRequest.vue";
 import Home from "../views/Home.vue";
 
 const routes = [
@@ -20,11 +19,6 @@ const routes = [
     meta: {
       hideNavbar: true,
     },
-  },
-  {
-    path: "/MyRequests",
-    name: "MyRequest",
-    component: MyRequest,
   },
 
   {
