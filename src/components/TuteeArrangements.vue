@@ -62,12 +62,12 @@ export default {
 
 				this.$emit("ended")
 			}
-		}, 
+		},
 		redirectToChat(chatId) {
-			this.$router.push({name: "InChat", params: {id: chatId}})
+			this.$router.push({ name: "InChat", params: { id: chatId } })
 		},
 		redirectToProgress(progressId) {
-			this.$router.push({name: "Progress", params: {id: progressId}})
+			this.$router.push({ name: "Progress", params: { id: progressId } })
 		}
 	}
 }
