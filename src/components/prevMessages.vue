@@ -1,11 +1,25 @@
 <template>
-  <div id="Heading">Tutor X Tutee</div>
+  <h1 id="Heading">Tutor X Tutee</h1>
   <router-link
     id="router"
     to="/Chat"
     style="font-family: Arial, Helvetica, sans-serif"
     >Back to Chat</router-link
   >
+  <div class = "toTuteeTutor" v-if="role">
+  <router-link
+    id = "toMyTutees"
+    to = "/myTutees"
+    style="font-family: Arial, Helvetica, sans-serif"
+    >Back to myTutees</router-link>
+</div>
+  <div class = "toTuteeTutor" v-else>
+    <router-link
+    id = "toMyTutors"
+    to = "/myTutors"
+    style = "font-family: Arial, Helvetica, sans-serif"
+    >Back to myTutors</router-link>
+  </div>
   <div id="chat">
     <div>
       <img
@@ -21,8 +35,8 @@
     <div id="messagesOnly">
       <!--need to display this on the left eventually-->
       <div id="display" v-if="allMessages">
-        <div id="scrollable">
-          <div id="allMessages" v-for="message in allMessages" :key="index">
+        <div class="scrollable">
+          <div id="allMessages" v-for="message in allMessages.slice().reverse()" :key="index">
             <div id="senderMessages">
               <div id="sender" v-if="message[1]">
                 <h4>{{ message[0] }}</h4>
@@ -76,6 +90,8 @@ export default {
   components: { ConfirmDialogue },
   data() {
     return {
+        //role if true if current user is tutor
+      role:"",
       displayName: "",
       allMessages: [],
       userEmail: "",
@@ -109,10 +125,13 @@ export default {
       const userSnap = await getDoc(usersRef);
       this.userRole = userSnap.data().role;
 
+
       //get the receiver email in the chat collection
       if (this.userRole == "tutor") {
+        this.role = true;
         receiverEmail = docSnap.data().TuteeEmail;
       } else {
+        this.role = false;
         receiverEmail = docSnap.data().TutorEmail;
       }
       console.log("current user is: " + this.userEmail);
@@ -222,8 +241,6 @@ export default {
 <style scoped>
 #Heading {
   color: black;
-  font-size: 2em;
-  font-weight: 400px;
   top: 10px;
   width: 700px;
   margin-top: 40px;
@@ -307,8 +324,31 @@ export default {
   margin-top: -10px;
 }
 
-#scrollable {
+.scrollable {
   overflow-y: scroll;
   height: 320px;
+  display: flex;
+  flex-direction:column-reverse;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: white;        /* color of the tracking area */
+  border-radius: 20px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: purple;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 2px solid violet;  /* creates padding around scroll thumb */
+}
+
+.toTuteeTutor {
+    margin-left: -90px;
+    margin-top: -50px;
+    
 }
 </style>
