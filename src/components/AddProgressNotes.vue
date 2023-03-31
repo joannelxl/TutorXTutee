@@ -167,6 +167,7 @@ export default {
 
 .heading {
     display: inline-block;
+    margin-left: 100px;
 }
 
 .modal-body {
