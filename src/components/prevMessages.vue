@@ -6,19 +6,21 @@
     style="font-family: Arial, Helvetica, sans-serif"
     >Back to Chat</router-link
   >
-  <div class = "toTuteeTutor" v-if="role">
-  <router-link
-    id = "toMyTutees"
-    to = "/myTutees"
-    style="font-family: Arial, Helvetica, sans-serif"
-    >Back to myTutees</router-link>
-</div>
-  <div class = "toTuteeTutor" v-else>
+  <div class="toTuteeTutor" v-if="role">
     <router-link
-    id = "toMyTutors"
-    to = "/myTutors"
-    style = "font-family: Arial, Helvetica, sans-serif"
-    >Back to myTutors</router-link>
+      id="toMyTutees"
+      to="/myTutees"
+      style="font-family: Arial, Helvetica, sans-serif"
+      >Back to myTutees</router-link
+    >
+  </div>
+  <div class="toTuteeTutor" v-else>
+    <router-link
+      id="toMyTutors"
+      to="/myTutors"
+      style="font-family: Arial, Helvetica, sans-serif"
+      >Back to myTutors</router-link
+    >
   </div>
   <div id="chat">
     <div>
@@ -36,12 +38,17 @@
       <!--need to display this on the left eventually-->
       <div id="display" v-if="allMessages">
         <div class="scrollable">
-          <div id="allMessages" v-for="message in allMessages.slice().reverse()" :key="index">
+          <div
+            id="allMessages"
+            v-for="message in allMessages.slice().reverse()"
+            :key="index">
             <div id="senderMessages">
               <div id="sender" v-if="message[1]">
                 <h4>{{ message[0] }}</h4>
               </div>
-              <div id="receiver" v-else>
+            </div>
+            <div id = "receiverMessages">
+              <div id="receiver" v-if="message[1] == false">
                 <h4>{{ message[0] }}</h4>
               </div>
             </div>
@@ -53,7 +60,7 @@
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 35px; width: 450px"
+          style="height: 60px; width: 550px"
           v-model="newMessage"
           placeholder="Send a message..." />
         <button id="button" type="submit">Send</button>
@@ -90,8 +97,8 @@ export default {
   components: { ConfirmDialogue },
   data() {
     return {
-        //role if true if current user is tutor
-      role:"",
+      //role if true if current user is tutor
+      role: "",
       displayName: "",
       allMessages: [],
       userEmail: "",
@@ -124,7 +131,6 @@ export default {
       const usersRef = doc(db, "VerifiedUsers", this.userEmail);
       const userSnap = await getDoc(usersRef);
       this.userRole = userSnap.data().role;
-
 
       //get the receiver email in the chat collection
       if (this.userRole == "tutor") {
@@ -163,15 +169,9 @@ export default {
         this.allMessages = [];
         snapShot.docs.forEach((doc) => {
           if (doc.data().sender == this.userEmail) {
-            this.allMessages.push([
-              doc.data().message,
-              true,
-            ]);
+            this.allMessages.push([doc.data().message, true]);
           } else {
-            this.allMessages.push([
-              doc.data().message,
-              false,
-            ]);
+            this.allMessages.push([doc.data().message, false]);
             console.log(snapShot.message);
           }
         });
@@ -183,13 +183,12 @@ export default {
         const docRef = doc(db, "Tutees", receiverEmail);
         const docSnap = await getDoc(docRef);
         var name = docSnap.data().firstName + " " + docSnap.data().lastName;
-        this.displayName = name; 
+        this.displayName = name;
       } else {
         const docRef = doc(db, "Tutors", receiverEmail);
         const docSnap = await getDoc(docRef);
         var name = docSnap.data().firstName + " " + docSnap.data().lastName;
-        this.displayName = name; 
-
+        this.displayName = name;
       }
       //this.displayName = receiverEmail.split("@");
       //get all documents that correspond to the chat id and sender = email of the receiver
@@ -197,7 +196,9 @@ export default {
     },
 
     async sendMessage() {
+      if (this.newMessage) {
       this.allMessages.push([this.newMessage, true]);
+      }
 
       //add to firebase
       //dont need to add to the chat collection since being able to come to this page
@@ -288,8 +289,8 @@ export default {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
   border-radius: 100%;
-  left: 550px;
-  bottom: 70px;
+  left: 570px;
+  bottom: 50px;
 }
 
 .deleteIcon {
@@ -302,36 +303,25 @@ export default {
 }
 
 #receiverMessages {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  width: 300px;
+  float: left;
+  margin-left: 30px;
+  padding-bottom: 10px;
 }
 
-#sender {
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  text-align: right;
-  block-size: fit-content;
-  right: 0px;
-  height: 12%;
-  margin-left: 370px;
-  margin-right: 40px;
-  padding: 0px 10px;
+#senderMessages {
+    float: right;
+    margin-right: 30px;
+    padding-bottom: 10px;
 }
 
-#receiver {
-  background: #ffffff;
+#sender, #receiver {
+  background: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   text-align: left;
-  block-size: fit-content;
   right: 0px;
-  height: 12%;
-  margin-left: 40px;
-  margin-right: 370px;
   padding: 0px 10px;
+  margin-top:-15px;
 }
 
 #router {
@@ -341,29 +331,28 @@ export default {
 
 .scrollable {
   overflow-y: scroll;
-  height: 320px;
+  height: 310px;
   display: flex;
-  flex-direction:column-reverse;
+  flex-direction: column-reverse;
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 12px;               /* width of the entire scrollbar */
+  width: 12px; /* width of the entire scrollbar */
 }
 
 .scrollable::-webkit-scrollbar-track {
-  background: white;        /* color of the tracking area */
+  background: beige; /* color of the tracking area */
   border-radius: 20px;
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background-color: purple;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
-  border: 2px solid violet;  /* creates padding around scroll thumb */
+  background-color: #c77cc7; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid purple; /* creates padding around scroll thumb */
 }
 
 .toTuteeTutor {
-    margin-left: -90px;
-    margin-top: -50px;
-    
+  margin-left: -90px;
+  margin-top: -50px;
 }
 </style>

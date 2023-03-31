@@ -50,8 +50,6 @@ export default {
 				} else {
 					this.dataLoaded = true
 				}
-
-
 			}
 		})
 	},
@@ -59,7 +57,7 @@ export default {
 		async endSession(id, tuteeName) {
 			const confirm = await (this.$refs.confirmDialogue).show({
 				title: "End Session",
-				message: "Are you sure you want to end the session with " + tuteeName + "?\nThis action cannot be undone.",
+				message: "Are you sure you want to end the session with " + tuteeName + "?" + '\n' + "This action cannot be undone.",
 				okButton: "Confirm",
 				cancelButton: "Cancel",
 			})
@@ -70,8 +68,11 @@ export default {
 				this.$emit("ended")
 			}
 		},
-		redirectToChat(chatId) {
-			this.$router.push({ name: "InChat", params: { id: chatId } })
+		async redirectToChat(chatId) {
+            //check if chatId exist in the document. if not, create new one w the same id
+            //need to check if curr user is tutor or tutee
+            //need to hv tutor and tutee email
+            this.$router.push({ name: "InChat", params: { id: chatId } })
 		},
 		redirectToProgress(progressId) {
 			this.$router.push({ name: "Progress", params: { id: progressId } })

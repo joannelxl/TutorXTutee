@@ -1,5 +1,5 @@
 <template>
-    <h1 id="Heading">Tutor X Tutee</h1>
+  <h1 id="Heading">Tutor X Tutee</h1>
   <div class="allChats">
     <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)">
       <div class="container">
@@ -22,7 +22,7 @@ import {
   query,
   where,
   doc,
-  orderBy
+  orderBy,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     async display() {
-
       this.chats = [];
       //const auth = getAuth();
       const usersRef = doc(db, "VerifiedUsers", this.userEmail);
@@ -75,7 +74,7 @@ export default {
       } else if (this.userRole == "tutee") {
         const chatCollection = collection(db, "Chats");
         const querySnapshot = await getDocs(collection(db, "Chats"));
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(async(doc) => {
           if (doc.data().TuteeEmail == this.userEmail) {
             chatId = doc.id;
             receiverEmail = doc.data().TutorEmail;
@@ -87,12 +86,8 @@ export default {
       //trying to get the latest message for each receiver
       //const msgRef = collection(db, "UserMessages");
       //const querySnapshot2 = query(msgRef,where("chatId", "==", chatId),orderBy("sentAt"));
-      
-      //console.log(type(querySnapshot2)) 
 
-
-
-
+      //console.log(type(querySnapshot2))
     },
     toMessages(chat) {
       console.log(chat[2]);
@@ -112,17 +107,16 @@ export default {
   width: 500px;
   height: 50px;
   margin-left: 260px;
-
 }
 
 .chat {
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
 }
 .allChats {
-    margin-top: 120px;
+  margin-top: 120px;
 }
 
 #Heading {
@@ -133,5 +127,4 @@ export default {
   margin-bottom: 0px;
   margin-left: 230px;
 }
-
 </style>

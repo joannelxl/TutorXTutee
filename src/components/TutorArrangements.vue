@@ -70,7 +70,7 @@ export default {
         message:
           "Are you sure you want to end the session with " +
           tutorName +
-          "?\nThis action cannot be undone.",
+          "?" + '\n' + "This action cannot be undone.",
         okButton: "Confirm",
         cancelButton: "Cancel",
       });
