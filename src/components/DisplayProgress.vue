@@ -195,7 +195,7 @@ export default {
 
 .date {
     float: right;
-    margin-right: 32px;
+    margin-right: 20px;
     font-weight: bold;
 
 }
