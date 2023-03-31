@@ -28,11 +28,11 @@
             <h3>To add please click the + button.</h3>
         </div>
         <div class="progress">
-            <div class="req" v-for="(note, index) in progressNotes">
+            <div class="req" v-for="note in progressNotes">
                 <div class="card">
                     <div class="container">
                         <p class="date"> {{ note[1].Date.toDate().toLocaleDateString("en-GB") }}</p>
-                        <p class="lesson"><strong>Lesson {{ progressNotes.length - index }}</strong></p>
+                        <p class="lesson"><strong>Lesson {{ note[1].Lesson }}</strong></p>
 
                     </div>
                     <br><br>

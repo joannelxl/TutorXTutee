@@ -1,5 +1,5 @@
 <template>
-    <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
+    <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
     <div class="modal-mask">
 
         <div class="form-container">
@@ -18,8 +18,8 @@
                             <p>{{ tuteeName }}</p>
                         </div>
 
-                        <!-- <label class=" required">Lesson Number:</label> -->
-                        <!-- <input min="1" type="number" v-model="lesson" /> -->
+                        <label class=" required">Lesson Number:</label>
+                        <input type="number" v-model="lesson" />
                         <br />
 
                         <label class="required">Remarks:</label>
@@ -42,7 +42,7 @@ import firebaseApp from "../firebase.js";
 import { collection, getFirestore, doc, getDoc } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import ConfirmDialogue from "./ConfirmDialogue.vue";
+import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 
 const db = getFirestore(firebaseApp);
 export default {
@@ -50,7 +50,7 @@ export default {
         return {
             //Fake email
             useremail: "",
-            // lesson: '',
+            lesson: '',
             remarks: "",
             formError: "",
             tuteeName: "",
@@ -58,7 +58,7 @@ export default {
         };
     },
     components: {
-        ConfirmDialogue,
+        AcknowledgeDialogue,
     },
     emits: ["added"],
     methods: {
@@ -66,30 +66,27 @@ export default {
 
             //check if location is chosen
             if (
-                // this.lesson.length == 0 ||
-                this.remarks.length == 0
+                this.lesson < 1
             ) {
-                this.formError = "Please fill in all required fields!";
-            } else {
+                this.formError = "Lesson number cannot be negative!";
+            } else if (
+                this.lesson.length == 0 ||
+                this.remarks.length == 0) {
+                this.formError = "Please fill in all required fields!"
+            }
+            else {
                 let details = {
                     User: this.useremail,
-                    // Lesson: this.lesson,
+                    Lesson: this.lesson,
                     Date: new Date(),
                     Remarks: this.remarks,
                     Id: this.id,
                 };
 
                 try {
-                    const ok = await this.$refs.confirmDialogue.show({
-                        title: "Add Progress Note",
-                        message:
-                            "Add Progress Note",
-                        okButton: "Confirm Add",
-                        cancelButton: "Go Back",
-                    });
-                    if (ok) {
-                        const docRef = await addDoc(collection(db, "ProgressNotes"), details);
-                    }
+                    await (this.$refs.acknowledgeDialogue).show({
+                        message: "New Progress Note added!",
+                    })
                 } catch (error) {
                     console.error("Error adding document: ", error);
                 }
