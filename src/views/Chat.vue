@@ -69,8 +69,6 @@ export default {
           if (document.data().TutorEmail == this.userEmail) {
             chatId = document.id;
             receiverEmail = document.data().TuteeEmail;
-
-            
             this.chats.push([receiverEmail, "test", chatId]);
           }
         });
@@ -124,7 +122,7 @@ export default {
     margin: 0;
 }
 .allChats {
-    margin-top: 150px;
+    margin-top: 120px;
 }
 
 #Heading {

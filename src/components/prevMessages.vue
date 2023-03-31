@@ -30,7 +30,7 @@
       <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
     </div>
     <div id="displayname">
-      <h3>{{ displayName[0] }}</h3>
+      <h3>{{ displayName }}</h3>
     </div>
     <div id="messagesOnly">
       <!--need to display this on the left eventually-->
@@ -176,7 +176,22 @@ export default {
           }
         });
       });
-      this.displayName = receiverEmail.split("@");
+
+      //get Display name
+      if (this.userRole == "tutor") {
+        //means receiver is tutee
+        const docRef = doc(db, "Tutees", receiverEmail);
+        const docSnap = await getDoc(docRef);
+        var name = docSnap.data().firstName + " " + docSnap.data().lastName;
+        this.displayName = name; 
+      } else {
+        const docRef = doc(db, "Tutors", receiverEmail);
+        const docSnap = await getDoc(docRef);
+        var name = docSnap.data().firstName + " " + docSnap.data().lastName;
+        this.displayName = name; 
+
+      }
+      //this.displayName = receiverEmail.split("@");
       //get all documents that correspond to the chat id and sender = email of the receiver
       //sort all these documents according to date and time, then push the messages into receiverMessages array
     },
