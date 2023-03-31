@@ -27,13 +27,12 @@
             <h3>You do not have any progress notes now. </h3>
             <h3>To add please click the + button.</h3>
         </div>
-
         <div class="progress">
-            <div class="req" v-for="note in progressNotes">
+            <div class="req" v-for="(note, index) in progressNotes">
                 <div class="card">
                     <div class="container">
                         <p class="date"> {{ note[1].Date.toDate().toLocaleDateString("en-GB") }}</p>
-                        <p class="lesson"><strong>Lesson {{ note[1].Lesson }}</strong></p>
+                        <p class="lesson"><strong>Lesson {{ progressNotes.length - index }}</strong></p>
 
                     </div>
                     <br><br>
@@ -93,7 +92,7 @@ export default {
         async display() {
             this.progressNotes = [];
             const progressRef = collection(db, "ProgressNotes");
-            const q = query(progressRef, orderBy("Lesson", 'desc'), where("Id", "==", this.id));
+            const q = query(progressRef, orderBy("Date", 'desc'), where("Id", "==", this.id));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 this.progressNotes.push([doc.id, doc.data()]);

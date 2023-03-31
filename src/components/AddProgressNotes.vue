@@ -18,9 +18,9 @@
                             <p>{{ tuteeName }}</p>
                         </div>
 
-                        <label class=" required">Lesson Number:</label>
-                        <input min="1" type="number" v-model="lesson" />
-                        <br /><br />
+                        <!-- <label class=" required">Lesson Number:</label> -->
+                        <!-- <input min="1" type="number" v-model="lesson" /> -->
+                        <br />
 
                         <label class="required">Remarks:</label>
                         <textarea rows="15" type="text" id="remarks" v-model="remarks"></textarea>
@@ -50,7 +50,7 @@ export default {
         return {
             //Fake email
             useremail: "",
-            lesson: '',
+            // lesson: '',
             remarks: "",
             formError: "",
             tuteeName: "",
@@ -66,14 +66,14 @@ export default {
 
             //check if location is chosen
             if (
-                this.lesson.length == 0 ||
+                // this.lesson.length == 0 ||
                 this.remarks.length == 0
             ) {
                 this.formError = "Please fill in all required fields!";
             } else {
                 let details = {
                     User: this.useremail,
-                    Lesson: this.lesson,
+                    // Lesson: this.lesson,
                     Date: new Date(),
                     Remarks: this.remarks,
                     Id: this.id,
@@ -107,7 +107,7 @@ export default {
         },
         async handleReset() {
             (this.subject = ""),
-                (this.lesson = ""),
+                // (this.lesson = ""),
                 (this.remarks = ""),
                 (this.formError = "");
         },
