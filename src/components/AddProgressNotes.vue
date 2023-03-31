@@ -23,7 +23,7 @@
                         <br />
 
                         <label class="required">Remarks:</label>
-                        <textarea rows="15" type="text" id="remarks" v-model="remarks"></textarea>
+                        <textarea style="font-size: 15px;" rows="15" type="text" id="remarks" v-model="remarks"></textarea>
 
                         <div class="error" v-if="formError">{{ formError }}</div>
                         <br /><br />
