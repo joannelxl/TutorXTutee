@@ -217,7 +217,6 @@ input {
 }
 
 .add-button {
-
     border-radius: 5px;
     padding: 5px;
     width: 170px;
@@ -230,12 +229,13 @@ input {
     cursor: pointer;
     box-shadow: 2px 2px gray;
     background-color: #a3cb7b;
-    float: right
+    float: right;
+    text-align: center;
 }
 
 .add-button:hover {
     cursor: pointer;
-    background-color: white;
+    background-color: #8bae68;
 }
 
 .cancel-button {

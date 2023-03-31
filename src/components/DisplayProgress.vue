@@ -242,7 +242,7 @@ export default {
 
 .delete-button:hover {
     cursor: pointer;
-    background-color: white;
+    background-color: #d08a6e;
 }
 
 #show-modal {
