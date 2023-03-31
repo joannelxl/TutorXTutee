@@ -2,51 +2,62 @@
     <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 
     <div class="main-container">
+
         <!-- Back to tutoring arrangement  -->
-        <div style="float:left" v-if="role == 'tutor'">
+        <div style="float:left; margin-left:20px;" v-if="role == 'tutor'">
             <br>
-            <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutees</router-link>
+            <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif; height:9px;">Back to
+                MyTutees</router-link>
             <button id="show-modal" @click="navigateProgressNotes"></button>
         </div>
 
-        <div style="float:left" v-if="role == 'tutee'">
+        <div style="float:left;margin-left:20px;" v-if="role == 'tutee'">
             <br>
             <router-link to="/MyTutors" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutors</router-link>
         </div>
-        <h1>Tutor X Tutee</h1>
-        <h4>All your written progress for {{ tuteeName }} are listed here.</h4>
+        <div class="entire-card">
 
-        <!-- if tutee -->
-        <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
-            <h3>Your tutor has not added any progress note.</h3>
-            <h3>Progress Notes will be displayed here once he/she writes one.</h3>
-        </div>
+            <div class="heading">
+                <h1 style="margin-top:0px">Tutor X Tutee</h1>
+                <h4>All your written progress for {{ tuteeName }} are listed here.</h4>
+            </div>
 
-        <!-- if tutee -->
-        <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
-            <h3>You do not have any progress notes now. </h3>
-            <h3>To add please click the + button.</h3>
-        </div>
-        <div class="progress">
-            <div class="req" v-for="note in progressNotes">
-                <div class="card">
-                    <div class="container">
-                        <p class="date"> {{ note[1].Date.toDate().toLocaleDateString("en-GB") }}</p>
-                        <p class="lesson"><strong>Lesson {{ note[1].Lesson }}</strong></p>
+            <!-- if tutee -->
+            <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
+                <h3>Your tutor has not added any progress note.</h3>
+                <h3>Progress Notes will be displayed here once he/she writes one.</h3>
+            </div>
+
+            <!-- if tutee -->
+            <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
+                <h3>You do not have any progress notes now. </h3>
+                <h3>To add please click the + button.</h3>
+            </div>
+
+            <div class="progress">
+                <div class="req" v-for="note in progressNotes">
+                    <div class="card">
+                        <div class="container">
+                            <text style="font-size: large" class="date"> {{
+                                note[1].Date.toDate().toLocaleDateString("en-GB")
+                            }}</text>
+                            <text style="font-size: x-large" class="lesson"><strong>Lesson {{ note[1].Lesson
+                            }}</strong></text>
+
+                        </div>
+                        <br><br>
+                        <p class="remarks">
+                            {{ note[1].Remarks }}
+                            <br>
+                            <button v-if="role == 'tutor'" class="delete-button" @click="handleDelete(note[0])">
+                                Delete Note
+                            </button>
+                        </p>
 
                     </div>
-                    <br><br>
-                    <p class="remarks">
-                        {{ note[1].Remarks }}
-                        <br><br>
-                        <button v-if="role == 'tutor'" class="delete-button" @click="handleDelete(note[0])">
-                            Delete Note
-                        </button>
-                    </p>
 
+                    <br>
                 </div>
-
-                <br>
             </div>
         </div>
     </div>
@@ -128,7 +139,7 @@ export default {
                 const docRef = doc(db, "TutoringArrangements", this.id);
                 try {
                     const docSnap = await getDoc(docRef);
-                    var account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
+                    const account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
                     this.tuteeName = account.data().firstName + " " + account.data().lastName
                 } catch (error) {
                     console.log(error)
@@ -142,23 +153,16 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
-    width: 70%;
-    height: 90%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
 .empty {
     background-color: #f3ddb0;
     padding: 5px 10px;
     border-radius: 10px;
     margin: 0px;
 
+}
+
+.heading {
+    display: inline-block;
 }
 
 .card {
@@ -169,32 +173,48 @@ export default {
     min-height: 100%;
     background-color: #f3ddb0;
     height: 20%;
-    padding-bottom: 2px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.entire-card {
+    display: inline-block;
+    border-radius: 10px;
+    padding: 10px;
+    padding-top: 0px;
+    margin: 20px;
+    margin-top: 0px;
+    width: 750px;
+    margin-left: 250px;
 }
 
 .lesson {
-    float: left
+    float: left;
+    font-size: 16px;
 }
 
 .date {
     float: right;
-    margin-right: 15px;
-    font-family: 'Radley';
-    font-weight: bold
+    margin-right: 32px;
+    font-weight: bold;
+
 }
 
 .remarks {
-
     overflow-wrap: break-word;
     text-overflow: ellipsis;
     margin-left: 16px;
     overflow: auto;
     justify-content: baseline;
     padding-right: 20px;
+    line-height: 25px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 .container {
     padding-left: 15px;
+    margin-top: 10px;
 }
 
 .progress {
@@ -205,18 +225,19 @@ export default {
 
 .delete-button {
     border-radius: 5px;
-    width: 90px;
+    padding: 5px;
+    width: 120px;
     text-align: left;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-right: 9px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border: none;
-    height: 30px;
-    font-size: small;
+    height: 40px;
+    font-size: large;
     cursor: pointer;
     box-shadow: 2px 2px gray;
-    background-color: rgba(240, 51, 51, 0.56);
-    float: left
+    background-color: #efa182;
+    float: right;
+    text-align: center;
 }
 
 .delete-button:hover {

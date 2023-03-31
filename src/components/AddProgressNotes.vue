@@ -1,13 +1,15 @@
 <template>
     <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
     <div class="modal-mask">
-
+        <br>
+        <div style="float:left; margin-left:15px">
+            <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
+        </div>
         <div class="form-container">
-            <div style="float:left">
-                <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
+            <div class="heading">
+                <h1>Tutor X Tutee</h1>
+                <h4>Keep track of {{ tuteeName }}'s progress here.</h4>
             </div>
-            <h1>Tutor X Tutee</h1>
-            <h4>Keep track of {{ tuteeName }}'s progress here.</h4>
 
             <div class="modal-container">
                 <form id="requestform" @submit.prevent="">
@@ -26,7 +28,7 @@
                         <textarea style="font-size: 15px;" rows="15" type="text" id="remarks" v-model="remarks"></textarea>
 
                         <div class="error" v-if="formError">{{ formError }}</div>
-                        <br /><br />
+                        <br />
 
                         <button class="add-button" @click="handleSubmit">Add Progress Note!</button>
 
@@ -39,8 +41,7 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { collection, getFirestore, doc, getDoc } from "firebase/firestore";
-import { addDoc } from "firebase/firestore";
+import { collection, getFirestore, doc, getDoc, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 
@@ -82,8 +83,8 @@ export default {
                     Remarks: this.remarks,
                     Id: this.id,
                 };
-
                 try {
+                    await addDoc(collection(db, "ProgressNotes"), details);
                     await (this.$refs.acknowledgeDialogue).show({
                         message: "New Progress Note added!",
                     })
@@ -103,10 +104,10 @@ export default {
             this.handleReset();
         },
         async handleReset() {
-            (this.subject = ""),
-                // (this.lesson = ""),
-                (this.remarks = ""),
-                (this.formError = "");
+            this.subject = ""
+            this.lesson = ""
+            this.remarks = ""
+            this.formError = ""
         },
     },
     async mounted() {
@@ -121,7 +122,7 @@ export default {
                 const docRef = doc(db, "TutoringArrangements", this.id);
                 try {
                     const docSnap = await getDoc(docRef);
-                    var account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
+                    const account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
                     this.tuteeName = account.data().firstName + " " + account.data().lastName
                 } catch (error) {
                     console.log(error)
@@ -144,15 +145,12 @@ export default {
 }
 
 .form-container {
-    width: 40%;
-    height: 90%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    margin: auto;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px;
+    margin-top: 0px;
+    width: 750px;
+    margin-left: 200px;
 }
 
 .modal-container {
@@ -160,14 +158,15 @@ export default {
     margin: auto;
     padding: 20px 50px 50px 50px;
     background-color: #F3DDB0;
-    border-radius: 2px;
+    border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    border-radius: 25px;
+    padding-bottom: 60px;
+
 }
 
-.modal-title {
-    text-align: center;
+.heading {
+    display: inline-block;
 }
 
 .modal-body {
@@ -182,15 +181,16 @@ form label {
 input[type=number],
 input[type=date],
 textarea {
-    border-radius: 25px;
+    border-radius: 2px;
     background-color: rgba(138, 121, 121, 0.26);
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+
 }
 
 select {
@@ -216,19 +216,20 @@ input {
 }
 
 .add-button {
-    float: right;
-    background: rgba(3, 131, 0, 0.64);
+
     border-radius: 5px;
-    width: 160px;
+    padding: 5px;
+    width: 170px;
     text-align: left;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-right: 9px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border: none;
-    height: 30px;
-    font-size: medium;
+    height: 40px;
+    font-size: large;
     cursor: pointer;
     box-shadow: 2px 2px gray;
+    background-color: #a3cb7b;
+    float: right
 }
 
 .add-button:hover {
