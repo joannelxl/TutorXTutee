@@ -101,19 +101,25 @@ export default {
 .container {
   background-color: #f3ddb0;
   text-align: center;
-  border: 1px solid lightgrey;
+  border: 1px solid grey;
   padding: 20px 90px;
   display: inline-block;
   width: 500px;
   height: 50px;
   margin-left: 260px;
 }
-
 .chat {
-  border: none;
-  background: none;
   padding: 0;
-  margin: 0;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border-radius: none;
+  box-shadow: 0 9px transparent;
+}
+.chat:active {
+  transform: translateY(3px);
 }
 .allChats {
   margin-top: 120px;

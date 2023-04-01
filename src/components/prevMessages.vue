@@ -4,14 +4,14 @@
     id="router"
     to="/Chat"
     style="font-family: Arial, Helvetica, sans-serif"
-    >Back to Chat</router-link
+    >Back to Chats</router-link
   >
   <div class="toTuteeTutor" v-if="role">
     <router-link
       id="toMyTutees"
       to="/myTutees"
       style="font-family: Arial, Helvetica, sans-serif"
-      >Back to myTutees</router-link
+      >Back to My Tutees</router-link
     >
   </div>
   <div class="toTuteeTutor" v-else>
@@ -19,7 +19,7 @@
       id="toMyTutors"
       to="/myTutors"
       style="font-family: Arial, Helvetica, sans-serif"
-      >Back to myTutors</router-link
+      >Back to My Tutors</router-link
     >
   </div>
   <div id="chat">
@@ -60,7 +60,7 @@
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 60px; width: 550px"
+          style="height: 60px; width: 550px;"
           v-model="newMessage"
           placeholder="Send a message..." />
         <button id="button" type="submit">Send</button>
@@ -283,14 +283,15 @@ export default {
   height: 100px;
   left: 40px;
   bottom: 1px;
+  
 }
 
 #button {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
-  border-radius: 100%;
   left: 570px;
   bottom: 50px;
+  padding: 10px;
 }
 
 .deleteIcon {
@@ -320,8 +321,10 @@ export default {
   border-radius: 10px;
   text-align: left;
   right: 0px;
-  padding: 0px 10px;
-  margin-top:-15px;
+  padding: 0px 20px;
+  margin-top:-25px;
+  max-width:350px;
+  word-break: break-all;
 }
 
 #router {
@@ -341,7 +344,7 @@ export default {
 }
 
 .scrollable::-webkit-scrollbar-track {
-  background: beige; /* color of the tracking area */
+  background: transparent; /* color of the tracking area */
   border-radius: 20px;
 }
 

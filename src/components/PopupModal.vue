@@ -59,5 +59,6 @@ export default {
     margin-left: auto;
     margin-right: auto;
     padding: 1rem;
+    max-width: 400px;
 }
 </style>
