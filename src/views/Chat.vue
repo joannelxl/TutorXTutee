@@ -60,25 +60,34 @@ export default {
       //for userMessages to use
       var chatId;
       var receiverEmail;
+      var fullName;
       if (this.userRole == "tutor") {
         const chatCollection = collection(db, "Chats");
         //getting all documents in the chat collection
         const querySnapshot = await getDocs(collection(db, "Chats"));
-        querySnapshot.forEach((document) => {
+        querySnapshot.forEach(async(document) => {
           if (document.data().TutorEmail == this.userEmail) {
             chatId = document.id;
             receiverEmail = document.data().TuteeEmail;
-            this.chats.push([receiverEmail, "test", chatId]);
+            //if curr user is tutor, means receiver is tutee
+            const docRef = doc(db, "Tutees", receiverEmail);
+            const docSnap = await getDoc(docRef);
+            fullName = docSnap.data().firstName + " " + docSnap.data().lastName
+            this.chats.push([fullName, "test", chatId]);
           }
         });
       } else if (this.userRole == "tutee") {
         const chatCollection = collection(db, "Chats");
         const querySnapshot = await getDocs(collection(db, "Chats"));
-        querySnapshot.forEach(async(doc) => {
-          if (doc.data().TuteeEmail == this.userEmail) {
-            chatId = doc.id;
-            receiverEmail = doc.data().TutorEmail;
-            this.chats.push([receiverEmail, "test", chatId]);
+        querySnapshot.forEach(async(document) => {
+          if (document.data().TuteeEmail == this.userEmail) {
+            chatId = document.id;
+            receiverEmail = document.data().TutorEmail;
+            //if curr user is tutee, means receiver is tutor
+            const docRef = doc(db, "Tutors", receiverEmail);
+            const docSnap = await getDoc(docRef);
+            fullName = docSnap.data().firstName + " " + docSnap.data().lastName
+            this.chats.push([fullName, "test", chatId]);
           }
         });
       }
