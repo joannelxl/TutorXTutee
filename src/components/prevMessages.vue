@@ -307,12 +307,14 @@ export default {
   float: left;
   margin-left: 30px;
   padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 #senderMessages {
     float: right;
     margin-right: 30px;
     padding-bottom: 10px;
+    padding-top: 10px
 }
 
 #sender, #receiver {
@@ -340,7 +342,7 @@ export default {
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
+  width: 10px; /* width of the entire scrollbar */
 }
 
 .scrollable::-webkit-scrollbar-track {
