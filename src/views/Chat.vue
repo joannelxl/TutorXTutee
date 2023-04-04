@@ -1,10 +1,14 @@
 <template>
-  <h1 id="Heading">Tutor X Tutee</h1>
+  <div class="intro">
+    <h1>Tutor X Tutee</h1>
+    <h4>All your chats are listed here.</h4>
+  </div>
   <div class="allChats">
     <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)">
       <div class="container">
         <!-- chat[0] is name, chat[1] is latest message, chat[3] is chatid -->
         <h1>{{ chat[0] }}</h1>
+        <h3>{{ chat[1] }}</h3>
         <!--<h2>{{ chat[1] }}</h2>-->
       </div>
       <!--<prevMessages :receiverEmail="chat[0]"/>-->
@@ -23,6 +27,7 @@ import {
   where,
   doc,
   orderBy,
+  limit,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
@@ -65,29 +70,44 @@ export default {
         const chatCollection = collection(db, "Chats");
         //getting all documents in the chat collection
         const querySnapshot = await getDocs(collection(db, "Chats"));
-        querySnapshot.forEach(async(document) => {
+        querySnapshot.forEach(async (document) => {
           if (document.data().TutorEmail == this.userEmail) {
             chatId = document.id;
             receiverEmail = document.data().TuteeEmail;
             //if curr user is tutor, means receiver is tutee
             const docRef = doc(db, "Tutees", receiverEmail);
             const docSnap = await getDoc(docRef);
-            fullName = docSnap.data().firstName + " " + docSnap.data().lastName
+            fullName = docSnap.data().firstName + " " + docSnap.data().lastName;
+
             this.chats.push([fullName, "test", chatId]);
           }
         });
       } else if (this.userRole == "tutee") {
         const chatCollection = collection(db, "Chats");
         const querySnapshot = await getDocs(collection(db, "Chats"));
-        querySnapshot.forEach(async(document) => {
+        querySnapshot.forEach(async (document) => {
           if (document.data().TuteeEmail == this.userEmail) {
             chatId = document.id;
             receiverEmail = document.data().TutorEmail;
             //if curr user is tutee, means receiver is tutor
             const docRef = doc(db, "Tutors", receiverEmail);
             const docSnap = await getDoc(docRef);
-            fullName = docSnap.data().firstName + " " + docSnap.data().lastName
-            this.chats.push([fullName, "test", chatId]);
+            fullName = docSnap.data().firstName + " " + docSnap.data().lastName;
+
+            //get latest message
+            const msgRef = collection(db, "UserMessages");
+            const querySnapshot2 = query(
+              msgRef,
+              where("chatId", "==", chatId),
+              orderBy("sentAt", "desc"),
+              limit(1)
+            );
+            var latestMessage;
+            (await getDocs(querySnapshot2)).forEach((document) => {
+              latestMessage = document.data().message;
+            });
+            console.log(latestMessage);
+            this.chats.push([fullName, latestMessage, chatId]);
           }
         });
       }
@@ -118,7 +138,6 @@ export default {
   margin-left: 260px;
 }
 .chat {
-  padding: 0;
   text-align: center;
   cursor: pointer;
   outline: none;
@@ -134,12 +153,8 @@ export default {
   margin-top: 120px;
 }
 
-#Heading {
-  color: black;
-  top: 10px;
-  width: 700px;
-  margin-top: 40px;
-  margin-bottom: 0px;
-  margin-left: 230px;
+.intro {
+  text-align: center;
+  width: 1200px;
 }
 </style>

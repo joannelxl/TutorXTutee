@@ -4,7 +4,7 @@
     id="router"
     to="/Chat"
     style="font-family: Arial, Helvetica, sans-serif"
-    >Back to Chats</router-link
+    >Back to Chat</router-link
   >
   <div class="toTuteeTutor" v-if="role">
     <router-link
@@ -60,7 +60,7 @@
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 60px; width: 550px;"
+          style="height: 60px; width: 550px"
           v-model="newMessage"
           placeholder="Send a message..." />
         <button id="button" type="submit">Send</button>
@@ -283,15 +283,14 @@ export default {
   height: 100px;
   left: 40px;
   bottom: 1px;
-  
 }
 
 #button {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
+  border-radius: 100%;
   left: 570px;
   bottom: 50px;
-  padding: 10px;
 }
 
 .deleteIcon {
@@ -307,14 +306,12 @@ export default {
   float: left;
   margin-left: 30px;
   padding-bottom: 10px;
-  padding-top: 10px;
 }
 
 #senderMessages {
     float: right;
     margin-right: 30px;
     padding-bottom: 10px;
-    padding-top: 10px
 }
 
 #sender, #receiver {
@@ -342,7 +339,7 @@ export default {
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 10px; /* width of the entire scrollbar */
+  width: 12px; /* width of the entire scrollbar */
 }
 
 .scrollable::-webkit-scrollbar-track {
