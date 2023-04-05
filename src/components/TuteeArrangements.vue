@@ -167,24 +167,31 @@ button {
 	box-shadow: 2px 2px gray;
 }
 
-button:hover {
-	background-color: white;
-}
-
 button:active {
-	transform: translate(1px, 1px);
+  transform: translate(1px, 1px);
 }
 
 .chatbutton {
-	background-color: #8CD7E8;
+  background-color: #8CD7E8;
+}
 
+.chatbutton:hover {
+  background-color: #63b4c7;
 }
 
 .progressbutton {
-	background-color: #a3cb7b;
+  background-color: #a3cb7b;
+}
+
+.progressbutton:hover {
+  background-color: #8bae68;
 }
 
 .endsessionbutton {
-	background-color: #efa182;
+  background-color: #efa182;
+}
+
+.endsessionbutton:hover {
+  background-color: #d08a6e;
 }
 </style>
