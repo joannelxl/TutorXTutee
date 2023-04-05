@@ -27,26 +27,26 @@ export default {
 				var size = (await getDocs(q1)).size
 				if (size > 0) {
 					var count = 0;
-						(await getDocs(q1)).forEach(async (document) => {
-							count += 1
-							var arrangement = document.data()
-							arrangement.id = document.id
+					(await getDocs(q1)).forEach(async (document) => {
+						count += 1
+						var arrangement = document.data()
+						arrangement.id = document.id
 
-							// getting the tuteeName to use later
-							var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
-							arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
+						// getting the tuteeName to use later
+						var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
+						arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
 
-							// getting the chat Id corresponding to this tutor and tutee
-							const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
-							(await getDocs(q2)).forEach((chat) => {
-								arrangement.chatId = chat.id
-							})
-							this.arrangements.push(arrangement)
-							this.email = this.user.email
-							if (count == size) {
-								this.dataLoaded = true
-							}
+						// getting the chat Id corresponding to this tutor and tutee
+						const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
+						(await getDocs(q2)).forEach((chat) => {
+							arrangement.chatId = chat.id
 						})
+						this.arrangements.push(arrangement)
+						this.email = this.user.email
+						if (count == size) {
+							this.dataLoaded = true
+						}
+					})
 				} else {
 					this.dataLoaded = true
 				}
@@ -90,7 +90,7 @@ export default {
 		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
 				<div class="information">
-					<p><strong style="font-size: x-large;">{{ arrangement.tutorName }} </strong></p>
+					<p><strong style="font-size: x-large;">{{ arrangement.tuteeName }} </strong></p>
 					<text style="font-weight: bold;">Level: </text> {{ arrangement.level }} <br>
 					<text style="font-weight: bold;">Subject: </text> {{ arrangement.subject }} <br>
 					<div v-if="arrangement.location != 'Virtual'">
