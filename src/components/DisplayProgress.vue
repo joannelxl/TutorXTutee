@@ -185,7 +185,7 @@ export default {
     margin: 20px;
     margin-top: 0px;
     width: 750px;
-    margin-left: 250px;
+    margin-left: 17.6vw;
 }
 
 .lesson {
