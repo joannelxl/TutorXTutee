@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
-import { doc, getDocs, getDoc, orderBy, deleteDoc } from "firebase/firestore";
+import { doc, getDocs, getDoc, orderBy, deleteDoc, updateDoc } from "firebase/firestore";
 import ConfirmDialogue from '../components/ConfirmDialogue.vue'
 
 export default {
