@@ -162,4 +162,8 @@ button:hover {
   background-color: rgba(128, 0, 128, 0.66);
   transition: 0.3s;
 }
+
+.collapse-icon:hover {
+  background-color: #c09bc0;
+}
 </style>
