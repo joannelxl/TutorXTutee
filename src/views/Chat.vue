@@ -3,6 +3,9 @@
     <h1>Tutor X Tutee</h1>
     <h4>All your chats are listed here.</h4>
   </div>
+  <h1 class="empty" v-if="chats.length == 0">
+      You do not have any chats now.
+  </h1>
   <div class="allChats">
     <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)">
       <div class="container">
@@ -97,8 +100,6 @@ export default {
             if (latestMessage) {
                 this.chats.push([fullName, latestMessage, chatId]);
             }
-
-
           }
         });
       } else if (this.userRole == "tutee") {
@@ -130,6 +131,7 @@ export default {
             if (latestMessage) {
                 this.chats.push([fullName, latestMessage, chatId]);
             }
+            console.log(this.chats);
           }
         });
       }
@@ -176,5 +178,11 @@ export default {
 .intro {
   text-align: center;
   width: 1200px;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 200px;
+  width: 1200px
 }
 </style>
