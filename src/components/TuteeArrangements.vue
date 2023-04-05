@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
-import { doc, getDocs, getDoc, orderBy, deleteDoc } from "firebase/firestore";
+import { doc, getDocs, getDoc, orderBy, updateDoc } from "firebase/firestore";
 import ConfirmDialogue from '../components/ConfirmDialogue.vue'
 
 export default {
@@ -27,27 +27,35 @@ export default {
 				var size = (await getDocs(q1)).size
 				if (size > 0) {
 					var count = 0;
-						(await getDocs(q1)).forEach(async (document) => {
-							count += 1
-							var arrangement = document.data()
-							arrangement.id = document.id
+					(await getDocs(q1)).forEach(async (document) => {
+						count += 1
+						var arrangement = document.data()
+						arrangement.id = document.id
 
-							// getting the tuteeName to use later
-							var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
-							arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
-							arrangement.mode = (arrangement.location == 'Virtual') ? 'Virtual': 'Physical' 
+						// getting the tuteeName to use later
+						var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
+						arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
+						arrangement.mode = (arrangement.location == 'Virtual') ? 'Virtual' : 'Physical'
 
-							// getting the chat Id corresponding to this tutor and tutee
-							const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
-							(await getDocs(q2)).forEach((chat) => {
-								arrangement.chatId = chat.id
-							})
-							this.arrangements.push(arrangement)
-							this.email = this.user.email
-							if (count == size) {
-								this.dataLoaded = true
-							}
+						// getting the chat Id corresponding to this tutor and tutee
+						const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
+						(await getDocs(q2)).forEach((chat) => {
+							arrangement.chatId = chat.id
 						})
+						if (arrangement.endDate == null) {
+							this.arrangements.push(arrangement)
+						} else {
+							if (this.toDate(arrangement.endDate) > Date.now()) {
+								this.arrangements.push(arrangement)
+							} else {
+								await deleteDoc(doc(db, "TutoringArrangements", arrangement.id))
+							}
+						}
+						this.email = this.user.email
+						if (count == size) {
+							this.dataLoaded = true
+						}
+					})
 				} else {
 					this.dataLoaded = true
 				}
@@ -57,6 +65,16 @@ export default {
 		})
 	},
 	methods: {
+		toDate(date) {
+			var numbers = date.split("/")
+			return new Date(numbers[2], numbers[0] - 1, numbers[1])
+		},
+		getDateString() {
+			var today = new Date(Date.now())
+			const newMonth = today.getMonth() + 2
+			const string = today.getDate() + "/" + newMonth + "/" + today.getFullYear()
+			return string
+		},
 		async endSession(id, tuteeName) {
 			const confirm = await (this.$refs.confirmDialogue).show({
 				title: "End Session",
@@ -66,8 +84,9 @@ export default {
 			})
 			if (confirm) {
 				const db = getFirestore(firebaseApp);
-				await deleteDoc(doc(db, "TutoringArrangements", id))
-
+				await updateDoc(doc(db, "TutoringArrangements", id), {
+					endDate: this.getDateString()
+				})
 				this.$emit("ended")
 			}
 		},
@@ -104,8 +123,10 @@ export default {
 				<div class="buttons">
 					<button class="chatbutton" @click="redirectToChat(arrangement.chatId)">Chat</button><br>
 					<button class="progressbutton" @click="redirectToProgress(arrangement.id)">Progress</button><br>
-					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)">End
+					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)"
+						v-if="arrangement.endDate == null">End
 						Session</button>
+					<div v-else id="endDate"> Ends on: {{ arrangement.endDate }} </div>
 				</div>
 			</div>
 		</div>
@@ -137,7 +158,7 @@ export default {
 
 .information {
 	text-align: left;
-	width: 600px;
+	width: 550px;
 	display: inline-block;
 	vertical-align: middle;
 	overflow-wrap: break-word;
@@ -166,31 +187,40 @@ button {
 	box-shadow: 2px 2px gray;
 }
 
+#endDate {
+	padding: 5px;
+	width: 150px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: red;
+	font-size: large;
+}
+
 button:active {
-  transform: translate(1px, 1px);
+	transform: translate(1px, 1px);
 }
 
 .chatbutton {
-  background-color: #8CD7E8;
+	background-color: #8CD7E8;
 }
 
 .chatbutton:hover {
-  background-color: #63b4c7;
+	background-color: #63b4c7;
 }
 
 .progressbutton {
-  background-color: #a3cb7b;
+	background-color: #a3cb7b;
 }
 
 .progressbutton:hover {
-  background-color: #8bae68;
+	background-color: #8bae68;
 }
 
 .endsessionbutton {
-  background-color: #efa182;
+	background-color: #efa182;
 }
 
 .endsessionbutton:hover {
-  background-color: #d08a6e;
+	background-color: #d08a6e;
 }
 </style>
