@@ -348,7 +348,7 @@ export default {
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background-color: #c77cc7; /* color of the scroll thumb */
+  background-color: white; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
   border: 2px solid purple; /* creates padding around scroll thumb */
 }
