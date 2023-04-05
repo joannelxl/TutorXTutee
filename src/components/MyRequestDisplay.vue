@@ -144,6 +144,7 @@ export default {
   grid-template-columns: auto auto auto;
   row-gap: 5px;
   column-gap: 30px;
+  padding-left: 180px;
 }
 
 .delete-button {
@@ -151,9 +152,11 @@ export default {
   padding: 10px 10px;
   border-radius: 4px;
   font-size: medium;
-  margin-left: -5px;
+  margin-left: -13px;
   margin-right: 5px;
   margin-top: 10px;
+  border: none;
+  border: solid 0.5px;
 }
 
 .delete-button:hover {

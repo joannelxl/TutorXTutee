@@ -1,4 +1,5 @@
 <template>
+  <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
   <button class="update-button" @click="getData">Update Request</button>
 
   <div v-if="showModal" class="modal-mask">
@@ -77,6 +78,7 @@
 </template>
 
 <script>
+import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 import firebaseApp from "../firebase.js";
 import { deleteDoc, getFirestore, updateDoc } from "firebase/firestore";
 import {
@@ -90,6 +92,7 @@ import {
 const db = getFirestore(firebaseApp);
 
 export default {
+  components: { AcknowledgeDialogue },
   data() {
     return {
       subject: "",
@@ -178,11 +181,12 @@ export default {
       await updateDoc(docRef, {
         Location: this.location,
       });
-      /* this.handleClose();*/
+
+      this.handleClose();
+      await this.$refs.acknowledgeDialogue.show({
+        message: "Request successfully updated!",
+      });
       this.$parent.display();
-      setTimeout(function () {
-        alert("Request successfully updated!");
-      }, 150);
     },
     async handleClose() {
       console.log("close??");
@@ -209,6 +213,8 @@ export default {
   padding: 10px 10px;
   border-radius: 4px;
   font-size: medium;
+  border: none;
+  border: solid 0.5px;
 }
 .update-button:hover {
   background-color: #a7a5a5;

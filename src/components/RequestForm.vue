@@ -1,5 +1,6 @@
 <template>
   <!-- Button to add request -->
+  <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
   <button id="show-modal" @click="showModal = true"></button>
 
   <div v-if="showModal" class="modal-mask">
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 import firebaseApp from "../firebase.js";
 import { collection, getFirestore } from "firebase/firestore";
 import { addDoc } from "firebase/firestore";
@@ -82,6 +84,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const db = getFirestore(firebaseApp);
 
 export default {
+  components: { AcknowledgeDialogue },
   data() {
     return {
       //Fake email
@@ -133,9 +136,9 @@ export default {
         this.handleReset();
         this.$emit("added");
         this.handleClose();
-        setTimeout(function () {
-          alert("Request successfully created!");
-        }, 150);
+        await this.$refs.acknowledgeDialogue.show({
+          message: "Request successfully created!",
+        });
       }
     },
 
@@ -264,7 +267,7 @@ input {
 #show-modal {
   position: fixed;
   right: 100px;
-  bottom: 0;
+  bottom: 50px;
   width: 6em;
   height: 6em;
   border-radius: 50%;
@@ -273,6 +276,8 @@ input {
   background-size: 50% 0.5em, 0.5em 50%;
   background-repeat: no-repeat;
   background-color: rgba(240, 51, 51, 0.56);
+  border: none;
+  border: solid 0.5px;
 }
 
 #show-modal:hover {
