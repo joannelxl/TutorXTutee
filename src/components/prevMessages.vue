@@ -44,12 +44,12 @@
             :key="index">
             <div id="senderMessages">
               <div id="sender" v-if="message[1]">
-                <p style = "font-size:16px">{{ message[0] }}</p>
+                <p style="font-size: 16px">{{ message[0] }}</p>
               </div>
             </div>
-            <div id = "receiverMessages">
+            <div id="receiverMessages">
               <div id="receiver" v-if="message[1] == false">
-                <p style = "font-size:16px">{{ message[0] }}</p>
+                <p style="font-size: 16px">{{ message[0] }}</p>
               </div>
             </div>
           </div>
@@ -60,10 +60,10 @@
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 60px; width: 550px; font-size:16px"
+          style="height: 60px; width: 550px; font-size: 16px"
           v-model="newMessage"
           placeholder="Send a message..." />
-        <button id="button" type="submit" style = "font-size: 18px;">Send</button>
+        <button id="button" type="submit" style="font-size: 18px">Send</button>
       </form>
     </div>
   </div>
@@ -198,28 +198,27 @@ export default {
     async sendMessage() {
       if (this.newMessage) {
         this.allMessages.push([this.newMessage, true]);
+        const messageCollection = collection(db, "UserMessages");
+
+        //var today = new Date();
+        //var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        //var sendDate = today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
+
+        const messagesObj = {
+          chatId: this.chatId,
+          message: this.newMessage,
+          sender: this.userEmail,
+          sentAt: serverTimestamp(),
+        };
+
+        addDoc(messageCollection, messagesObj);
+        console.log("a new UserMessage document has been added");
+        this.newMessage = "";
       }
 
       //add to firebase
       //dont need to add to the chat collection since being able to come to this page
       //means that the chat exists between sender and receiver
-
-      const messageCollection = collection(db, "UserMessages");
-
-      //var today = new Date();
-      //var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      //var sendDate = today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
-
-      const messagesObj = {
-        chatId: this.chatId,
-        message: this.newMessage,
-        sender: this.userEmail,
-        sentAt: serverTimestamp(),
-      };
-
-      addDoc(messageCollection, messagesObj);
-      console.log("a new UserMessage document has been added");
-      this.newMessage = "";
     },
     async doDelete() {
       const ok = await this.$refs.confirmDialogue.show({
@@ -308,20 +307,21 @@ export default {
 }
 
 #senderMessages {
-    float: right;
-    margin-right: 40px;
-    padding-bottom: 10px;
+  float: right;
+  margin-right: 40px;
+  padding-bottom: 10px;
 }
 
-#sender, #receiver {
+#sender,
+#receiver {
   background: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   text-align: left;
   right: 0px;
   padding: 0px 20px;
-  margin-top:-25px;
-  max-width:350px;
+  margin-top: -25px;
+  max-width: 350px;
   word-break: break-word;
 }
 

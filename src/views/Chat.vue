@@ -3,9 +3,11 @@
     <h1>Tutor X Tutee</h1>
     <h4>All your chats are listed here.</h4>
   </div>
+  <div v-if="dataLoaded">
   <h1 class="empty" v-if="chats.length == 0">
       You do not have any chats now.
   </h1>
+  
   <div class="allChats">
     <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)">
       <div class="container">
@@ -17,6 +19,7 @@
       <!--<prevMessages :receiverEmail="chat[0]"/>-->
     </button>
   </div>
+</div>
 </template>
 
 <script>
@@ -45,6 +48,7 @@ export default {
       chats: [],
       userEmail: "",
       showModal: false,
+      dataLoaded: false
     };
   },
   mounted() {
@@ -135,12 +139,12 @@ export default {
           }
         });
       }
-
       //trying to get the latest message for each receiver
       //const msgRef = collection(db, "UserMessages");
       //const querySnapshot2 = query(msgRef,where("chatId", "==", chatId),orderBy("sentAt"));
 
       //console.log(type(querySnapshot2))
+      this.dataLoaded = true;
     },
     toMessages(chat) {
       console.log(chat[2]);
@@ -160,6 +164,8 @@ export default {
   margin-left: 280px;
 }
 .chat {
+  margin-top: -1px;
+  margin-bottom: -1px;
   cursor: pointer;
   outline: none;
   background-color: transparent;
@@ -173,6 +179,7 @@ export default {
 }
 .allChats {
   margin-top: 100px;
+  text-align: center;
 }
 
 .intro {
