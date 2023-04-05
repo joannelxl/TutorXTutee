@@ -44,12 +44,12 @@
             :key="index">
             <div id="senderMessages">
               <div id="sender" v-if="message[1]">
-                <h4>{{ message[0] }}</h4>
+                <p style = "font-size:16px">{{ message[0] }}</p>
               </div>
             </div>
             <div id = "receiverMessages">
               <div id="receiver" v-if="message[1] == false">
-                <h4>{{ message[0] }}</h4>
+                <p style = "font-size:16px">{{ message[0] }}</p>
               </div>
             </div>
           </div>
@@ -60,10 +60,10 @@
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 60px; width: 550px"
+          style="height: 60px; width: 550px; font-size:16px"
           v-model="newMessage"
           placeholder="Send a message..." />
-        <button id="button" type="submit">Send</button>
+        <button id="button" type="submit" style = "font-size: 18px;">Send</button>
       </form>
     </div>
   </div>
@@ -197,7 +197,7 @@ export default {
 
     async sendMessage() {
       if (this.newMessage) {
-      this.allMessages.push([this.newMessage, true]);
+        this.allMessages.push([this.newMessage, true]);
       }
 
       //add to firebase
@@ -288,7 +288,6 @@ export default {
 #button {
   position: absolute;
   background-color: rgba(128, 0, 128, 0.28);
-  border-radius: 100%;
   left: 570px;
   bottom: 50px;
 }
@@ -304,13 +303,13 @@ export default {
 
 #receiverMessages {
   float: left;
-  margin-left: 30px;
+  margin-left: 40px;
   padding-bottom: 10px;
 }
 
 #senderMessages {
     float: right;
-    margin-right: 30px;
+    margin-right: 40px;
     padding-bottom: 10px;
 }
 
