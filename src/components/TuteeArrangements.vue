@@ -35,6 +35,7 @@ export default {
 							// getting the tuteeName to use later
 							var account = await getDoc(doc(db, "Tutees", document.data().tuteeEmail))
 							arrangement.tuteeName = account.data().firstName + " " + account.data().lastName
+							arrangement.mode = (arrangement.location == 'Virtual') ? 'Virtual': 'Physical' 
 
 							// getting the chat Id corresponding to this tutor and tutee
 							const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
@@ -90,14 +91,12 @@ export default {
 		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
 				<div class="information">
-					<p><strong style="font-size: x-large;">{{ arrangement.tutorName }} </strong></p>
+					<p><strong style="font-size: x-large;">{{ arrangement.tuteeName }} </strong></p>
 					<text style="font-weight: bold;">Level: </text> {{ arrangement.level }} <br>
 					<text style="font-weight: bold;">Subject: </text> {{ arrangement.subject }} <br>
+					<text style="font-weight: bold;">Mode: </text> {{ arrangement.mode }} <br>
 					<div v-if="arrangement.location != 'Virtual'">
 						<text style="font-weight: bold;">Address: </text> {{ arrangement.address }} <br>
-					</div>
-					<div v-else>
-						<text style="font-weight: bold;">Location: </text> {{ arrangement.location }} <br>
 					</div>
 					<text style="font-weight: bold;">Day: </text> {{ arrangement.preferredDays }} <br>
 					<text style="font-weight: bold;">Time: </text> {{ arrangement.preferredTime }}
