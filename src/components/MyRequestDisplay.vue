@@ -16,7 +16,7 @@
           <h1>{{ request[1].Subject }}</h1>
 
           <p><strong>Level:</strong> {{ request[1].Level }}</p>
-          <p><strong>Preferred Days:</strong> {{ request[1].PreferredDays }}</p>
+          <p><strong>Preferred Day:</strong> {{ request[1].PreferredDays }}</p>
           <p><strong>Preferred Time: </strong>{{ request[1].PreferredTime }}</p>
           <p><strong>Location: </strong>{{ request[1].Location }}</p>
           <p v-if="request[1].Address.length < 20">

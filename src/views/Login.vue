@@ -7,8 +7,29 @@
     <form id="loginform" @submit="(e) => login(e)">
       <label>Email:</label>
       <input type="email" v-model="email" required="" /><br /><br />
-      <label>Password:</label>
-      <input type="password" v-model="password" required="" /><br /><br />
+      <div id="password-div">
+        <label>Password:</label>
+        <input
+          v-if="showPassword"
+          type="text"
+          class="input"
+          v-model="password"
+          required=""
+        />
+        <input v-else type="password" class="input" v-model="password" />
+        <button
+          v-if="showPassword"
+          type="button"
+          id="unsee"
+          @click="toggleShow"
+        >
+          <i class="fa regular fa-eye-slash"></i>
+        </button>
+        <button v-else type="button" id="see" @click="toggleShow">
+          <i class="fa regular fa-eye"></i>
+        </button>
+      </div>
+      <br /><br />
       <button type="submit">Login</button><br /><br />
     </form>
     <router-link to="/signup">Create your account here</router-link>
@@ -27,6 +48,7 @@ export default {
     return {
       email: "",
       password: "",
+      showPassword: false,
     };
   },
   methods: {
@@ -49,6 +71,9 @@ export default {
           });
           this.clearForm();
         });
+    },
+    toggleShow() {
+      this.showPassword = !this.showPassword;
     },
   },
 };
@@ -108,5 +133,26 @@ button {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+#password-div {
+  position: relative;
+}
+
+#unsee {
+  position: absolute;
+  padding: 0px 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 34px;
+  margin-left: 153px;
+}
+
+#see {
+  position: absolute;
+  padding: 0px 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 34px;
+  margin-left: 153px;
 }
 </style>

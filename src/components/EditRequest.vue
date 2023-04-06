@@ -18,7 +18,7 @@
           <input type="text" :placeholder="level" v-model="newLevel" />
           <br /><br />
 
-          <label class="required">Preferred Days:</label>
+          <label class="required">Preferred Day:</label>
           <input
             type="text"
             :placeholder="preferredDays"

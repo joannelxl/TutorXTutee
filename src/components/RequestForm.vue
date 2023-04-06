@@ -19,7 +19,7 @@
           <input type="text" placeholder="e.g. Secondary 1" v-model="level" />
           <br /><br />
 
-          <label class="required">Preferred Days:</label>
+          <label class="required">Preferred Day:</label>
           <input
             type="text"
             placeholder="e.g. Tuesday"
