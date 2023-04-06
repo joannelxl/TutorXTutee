@@ -160,7 +160,7 @@ export default {
 }
 
 .delete-button:hover {
-  background-color: #c27f66;
+  background-color: #d08a6e;
   cursor: pointer;
 }
 </style>
