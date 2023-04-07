@@ -60,10 +60,10 @@
       <form @submit.prevent="sendMessage">
         <input
           type="text"
-          style="height: 60px; width: 550px; font-size: 16px"
+          style="height: 50px; width: 550px; font-size: 14px"
           v-model="newMessage"
           placeholder="Send a message..." />
-        <button id="button" type="submit" style="font-size: 18px">Send</button>
+        <button id="button" type="submit" style="font-size: 16px">Send</button>
       </form>
     </div>
   </div>
@@ -260,7 +260,7 @@ export default {
   width: 700px;
   margin-top: 40px;
   margin-bottom: 0px;
-  margin-left: 190px;
+  margin-left: 275px;
 }
 
 #chat {
@@ -268,12 +268,11 @@ export default {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   text-align: center;
-
   position: absolute;
   width: 700px;
   height: 480px;
-  left: 390px;
-  top: 100px;
+  margin-left: 40vh;
+  margin-top: 10vh;
 }
 
 #inputBox {
@@ -289,6 +288,7 @@ export default {
   background-color: rgba(128, 0, 128, 0.28);
   left: 570px;
   bottom: 50px;
+  padding:10px
 }
 
 .deleteIcon {
@@ -347,7 +347,7 @@ export default {
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background-color: white; /* color of the scroll thumb */
+  background-color: #EEEDED; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
   border: 2px solid purple; /* creates padding around scroll thumb */
 }

@@ -139,13 +139,15 @@ export default {
           }
         });
       }
+
+      this.dataLoaded = true;
       //trying to get the latest message for each receiver
       //const msgRef = collection(db, "UserMessages");
       //const querySnapshot2 = query(msgRef,where("chatId", "==", chatId),orderBy("sentAt"));
 
       //console.log(type(querySnapshot2))
-      this.dataLoaded = true;
     },
+    
     toMessages(chat) {
       console.log(chat[2]);
       this.$router.push({ name: "InChat", params: { id: chat[2] } });
