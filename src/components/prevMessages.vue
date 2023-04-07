@@ -270,7 +270,7 @@ export default {
   text-align: center;
   position: absolute;
   width: 700px;
-  height: 480px;
+  height: 510px;
   margin-left: 40vh;
   margin-top: 10vh;
 }
@@ -332,7 +332,7 @@ export default {
 
 .scrollable {
   overflow-y: scroll;
-  height: 310px;
+  height: 330px;
   display: flex;
   flex-direction: column-reverse;
 }
