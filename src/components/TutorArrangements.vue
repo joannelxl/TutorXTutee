@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
 import ConfirmDialogue from "../components/ConfirmDialogue.vue";
 import { doc, getDocs, getDoc, orderBy, deleteDoc, updateDoc, addDoc } from "firebase/firestore";
-
+const db = getFirestore(firebaseApp);
 export default {
   components: { ConfirmDialogue },
   data() {
