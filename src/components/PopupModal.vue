@@ -56,9 +56,9 @@ export default {
     background: #fff;
     border-radius: 5px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 280px;
     margin-left: auto;
     margin-right: auto;
     padding: 1rem;
+    max-width: 400px;
 }
 </style>

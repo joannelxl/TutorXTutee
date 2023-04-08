@@ -1,43 +1,42 @@
 <script>
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
-import { doc, getDocs, getDoc, orderBy, deleteDoc, updateDoc } from "firebase/firestore";
-import ConfirmDialogue from '../components/ConfirmDialogue.vue'
-
+import ConfirmDialogue from "../components/ConfirmDialogue.vue";
+import { doc, getDocs, getDoc, orderBy, deleteDoc, updateDoc, addDoc } from "firebase/firestore";
+const db = getFirestore(firebaseApp);
 export default {
-	components: { ConfirmDialogue },
-	data() {
-		return {
-			user: false,
-			email: false,
-			arrangements: [],
-			dataLoaded: false,
+  components: { ConfirmDialogue },
+  data() {
+    return {
+      user: false,
+      email: false,
+      arrangements: [],
+      dataLoaded: false,
+    };
+  },
+  async mounted() {
+    const auth = getAuth();
+    const db = getFirestore(firebaseApp);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        this.user = user;
+        const q1 = query(collection(db, "TutoringArrangements"), where("tuteeEmail", "==", this.user.email), orderBy("tutorEmail"));
+        var size = (await getDocs(q1)).size;
+        if (size > 0) {
+          var count = 0;
+          (await getDocs(q1)).forEach(async (document) => {
+            count += 1;
+            var arrangement = document.data();
+            arrangement.id = document.id;
 
-		}
-	},
-	async mounted() {
-		const auth = getAuth();
-		const db = getFirestore(firebaseApp);
-		onAuthStateChanged(auth, async (user) => {
-			if (user) {
-				this.user = user
-				const q1 = query(collection(db, "TutoringArrangements"), where("tuteeEmail", "==", this.user.email), orderBy("tutorEmail"));
-				var size = (await getDocs(q1)).size
-				if (size > 0) {
-					var count = 0;
-					(await getDocs(q1)).forEach(async (document) => {
-						count += 1
-						var arrangement = document.data()
-						arrangement.id = document.id
-
-						// getting the tutorName to use later
+            // getting the tutorName to use later
 						var account = await getDoc(doc(db, "Tutors", document.data().tutorEmail))
 						arrangement.tutorName = account.data().firstName + " " + account.data().lastName
 						arrangement.mode = (arrangement.location == 'Virtual') ? 'Virtual' : 'Physical'
 
-						// getting the chat Id corresponding to this tutor and tutee
+            // getting the chat Id corresponding to this tutor and tutee
 						const q2 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.user.email), where("TutorEmail", "==", document.data().tutorEmail));
 						(await getDocs(q2)).forEach((chat) => {
 							arrangement.chatId = chat.id
@@ -56,15 +55,15 @@ export default {
 						if (count == size) {
 							this.dataLoaded = true
 						}
-					})
-				} else {
-					this.dataLoaded = true
-				}
-			}
-		})
-	},
-	methods: {
-		toDate(date) {
+          });
+        } else {
+          this.dataLoaded = true;
+        }
+      }
+    });
+  },
+  methods: {
+    toDate(date) {
 			var numbers = date.split("/")
 			return new Date(numbers[2], numbers[0] - 1, numbers[1])
 		},
@@ -74,7 +73,7 @@ export default {
 			const string = today.getDate() + "/" + newMonth + "/" + today.getFullYear()
 			return string
 		},
-		async endSession(id, tutorName) {
+    async endSession(id, tutorName) {
 			const confirm = await (this.$refs.confirmDialogue).show({
 				title: "End Session",
 				message: "Are you sure you want to end the session with " + tutorName + "?\nThis action cannot be undone.",
@@ -89,14 +88,35 @@ export default {
 				this.$emit("ended")
 			}
 		},
-		redirectToChat(chatId) {
-			this.$router.push({ name: "InChat", params: { id: chatId } })
-		},
-		redirectToProgress(progressId) {
-			this.$router.push({ name: "Progress", params: { id: progressId } })
-		}
-	}
-}
+    async redirectToChat(chatId, tuteeEmail, tutorEmail) {
+      //check if chatId exist in the document. if not, create new doc
+      const chatsCollection = collection(db, "Chats");
+      if (chatId == undefined) {
+        //create chat doc
+        const chatsCollection = collection(db, "Chats");
+        const chatObj = { TuteeEmail: tuteeEmail, TutorEmail: tutorEmail };
+        addDoc(chatsCollection, chatObj);
+
+        //query the chat id
+        var newChatId;
+        const q2 = query(
+          collection(db, "Chats"),
+          where("TutorEmail", "==", tutorEmail),
+          where("TuteeEmail", "==", tuteeEmail)
+        );
+        (await getDocs(q2)).forEach((chat) => {
+          newChatId = chat.id;
+        });
+        this.$router.push({ name: "InChat", params: { id: newChatId } });
+      } else {
+        this.$router.push({ name: "InChat", params: { id: chatId } });
+      }
+    },
+    redirectToProgress(progressId) {
+      this.$router.push({ name: "Progress", params: { id: progressId } });
+    },
+  },
+};
 </script>
 
 <template>
@@ -116,7 +136,12 @@ export default {
 					<text style="font-weight: bold;">Time: </text> {{ arrangement.preferredTime }}
 				</div>
 				<div class="buttons">
-					<button class="chatbutton" @click="redirectToChat(arrangement.chatId)">Chat</button><br>
+					<button class="chatbutton" @click="
+              redirectToChat(
+                arrangement.chatId,
+                arrangement.tuteeEmail,
+                arrangement.tutorEmail
+              )">Chat</button><br>
 					<button class="progressbutton" @click="redirectToProgress(arrangement.id)">Progress</button><br>
 					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tutorName)"
 						v-if="arrangement.endDate == null">End
@@ -130,25 +155,25 @@ export default {
 
 <style scoped>
 #tutorarrangements {
-	font-family: Arial, Helvetica, sans-serif;
-	text-align: center;
-	display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  display: inline-block;
 }
 
 #noarrangements {
-	text-align: left;
-	background-color: #f3ddb0;
-	padding: 5px 10px;
-	border-radius: 10px;
+  text-align: left;
+  background-color: #f3ddb0;
+  padding: 5px 10px;
+  border-radius: 10px;
 }
 
 .arrangement {
-	background-color: #f3ddb0;
-	border-radius: 10px;
-	padding: 10px;
-	margin: 20px;
-	width: 750px;
-	display: block;
+  background-color: #f3ddb0;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px;
+  width: 750px;
+  display: block;
 }
 
 .information {
@@ -163,23 +188,23 @@ export default {
 }
 
 .buttons {
-	text-align: right;
-	display: inline-block;
-	vertical-align: middle;
+  text-align: right;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 button {
-	border-radius: 5px;
-	padding: 5px;
-	width: 120px;
-	text-align: left;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border: none;
-	height: 40px;
-	font-size: large;
-	cursor: pointer;
-	box-shadow: 2px 2px gray;
+  border-radius: 5px;
+  padding: 5px;
+  width: 120px;
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: none;
+  height: 40px;
+  font-size: large;
+  cursor: pointer;
+  box-shadow: 2px 2px gray;
 }
 
 #endDate {
@@ -192,7 +217,7 @@ button {
 }
 
 button:active {
-	transform: translate(1px, 1px);
+  transform: translate(1px, 1px);
 }
 
 .chatbutton {
@@ -204,7 +229,7 @@ button:active {
 }
 
 .progressbutton {
-	background-color: #a3cb7b;
+  background-color: #a3cb7b;
 }
 
 .progressbutton:hover {
@@ -212,7 +237,7 @@ button:active {
 }
 
 .endsessionbutton {
-	background-color: #efa182;
+  background-color: #efa182;
 }
 
 .endsessionbutton:hover {

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import SignUp from "@/views/SignUp.vue";
 import Login from "@/views/Login.vue";
+import InChat from '@/views/InChat.vue'
+import Chat from '@/views/Chat.vue'
 import Home from "../views/Home.vue";
 
 const routes = [
@@ -61,6 +63,11 @@ const routes = [
     path: "/MyProfile",
     name: "MyProfile",
     component: () => import("../views/MyProfile.vue"),
+  },
+  {
+    path: "/InChat/:id",
+    name: "InChat",
+    component: InChat,
   },
   {
     path: "/Progress/:id",

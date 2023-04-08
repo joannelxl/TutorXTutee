@@ -1,20 +1,30 @@
 <script>
-import SignUp from "@/views/SignUp.vue";
-import Login from "@/views/Login.vue";
-import Sidebar from "@/components/sidebar/Sidebar.vue";
-import { sidebarWidth } from "@/components/sidebar/state";
+import Sidebar from '@/components/sidebar/Sidebar.vue'
+import { sidebarWidth } from '@/components/sidebar/state'
+import SignUp from '@/views/SignUp.vue'
+import Login from '@/views/Login.vue'
+import InChat from '@/views/InChat.vue'
+import ConfirmDialogue from './components/ConfirmDialogue.vue'
+import PopupModal from './components/PopupModal.vue'
+import Chat from './views/Chat.vue'
+import prevMessages from './components/prevMessages.vue'
 
 export default {
-  name: "App",
-  components: {
-    SignUp,
-    Login,
-    Sidebar,
-  },
-  setup() {
-    return { sidebarWidth };
-  },
-};
+    name: 'App',
+    components: {
+        SignUp,
+        Login,
+        Sidebar,
+        InChat,
+        ConfirmDialogue, 
+        PopupModal,
+        Chat,
+        prevMessages
+    },
+    setup() {
+        return { sidebarWidth }
+    }
+}
 </script>
 
 <template>
@@ -46,7 +56,6 @@ export default {
   color: #2c3e50;
   width: 500px;
 }
-
 body {
   background: rgba(128, 0, 128, 0.1);
 }

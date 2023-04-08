@@ -134,6 +134,7 @@ button {
   left: 50%;
   transform: translateX(-50%);
 }
+
 #password-div {
   position: relative;
 }

@@ -3,8 +3,9 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
-import { doc, getDocs, getDoc, orderBy, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDocs, getDoc, orderBy, updateDoc, deleteDoc, addDoc } from "firebase/firestore";
 import ConfirmDialogue from '../components/ConfirmDialogue.vue'
+const db = getFirestore(firebaseApp);
 
 export default {
 	components: { ConfirmDialogue },
@@ -59,8 +60,6 @@ export default {
 				} else {
 					this.dataLoaded = true
 				}
-
-
 			}
 		})
 	},
@@ -78,7 +77,7 @@ export default {
 		async endSession(id, tuteeName) {
 			const confirm = await (this.$refs.confirmDialogue).show({
 				title: "End Session",
-				message: "Are you sure you want to end the session with " + tuteeName + "?\nThis action cannot be undone.",
+				message: "Are you sure you want to end the session with " + tuteeName + "?" + '\n' + "This action cannot be undone.",
 				okButton: "Confirm",
 				cancelButton: "Cancel",
 			})
@@ -90,8 +89,25 @@ export default {
 				this.$emit("ended")
 			}
 		},
-		redirectToChat(chatId) {
-			this.$router.push({ name: "InChat", params: { id: chatId } })
+		async redirectToChat(chatId, tuteeEmail, tutorEmail) {
+            //check if chatId exist in the document. if not, create new doc
+            const chatsCollection = collection(db, "Chats");
+            if (chatId == undefined) {
+                //create chat doc
+                const chatsCollection = collection(db, "Chats");
+                const chatObj = {TuteeEmail: tuteeEmail, TutorEmail: tutorEmail}
+                addDoc(chatsCollection, chatObj);
+
+                //query the chat id
+                var newChatId;
+                const q2 = query(collection(db, "Chats"), where("TutorEmail", "==", tutorEmail), where("TuteeEmail", "==", tuteeEmail));
+				(await getDocs(q2)).forEach((chat) => {
+				    newChatId = chat.id
+				})
+                this.$router.push({ name: "InChat", params: { id: newChatId } })
+            } else {
+                this.$router.push({ name: "InChat", params: { id: chatId } })
+            }
 		},
 		redirectToProgress(progressId) {
 			this.$router.push({ name: "Progress", params: { id: progressId } })
@@ -121,7 +137,7 @@ export default {
 					<text style="font-weight: bold;">Time: </text> {{ arrangement.preferredTime }}
 				</div>
 				<div class="buttons">
-					<button class="chatbutton" @click="redirectToChat(arrangement.chatId)">Chat</button><br>
+					<button class="chatbutton" @click="redirectToChat(arrangement.chatId, arrangement.tuteeEmail, arrangement.tutorEmail)">Chat</button><br>
 					<button class="progressbutton" @click="redirectToProgress(arrangement.id)">Progress</button><br>
 					<button class="endsessionbutton" @click="endSession(arrangement.id, arrangement.tuteeName)"
 						v-if="arrangement.endDate == null">End
