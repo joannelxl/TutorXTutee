@@ -140,19 +140,21 @@ button {
 
 #unsee {
   position: absolute;
-  padding: 0px 6px;
   top: 50%;
   transform: translateY(-50%);
   height: 34px;
-  margin-left: 153px;
+  margin-left: 150px;
+  background-color: transparent;
+  border: 0px;
 }
 
 #see {
   position: absolute;
-  padding: 0px 7px;
   top: 50%;
   transform: translateY(-50%);
   height: 34px;
-  margin-left: 153px;
+  margin-left: 151px;
+  background-color: transparent;
+  border: 0px;
 }
 </style>
