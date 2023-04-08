@@ -24,17 +24,16 @@ export default {
 			<h1>Tutor x Tutee</h1>
 			<h4> All your tutors are listed here.</h4>
 		</div>
-		<TutorArrangements :key="refreshComp" @ended="update"/>
+		<TutorArrangements :key="refreshComp" @ended="update" />
 	</div>
 </template>
 
-<style scoped> 
+<style scoped> #mytutees {
+ 	text-align: center;
+ 	width: 90vw;
+ }
 
-#mytutees {
-	text-align: center;
-	width: 90vw;
-}
-.heading {
+ .heading {
  	text-align: center;
 
  }

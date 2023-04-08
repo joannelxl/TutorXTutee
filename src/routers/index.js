@@ -76,6 +76,13 @@ const routes = [
     params: true,
   },
   {
+    path: "/AddProgress/:id",
+    name: "AddProgress",
+    component: () => import("../views/AddProgress.vue"),
+    props: true,
+    params: true,
+  },
+  {
     path: "",
     redirectTo: "/",
   },

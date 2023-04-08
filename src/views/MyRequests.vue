@@ -5,7 +5,7 @@
 
 <script>
 import RequestForm from "../components/RequestForm.vue";
-import RequestDisplay from "../components/RequestDisplay.vue";
+import RequestDisplay from "../components/MyRequestDisplay.vue";
 
 export default {
   components: {
