@@ -196,7 +196,7 @@ export default {
     },
 
     async sendMessage() {
-      if (this.newMessage) {
+      if (this.newMessage && this.newMessage.trim()) {
         this.allMessages.push([this.newMessage, true]);
         const messageCollection = collection(db, "UserMessages");
 

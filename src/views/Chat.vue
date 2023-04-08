@@ -71,10 +71,18 @@ export default {
 
       //for userMessages to use
       var receiverEmail;
+
+      const chatCollection = collection(db, "Chats");
+      //getting all documents in the chat collection
+      const querySnapshot = await getDocs(chatCollection);
+      var count = 0
+      var size = querySnapshot.size
+
+      if (size == 0) {
+        this.dataLoaded = true
+      }
+
       if (this.userRole == "tutor") {
-        const chatCollection = collection(db, "Chats");
-        //getting all documents in the chat collection
-        const querySnapshot = await getDocs(collection(db, "Chats"));
         querySnapshot.forEach(async (document) => {
           if (document.data().TutorEmail == this.userEmail) {
             var chatId = document.id;
@@ -82,10 +90,8 @@ export default {
             //if curr user is tutor, means receiver is tutee
             const docRef = doc(db, "Tutees", receiverEmail);
             const docSnap = await getDoc(docRef);
-            var fullName = docSnap.data().firstName + " " + docSnap.data().lastName;
-
-            console.log(fullName);
-            console.log(chatId);
+            var fullName =
+              docSnap.data().firstName + " " + docSnap.data().lastName;
 
             const msgRef = collection(db, "UserMessages");
             const querySnapshot2 = query(
@@ -94,21 +100,25 @@ export default {
               orderBy("sentAt", "desc"),
               limit(1)
             );
-            var latestMessage;
-            (await getDocs(querySnapshot2)).forEach((document) => {
-              latestMessage = document.data().message;
-            });
-            console.log(latestMessage);
-
-            //only if there is a chat history then display. if there is no chat gg on yet, then dont
-            if (latestMessage) {
-                this.chats.push([fullName, latestMessage, chatId]);
+            var size2 = (await getDocs(querySnapshot2)).size
+            if (size2 == 0) {
+              count += 1
+            } else {
+              var latestMessage;
+              (await getDocs(querySnapshot2)).forEach((document) => {
+                latestMessage = document.data().message;
+                count += 1
+              });
+              this.chats.push([fullName, latestMessage, chatId]);
             }
+          } else {
+            count += 1
+          }
+          if (count == size) {
+            this.dataLoaded = true
           }
         });
       } else if (this.userRole == "tutee") {
-        const chatCollection = collection(db, "Chats");
-        const querySnapshot = await getDocs(collection(db, "Chats"));
         querySnapshot.forEach(async (document) => {
           if (document.data().TuteeEmail == this.userEmail) {
             var chatId = document.id;
@@ -116,7 +126,8 @@ export default {
             //if curr user is tutee, means receiver is tutor
             const docRef = doc(db, "Tutors", receiverEmail);
             const docSnap = await getDoc(docRef);
-            var fullName = docSnap.data().firstName + " " + docSnap.data().lastName;
+            var fullName =
+              docSnap.data().firstName + " " + docSnap.data().lastName;
 
             //get latest message
             const msgRef = collection(db, "UserMessages");
@@ -126,16 +137,22 @@ export default {
               orderBy("sentAt", "desc"),
               limit(1)
             );
-            var latestMessage;
-            (await getDocs(querySnapshot2)).forEach((document) => {
-              latestMessage = document.data().message;
-            });
-            console.log(latestMessage);
-
-            if (latestMessage) {
-                this.chats.push([fullName, latestMessage, chatId]);
+            var size2 = (await getDocs(querySnapshot2)).size
+            if (size2 == 0) {
+              count += 1
+            } else {
+              var latestMessage;
+              (await getDocs(querySnapshot2)).forEach((document) => {
+                latestMessage = document.data().message;
+                count += 1
+              });
+              this.chats.push([fullName, latestMessage, chatId]);
             }
-            console.log(this.chats);
+          } else {
+            count += 1
+          }
+          if (count == size) {
+            this.dataLoaded = true
           }
         });
       }
@@ -144,7 +161,6 @@ export default {
       //const querySnapshot2 = query(msgRef,where("chatId", "==", chatId),orderBy("sentAt"));
 
       //console.log(type(querySnapshot2))
-      this.dataLoaded = true;
     },
     toMessages(chat) {
       console.log(chat[2]);
