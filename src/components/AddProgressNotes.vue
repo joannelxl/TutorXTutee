@@ -67,14 +67,17 @@ export default {
 
             //check if location is chosen
             if (
+                this.lesson.length == 0 ||
+                this.remarks.length == 0) {
+
+                this.formError = "Please fill in all required fields!"
+
+            } else if (
                 this.lesson < 1
             ) {
                 this.formError = "Lesson number cannot be negative!";
-            } else if (
-                this.lesson.length == 0 ||
-                this.remarks.length == 0) {
-                this.formError = "Please fill in all required fields!"
             }
+
             else {
                 let details = {
                     User: this.useremail,
