@@ -9,7 +9,7 @@
     </h1>
 
     <div class="allChats">
-      <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)">
+      <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)" :key="chat[2]">
         <div class="container">
           <!-- chat[0] is name, chat[1] is latest message, chat[3] is chatid -->
           <h1 style="font-size: 19px">{{ chat[0] }}</h1>
