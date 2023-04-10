@@ -174,7 +174,7 @@ export default {
 
 .information {
 	text-align: left;
-	width: 550px;
+	width: 540px;
 	display: inline-block;
 	vertical-align: middle;
 	overflow-wrap: break-word;
@@ -184,6 +184,7 @@ export default {
 }
 
 .buttons {
+	width: 150px;
 	text-align: right;
 	display: inline-block;
 	vertical-align: middle;
