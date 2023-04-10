@@ -1,8 +1,4 @@
 <template>
-  <div class="intro">
-    <h1>Tutor X Tutee</h1>
-    <h4>All your tuition requests are listed here</h4>
-  </div>
   <div class="intro" v-if="dataLoaded">
     <h1 class="empty" v-if="userRequests.length == 0">
       You do not have any request now. To add please click the + button
@@ -117,7 +113,7 @@ export default {
 <style scoped>
 .intro {
   text-align: center;
-  width: 1500px;
+  width: 90vw;
 }
 
 .empty {
@@ -129,7 +125,7 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: left;
-  width: 320px;
+  width: 31.5vh;
   margin: 20px;
   background-color: #f3ddb0;
   height: 420px;
@@ -152,7 +148,7 @@ export default {
   grid-template-columns: auto auto auto;
   row-gap: 5px;
   column-gap: 30px;
-  padding-left: 180px;
+  padding-left: 8vw;
 }
 
 .delete-button {
