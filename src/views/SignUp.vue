@@ -236,7 +236,7 @@ button {
   top: 50%;
   transform: translateY(-50%);
   height: 34px;
-  margin-left: 150px;
+  margin-left: 159px;
   background-color: transparent;
   border: 0px;
 }
@@ -246,7 +246,7 @@ button {
   top: 50%;
   transform: translateY(-50%);
   height: 34px;
-  margin-left: 151px;
+  margin-left: 160px;
   background-color: transparent;
   border: 0px;
 }
