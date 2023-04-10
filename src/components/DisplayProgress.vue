@@ -22,41 +22,43 @@
                 <h4>All your written progress for {{ tuteeName }} are listed here.</h4>
             </div>
 
-            <!-- if tutee -->
-            <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
-                <h3>Your tutor has not added any progress note.</h3>
-                <h3>Progress Notes will be displayed here once he/she writes one.</h3>
-            </div>
+            <div v-if="dataLoaded">
+                <!-- if tutee -->
+                <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
+                    <h3>Your tutor has not added any progress note.</h3>
+                    <h3>Progress Notes will be displayed here once he/she writes one.</h3>
+                </div>
 
-            <!-- if tutee -->
-            <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
-                <h3>You do not have any progress notes now. </h3>
-                <h3>To add please click the + button.</h3>
-            </div>
+                <!-- if tutor -->
+                <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
+                    <h3>You have not written any progress notes for {{ tuteeName }}. </h3>
+                    <h3>To add please click the '+'' button.</h3>
+                </div>
 
-            <div class="progress">
-                <div class="req" v-for="note in progressNotes">
-                    <div class="card">
-                        <div class="container">
-                            <text style="font-size: large" class="date"> {{
-                                note[1].Date.toDate().toLocaleDateString("en-GB")
-                            }}</text>
-                            <text style="font-size: x-large" class="lesson"><strong>Lesson {{ note[1].Lesson
-                            }}</strong></text>
+                <div class="progress">
+                    <div class="req" v-for="note in progressNotes" :key="note[0]">
+                        <div class="card">
+                            <div class="container">
+                                <text style="font-size: large" class="date"> {{
+                                    note[1].Date.toDate().toLocaleDateString("en-GB")
+                                }}</text>
+                                <text style="font-size: x-large" class="lesson"><strong>Lesson {{ note[1].Lesson
+                                }}</strong></text>
+
+                            </div>
+                            <br><br>
+                            <p class="remarks">
+                                {{ note[1].Remarks }}
+                                <br>
+                                <button v-if="role == 'tutor'" class="delete-button" @click="handleDelete(note[0])">
+                                    Delete Note
+                                </button>
+                            </p>
 
                         </div>
-                        <br><br>
-                        <p class="remarks">
-                            {{ note[1].Remarks }}
-                            <br>
-                            <button v-if="role == 'tutor'" class="delete-button" @click="handleDelete(note[0])">
-                                Delete Note
-                            </button>
-                        </p>
 
+                        <br>
                     </div>
-
-                    <br>
                 </div>
             </div>
         </div>
@@ -94,6 +96,7 @@ export default {
             role: '',
             tuteeName: '',
             id: this.id,
+            dataLoaded: false,
         };
     },
     methods: {
@@ -141,10 +144,11 @@ export default {
                     const docSnap = await getDoc(docRef);
                     const account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
                     this.tuteeName = account.data().firstName + " " + account.data().lastName
+                    this.dataLoaded = true
                 } catch (error) {
                     console.log(error)
+                    this.dataLoaded = true
                 }
-                this.dataLoaded = true
 
             }
         })
