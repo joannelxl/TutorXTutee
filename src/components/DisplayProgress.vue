@@ -30,8 +30,8 @@
 
             <!-- if tutee -->
             <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
-                <h3>You do not have any progress notes now. </h3>
-                <h3>To add please click the + button.</h3>
+                <h3>You have not written any progress notes for {{ tuteeName }}. </h3>
+                <h3>To add please click the '+'' button.</h3>
             </div>
 
             <div class="progress">
