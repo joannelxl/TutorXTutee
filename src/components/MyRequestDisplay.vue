@@ -21,8 +21,11 @@
             <p v-else>
               <strong>Address: </strong>{{ request[1].Address.substring(0, 20) }}...
             </p>
-            <p class="remarks">
+            <p v-if="request[1].Remarks.length < 20" class="remarks">
               <strong>Remarks: </strong>{{ request[1].Remarks }}
+            </p>
+            <p v-else class="remarks">
+              <strong>Remarks: </strong>{{ request[1].Remarks.substring(0, 20) }}...
             </p>
 
             <button class="delete-button" @click="handleDelete(request[0])">
@@ -125,7 +128,7 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: left;
-  width: 31.5vh;
+  width: 41.5vh;
   margin: 20px;
   background-color: #f3ddb0;
   height: 420px;
@@ -148,7 +151,7 @@ export default {
   grid-template-columns: auto auto auto;
   row-gap: 5px;
   column-gap: 30px;
-  padding-left: 8vw;
+  padding-left: 4vw;
 }
 
 .delete-button {

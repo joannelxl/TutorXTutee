@@ -210,7 +210,7 @@ export default {
 .allChats {
   margin-top: 100px;
   text-align: center;
-  margin-left: 13vw;
+  margin-left: 2.8vw;
 }
 
 .intro {
