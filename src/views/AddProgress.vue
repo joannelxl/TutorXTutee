@@ -2,7 +2,7 @@
     <div class="page">
         <div class="heading">
             <h1> Tutor x Tutee </h1>
-            <h4> Keep track of {{ tuteeName }}'s progress here. </h4>
+            <h4 v-if="dataLoaded"> Keep track of {{ tuteeName }}'s progress here. </h4>
         </div>
         <AddProgressNotes @added="change" />
     </div>

@@ -5,13 +5,13 @@
 
         <!-- Back to tutoring arrangement  -->
         <div style="float:left; margin-left: 5vw;" v-if="role == 'tutor'">
-            <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif; height:9px;">Back to
+            <router-link to="/MyTutees">Back to
                 MyTutees</router-link>
             <button id="show-modal" @click="navigateProgressNotes"></button>
         </div>
 
         <div style="float:left;margin-left: 5vw;" v-if="role == 'tutee'">
-            <router-link to="/MyTutors" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutors</router-link>
+            <router-link to="/MyTutors">Back to MyTutors</router-link>
         </div> <br>
         <div class="entire-card">
 

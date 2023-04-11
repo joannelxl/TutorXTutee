@@ -1,6 +1,6 @@
 <template>
     <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
-    <div class="modal-mask">
+    <div class="modal-mask" v-if="dataLoaded">
 
         <div style="float:left; margin-left:5vw;">
             <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
@@ -52,6 +52,7 @@ export default {
             formError: "",
             tuteeName: "",
             id: this.id,
+            dataLoaded: false,
         };
     },
     components: {
