@@ -16,7 +16,13 @@
           v-model="password"
           required=""
         />
-        <input v-else type="password" class="input" v-model="password" />
+        <input
+          v-else
+          type="password"
+          class="input"
+          v-model="password"
+          required=""
+        />
         <button
           v-if="showPassword"
           type="button"
