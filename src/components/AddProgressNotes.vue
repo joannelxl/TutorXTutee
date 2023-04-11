@@ -1,15 +1,11 @@
 <template>
     <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
     <div class="modal-mask">
-        <br>
-        <div style="float:left; margin-left:15px">
+
+        <div style="float:left; margin-left:5vw;">
             <router-link :to="{ name: 'Progress' }">Back to Progress</router-link>
         </div>
         <div class="form-container">
-            <div class="heading">
-                <h1>Tutor X Tutee</h1>
-                <h4>Keep track of {{ tuteeName }}'s progress here.</h4>
-            </div>
 
             <div class="modal-container">
                 <form id="requestform" @submit.prevent="">
