@@ -40,7 +40,7 @@
             <option value="Central">Central</option>
             <option value="Virtual">Virtual</option>
           </select>
-          <br /><br />
+          <br />
 
           <label class="required">Address:</label>
           <textarea
@@ -50,7 +50,7 @@
             placeholder="e.g. Computing drive 117417"
             v-model="address"
           ></textarea>
-          <br /><br />
+          <br />
 
           <label>Remarks:</label>
           <textarea
@@ -62,10 +62,10 @@
             v-model="remarks"
           >
           </textarea>
-          <br /><br />
+          <br />
 
           <div class="error" v-if="formError">{{ formError }}</div>
-          <br /><br />
+          <br />
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
           <button class="add-button" @click="handleSubmit">Add Request!</button>
@@ -213,7 +213,12 @@ export default {
 }
 
 select {
-  width: 58%;
+  height: 32px;
+  width: 212px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
 }
 
 form {
@@ -225,24 +230,45 @@ form {
 textarea {
   resize: none;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
 }
 
 label {
+  padding: 5px;
   float: left;
   margin-right: 30px;
+  height: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 input {
   float: right;
-  height: 15px;
-  width: 180px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  height: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
+
 .add-button {
   text-align: center;
-  background: #e7e5aa;
+  background-color: #a3cb7b;
   border: 1px solid #000000;
   font-size: 20px;
   float: right;
+  border-radius: 5px;
+	padding: 5px;
+}
+
+.add-button:hover {
+  background-color: #8bae68;
 }
 
 .cancel-button {
@@ -251,6 +277,12 @@ input {
   border: 1px solid #000000;
   font-size: 20px;
   float: left;
+  border-radius: 5px;
+	padding: 5px;
+}
+
+.cancel-button:hover {
+  background-color: #aeaeae;
 }
 
 .required:after {

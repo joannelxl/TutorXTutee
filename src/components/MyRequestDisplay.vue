@@ -1,7 +1,7 @@
 <template>
   <div class="intro">
     <h1>Tutor X Tutee</h1>
-    <h4>All your tuition requests are listed here</h4>
+    <h4>All your requests are listed here.</h4>
   </div>
   <div class="intro" v-if="dataLoaded">
     <h1 class="empty" v-if="userRequests.length == 0">
@@ -28,12 +28,15 @@
             <p class="remarks">
               <strong>Remarks: </strong>{{ request[1].Remarks }}
             </p>
+            <br>
+            <div class="buttons">
+              <button class="delete-button" @click="handleDelete(request[0])">
+                Delete
+              </button>
 
-            <button class="delete-button" @click="handleDelete(request[0])">
-              Delete Request
-            </button>
+              <EditRequest :requestId="request[0]" />
+            </div>
 
-            <EditRequest :requestId="request[0]" />
           </div>
         </div>
       </div>
@@ -93,8 +96,8 @@ export default {
         title: "Delete Request",
         message:
           "Are you sure you want to delete this request? This action cannot be undone.",
-        okButton: "Confirm deletion",
-        cancelButton: "Go Back",
+        okButton: "Delete",
+        cancelButton: "Cancel",
       });
       if (ok) {
         await deleteDoc(doc(db, "Requests", requestId));
@@ -124,18 +127,22 @@ export default {
   padding-top: 200px;
 }
 
+h1, p {
+  padding: 0 15px;
+}
+
 .card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: left;
-  width: 320px;
-  margin: 20px;
+  width: 340px;
+  margin: 10px;
   background-color: #f3ddb0;
-  height: 420px;
-  padding-top: 30px;
+  height: 380px;
+  padding: 20px 10px;
+  border-radius: 20px;
 }
-
 .remarks {
   width: 250px;
   white-space: nowrap;
@@ -144,7 +151,8 @@ export default {
 }
 
 .container {
-  padding-left: 30px;
+  padding-left: 0px;
+  padding: 0 30px;
 }
 
 .requests {
@@ -157,18 +165,19 @@ export default {
 
 .delete-button {
   background-color: #f7a588;
-  padding: 10px 10px;
-  border-radius: 4px;
-  font-size: medium;
-  margin-left: -13px;
-  margin-right: 5px;
-  margin-top: 10px;
-  border: none;
-  border: solid 0.5px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 0 20px;
+  border: 1px solid grey;
+  font-size: large;
 }
 
 .delete-button:hover {
   background-color: #d08a6e;
   cursor: pointer;
+}
+
+.buttons {
+  text-align: center;
 }
 </style>

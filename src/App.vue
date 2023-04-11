@@ -54,7 +54,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 500px;
+  background-color: white;
 }
 body {
   background: rgba(128, 0, 128, 0.1);

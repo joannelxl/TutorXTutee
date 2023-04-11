@@ -1,6 +1,6 @@
 <template>
   <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
-  <button class="update-button" @click="getData">Update Request</button>
+  <button class="update-button" @click="getData">Update</button>
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
@@ -210,11 +210,11 @@ export default {
 <style scoped>
 .update-button {
   background-color: #d9d9d9;
-  padding: 10px 10px;
-  border-radius: 4px;
-  font-size: medium;
-  border: none;
-  border: solid 0.5px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid grey;
+  margin: 0 20px;
+  font-size: large;
 }
 .update-button:hover {
   background-color: #a7a5a5;
@@ -283,11 +283,17 @@ form {
 
 .edit-button {
   text-align: center;
-  background: #e7e5aa;
+  background-color: #a3cb7b;
   border: 1px solid #000000;
   font-size: 20px;
   margin-left: 50px;
   float: right;
+  border-radius: 5px;
+	padding: 5px;
+}
+
+.edit-button:hover {
+  background-color: #8bae68;
 }
 
 .cancel-button {
@@ -296,6 +302,12 @@ form {
   border: 1px solid #000000;
   font-size: 20px;
   float: left;
+  border-radius: 5px;
+	padding: 5px;
+}
+
+.cancel-button:hover {
+  background-color: #aeaeae;
 }
 
 textarea {
