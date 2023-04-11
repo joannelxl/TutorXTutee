@@ -44,6 +44,12 @@ const routes = [
     component: () => import("../views/Requests.vue"),
   },
   {
+    path: "/RequestsInfo/:id",
+    name: "RequestsInfo",
+    component: () => import("../views/RequestsInfo.vue"),
+    params: true
+  },
+  {
     path: "/MyRequests",
     name: "MyRequests",
     component: () => import("../views/MyRequests.vue"),
@@ -63,11 +69,6 @@ const routes = [
     path: "/MyProfile",
     name: "MyProfile",
     component: () => import("../views/MyProfile.vue"),
-  },
-  {
-    path: "/InChat/:id",
-    name: "InChat",
-    component: InChat,
   },
   {
     path: "/Progress/:id",

@@ -1,5 +1,5 @@
 <template>
-  <h1 id="Heading">Tutor X Tutee</h1>
+  <br><br>
   <router-link
     id="router"
     to="/Chat"
@@ -271,8 +271,8 @@ export default {
   position: absolute;
   width: 700px;
   height: 510px;
-  margin-left: 40vh;
-  margin-top: 10vh;
+  margin-left: 20vw;
+  margin-top: 0vh;
 }
 
 #inputBox {
@@ -326,7 +326,7 @@ export default {
 }
 
 #router {
-  margin-left: -100px;
+  margin-left: 0vw;
   margin-top: -10px;
 }
 
@@ -353,7 +353,7 @@ export default {
 }
 
 .toTuteeTutor {
-  margin-left: -90px;
+  margin-left: 0vw;
   margin-top: -50px;
 }
 </style>

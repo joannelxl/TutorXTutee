@@ -1,8 +1,4 @@
 <template>
-  <div class="intro">
-    <h1>Tutor X Tutee</h1>
-    <h4>All your requests are listed here.</h4>
-  </div>
   <div class="intro" v-if="dataLoaded">
     <h1 class="empty" v-if="userRequests.length == 0">
       You do not have any request now. To add please click the + button
@@ -25,19 +21,20 @@
             <p v-else>
               <strong>Address: </strong>{{ request[1].Address.substring(0, 20) }}...
             </p>
-            <p class="remarks">
+            <p v-if="request[1].Remarks.length < 20" class="remarks">
               <strong>Remarks: </strong>{{ request[1].Remarks }}
             </p>
-            <br>
-            <div class="buttons">
-              <button class="delete-button" @click="handleDelete(request[0])">
-                Delete
-              </button>
+            <p v-else class="remarks">
+              <strong>Remarks: </strong>{{ request[1].Remarks.substring(0, 20) }}...
+            </p>
 
-              <EditRequest :requestId="request[0]" />
-            </div>
+            <button class="delete-button" @click="handleDelete(request[0])">
+              Delete
+            </button>
 
+            <EditRequest :requestId="request[0]" />
           </div>
+
         </div>
       </div>
     </div>
@@ -120,14 +117,15 @@ export default {
 <style scoped>
 .intro {
   text-align: center;
-  width: 1500px;
+  width: 90vw;
 }
 
 .empty {
   padding-top: 200px;
 }
 
-h1, p {
+h1,
+p {
   padding: 0 15px;
 }
 
@@ -136,13 +134,14 @@ h1, p {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: left;
-  width: 340px;
+  width: 41.5vh;
   margin: 10px;
   background-color: #f3ddb0;
   height: 380px;
   padding: 20px 10px;
   border-radius: 20px;
 }
+
 .remarks {
   width: 250px;
   white-space: nowrap;
@@ -160,7 +159,7 @@ h1, p {
   grid-template-columns: auto auto auto;
   row-gap: 5px;
   column-gap: 30px;
-  padding-left: 180px;
+  padding-left: 4vw;
 }
 
 .delete-button {

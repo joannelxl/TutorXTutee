@@ -1,7 +1,9 @@
 <template>
-  <div class="intro">
-    <h1>Tutor X Tutee</h1>
-    <h4>All your chats are listed here.</h4>
+  <div class="wrapper">
+    <div class="intro">
+      <h1>Tutor x Tutee</h1>
+      <h4>All your chats are listed here.</h4>
+    </div>
   </div>
   <div v-if="dataLoaded">
     <h1 class="empty" v-if="chats.length == 0">
@@ -20,6 +22,7 @@
       </button>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -207,16 +210,21 @@ export default {
 .allChats {
   margin-top: 100px;
   text-align: center;
+  margin-left: 2.8vw;
 }
 
 .intro {
   text-align: center;
-  width: 1200px;
 }
 
 .empty {
   text-align: center;
   margin-top: 200px;
   width: 1200px;
+}
+
+.wrapper{
+  text-align: center;
+  width: 90vw;
 }
 </style>

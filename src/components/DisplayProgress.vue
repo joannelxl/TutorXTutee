@@ -4,23 +4,21 @@
     <div class="main-container">
 
         <!-- Back to tutoring arrangement  -->
-        <div style="float:left; margin-left:20px;" v-if="role == 'tutor'">
-            <br>
-            <router-link to="/MyTutees" style="font-family: Arial, Helvetica, sans-serif; height:9px;">Back to
+        <div style="float:left; margin-left: 5vw;" v-if="role == 'tutor'">
+            <router-link to="/MyTutees">Back to
                 MyTutees</router-link>
             <button id="show-modal" @click="navigateProgressNotes"></button>
         </div>
 
-        <div style="float:left;margin-left:20px;" v-if="role == 'tutee'">
-            <br>
-            <router-link to="/MyTutors" style="font-family: Arial, Helvetica, sans-serif">Back to MyTutors</router-link>
-        </div>
+        <div style="float:left;margin-left: 5vw;" v-if="role == 'tutee'">
+            <router-link to="/MyTutors">Back to MyTutors</router-link>
+        </div> <br>
         <div class="entire-card">
 
-            <div class="heading">
+            <!--div class="heading">
                 <h1 style="margin-top:0px">Tutor X Tutee</h1>
                 <h4>All your written progress for {{ tuteeName }} are listed here.</h4>
-            </div>
+            </div-->
 
             <div v-if="dataLoaded">
                 <!-- if tutee -->
@@ -161,7 +159,7 @@ export default {
     background-color: #f3ddb0;
     padding: 5px 10px;
     border-radius: 10px;
-    margin: 0px;
+    margin-top: 2vh;
 
 }
 
@@ -189,7 +187,7 @@ export default {
     margin: 20px;
     margin-top: 0px;
     width: 750px;
-    margin-left: 17.6vw;
+    margin-left: 0vw;
 }
 
 .lesson {
