@@ -251,7 +251,7 @@ export default {
   width: 920px;
   height: 600px;
   margin-left: 15vw;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 #inputBox {
