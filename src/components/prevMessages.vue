@@ -250,7 +250,7 @@ export default {
   position: absolute;
   width: 700px;
   height: 510px;
-  margin-left: 20vw;
+  margin-left: 23vw;
   margin-top: 50px;
 }
 
@@ -300,7 +300,7 @@ export default {
   text-align: left;
   right: 0px;
   padding: 0px 20px;
-  margin-top: -25px;
+  margin-top: -28px;
   max-width: 350px;
   word-break: break-word;
   font-size: medium;

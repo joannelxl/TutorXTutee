@@ -120,8 +120,8 @@ export default {
 	<confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 	<div id="tuteearrangements" v-if="dataLoaded">
 		<div id="noarrangements" v-if="arrangements.length == 0">
-			<h3>You do not have any tutees currently.</h3>
-			<h3>Go and accept a request!</h3>
+			<h2>You do not have any tutees currently.</h2>
+			<h2>Go and accept a request!</h2>
 		</div>
 		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
@@ -157,11 +157,10 @@ export default {
 }
 
 #noarrangements {
-	text-align: left;
-	background-color: #f3ddb0;
-	padding: 5px 10px;
-	border-radius: 10px;
+  text-align: center;
+  margin-top: 200px;
 }
+
 
 .arrangement {
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
