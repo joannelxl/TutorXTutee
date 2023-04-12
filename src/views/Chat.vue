@@ -197,7 +197,7 @@ export default {
 }
 
 .allChats {
-  margin-top: 50px;
+  margin-top: 80px;
   text-align: center;
   /* width: 90vw; */
   /* display: inline; */
