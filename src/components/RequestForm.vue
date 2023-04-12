@@ -7,7 +7,7 @@
     <div class="modal-container">
       <button class="close-button" @click="handleClose">x</button>
       <div class="modal-title">
-        <h1><strong>Fill in your request here!</strong></h1>
+        <h2><strong>Create your request</strong></h2>
       </div>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
@@ -68,7 +68,7 @@
           <br />
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
-          <button class="add-button" @click="handleSubmit">Add Request!</button>
+          <button class="add-button" @click="handleSubmit">Create request</button>
         </div>
       </form>
     </div>
@@ -187,8 +187,8 @@ export default {
 .modal-container {
   width: 30%;
   margin: auto;
-  padding: 50px 50px;
-  background-color: #ebdfeb;
+  padding: 30px 20px;
+  background-color: white;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
@@ -196,10 +196,10 @@ export default {
 
 .close-button {
   float: right;
-  margin-top: -30px;
-  margin-right: -30px;
   font-size: 20px;
   cursor: pointer;
+  border: 1px solid #000000;
+  border-radius: 5px;
 }
 
 .modal-title {
@@ -213,12 +213,13 @@ export default {
 }
 
 select {
-  height: 32px;
+  height: 30px;
   width: 212px;
   border-radius: 5px;
   border: 1px solid lightgray;
   padding: 5px;
   margin: 5px 0px;
+  font-size: medium;
 }
 
 form {
@@ -235,15 +236,17 @@ textarea {
   border: 1px solid lightgray;
   padding: 5px;
   margin: 5px 0px;
+  font-size: medium;
 }
 
 label {
   padding: 5px;
   float: left;
   margin-right: 30px;
-  height: 20px;
+  height: 15px;
   margin-top: 5px;
   margin-bottom: 5px;
+  font-size: medium;
 }
 
 input {
@@ -252,37 +255,31 @@ input {
   border-radius: 5px;
   border: 1px solid lightgray;
   padding: 5px;
-  height: 20px;
+  height: 15px;
   margin-top: 5px;
   margin-bottom: 5px;
+  font-size: medium;
+}
+
+.add-button, .cancel-button {
+  text-align: center;
+  border: 1px solid #000000;
+  font-size: medium;
+  border-radius: 5px;
+	padding: 10px;
+  margin: 0 30px;
 }
 
 .add-button {
-  text-align: center;
-  background-color: #a3cb7b;
-  border: 1px solid #000000;
-  font-size: 20px;
   float: right;
-  border-radius: 5px;
-	padding: 5px;
-}
-
-.add-button:hover {
-  background-color: #8bae68;
 }
 
 .cancel-button {
-  text-align: center;
-  background: #d9d9d9;
-  border: 1px solid #000000;
-  font-size: 20px;
   float: left;
-  border-radius: 5px;
-	padding: 5px;
 }
 
-.cancel-button:hover {
-  background-color: #aeaeae;
+.add-button:hover, .cancel-button:hover, .close-button:hover {
+  background-color: #e0dad4;
 }
 
 .required:after {
@@ -294,26 +291,28 @@ input {
   color: red;
   text-align: center;
   padding-bottom: 10px;
+  font-size: medium;
 }
 
 #show-modal {
   position: fixed;
   right: 100px;
   bottom: 50px;
-  width: 6em;
-  height: 6em;
+  width: 5em;
+  height: 5em;
+  color: black;
   border-radius: 50%;
-  background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
+  background: linear-gradient(white, white), linear-gradient(white, white);
   background-position: center;
-  background-size: 50% 0.5em, 0.5em 50%;
+  background-size: 50% 0.35em, 0.35em 50%;
   background-repeat: no-repeat;
-  background-color: rgba(240, 51, 51, 0.56);
+  background-color: #b79780;
   border: none;
-  border: solid 0.5px;
+  box-shadow: 1px 1px gray;
 }
 
 #show-modal:hover {
-  background-color: rgba(177, 36, 36, 0.56);
+  background-color: #9f775a;
   cursor: pointer;
 }
 .modal-enter-from {

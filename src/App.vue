@@ -34,19 +34,6 @@ export default {
   </div>
 </template>
 
-<!-- <script>
-
-  export default {
-  name: "App",
-  components: {
-    SignUp,
-    Login,
-  },
-};
-</script>
-
- -->
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -54,10 +41,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: white;
 }
 body {
-  background: rgba(128, 0, 128, 0.1);
+  background: #f4f2f0;
+  width: 100%;
+  font-size: medium;
 }
 
 /* nav bar styling */

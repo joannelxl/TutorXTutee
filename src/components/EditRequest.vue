@@ -6,7 +6,7 @@
     <div class="modal-container">
       <button class="close-button" @click="handleClose">x</button>
       <div class="modal-title">
-        <h1>Update your request</h1>
+        <h2>Update your request</h2>
       </div>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
@@ -43,7 +43,7 @@
             <option value="Central">Central</option>
             <option value="Virtual">Virtual</option>
           </select>
-          <br /><br />
+          <br />
 
           <label class="required">Address:</label>
           <textarea
@@ -53,7 +53,7 @@
             rows="3"
             cols="27"
           ></textarea>
-          <br /><br />
+          <br />
 
           <label>Remarks:</label>
           <textarea
@@ -65,11 +65,11 @@
             cols="27"
           >
           </textarea>
-          <br /><br />
+          <br /><br>
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
           <button class="edit-button" @click="handleEdit">
-            Update Request!
+            Update request
           </button>
         </div>
       </form>
@@ -80,15 +80,8 @@
 <script>
 import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 import firebaseApp from "../firebase.js";
-import { deleteDoc, getFirestore, updateDoc } from "firebase/firestore";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
+import { getFirestore, updateDoc } from "firebase/firestore";
+import { getDoc, doc} from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -209,15 +202,16 @@ export default {
 
 <style scoped>
 .update-button {
-  background-color: #d9d9d9;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 8px;
-  border: 1px solid grey;
-  margin: 0 20px;
+  border: 1px solid #2c3e50;
+  /* border: none; */
+  margin: 0 30px;
   font-size: large;
+  float: right;
 }
 .update-button:hover {
-  background-color: #a7a5a5;
+  background-color: #e0dad4;
   cursor: pointer;
 }
 .modal-mask {
@@ -235,8 +229,9 @@ export default {
 .modal-container {
   width: 30%;
   margin: auto;
-  padding: 50px 50px;
-  background-color: #ebdfeb;
+  padding: 40px 20px;
+  /* background-color: #F1DEC9; */
+  background-color: white;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
@@ -244,10 +239,10 @@ export default {
 
 .close-button {
   float: right;
-  margin-top: -30px;
-  margin-right: -30px;
   font-size: 20px;
   cursor: pointer;
+  border: 1px solid #000000;
+  border-radius: 5px;
 }
 
 .modal-title {
@@ -261,18 +256,35 @@ export default {
 }
 
 select {
-  width: 58%;
+  height: 30px;
+  width: 212px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
+  font-size: medium;
 }
 
 label {
+  padding: 5px;
   float: left;
   margin-right: 30px;
+  height: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: medium;
 }
 
 input {
   float: right;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
   height: 15px;
-  width: 180px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: medium;
 }
 
 form {
@@ -281,37 +293,36 @@ form {
   margin: auto;
 }
 
-.edit-button {
+.edit-button, .cancel-button {
   text-align: center;
-  background-color: #a3cb7b;
+  /* background-color: #a3cb7b; */
   border: 1px solid #000000;
-  font-size: 20px;
-  margin-left: 50px;
-  float: right;
+  font-size: medium;
   border-radius: 5px;
-	padding: 5px;
+	padding: 10px;
+  margin: 0 30px;
 }
 
-.edit-button:hover {
-  background-color: #8bae68;
+.edit-button {
+  float: right;
 }
 
 .cancel-button {
-  text-align: center;
-  background: #d9d9d9;
-  border: 1px solid #000000;
-  font-size: 20px;
   float: left;
-  border-radius: 5px;
-	padding: 5px;
 }
 
-.cancel-button:hover {
-  background-color: #aeaeae;
+.edit-button:hover, .cancel-button:hover, .close-button:hover {
+  background-color: #e0dad4;
 }
 
 textarea {
   resize: none;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
+  font-size: medium;
 }
 </style>

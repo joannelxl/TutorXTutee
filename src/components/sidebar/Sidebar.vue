@@ -58,15 +58,11 @@ export default {
     <div class="links">
       <br /><br /><br /><br />
       <SidebarLink to="/Home" icon="fas fa-home">Home</SidebarLink>
-      <br />
       <SidebarLink to="/MyTutees" icon="fas fa-users" v-if="role == 'tutor'">My Tutees</SidebarLink>
       <SidebarLink to="/MyTutors" icon="fas fa-users" v-else>My Tutors</SidebarLink>
-      <br />
       <SidebarLink to="/Requests" icon="fas fa-user-plus" v-if="role == 'tutor'">Requests</SidebarLink>
       <SidebarLink to="/MyRequests" icon="fas fa-user-plus" v-else>My Requests</SidebarLink>
-      <br />
       <SidebarLink to="/Chat" icon="fas fa-comments">Chats</SidebarLink>
-      <br />
       <SidebarLink to="/MyProfile" icon="fas fa-user">My Profile</SidebarLink>
     </div>
 
@@ -74,7 +70,7 @@ export default {
       <i class="fas fa-angle-double-left"></i>
     </span>
 
-    <br /><br />
+    <br /><br /><br><br>
     <div v-if="!collapsed">
       <button @click="signOut()">Logout</button>
     </div>
@@ -83,9 +79,9 @@ export default {
 
 <style>
 :root {
-  --sidebar-bg-color: #dcb4dc;
-  --sidebar-item-hover: #c09bc0;
-  --sidebar-item-active: #c09bc0;
+  --sidebar-bg-color: #d3c0b2;
+  --sidebar-item-hover: #c5ac99;
+  --sidebar-item-active: #c5ac99;
 }
 </style>
 
@@ -99,12 +95,13 @@ export default {
   top: 0;
   left: 0;
   bottom: 0;
-  padding: 0.5em;
+  /* padding: 0.5em; */
 
   transition: 0.3s ease;
 
   display: flex;
   flex-direction: column;
+  box-shadow: 0 20px 20px 0 #d3c0b2;
 }
 
 .sidebar h1 {
@@ -128,26 +125,28 @@ export default {
 
 button {
   top: 50%;
-  background-color: #c77cc7;
+  background-color: #b79780;
   color: black;
   border: none;
   border-radius: 10px;
   padding: 15px;
   min-height: 30px;
   min-width: 120px;
+  font-size: large;
+  box-shadow: 1px 1px grey;
 }
 
 img:hover {
-  background-color: #c09bc0;
+  background-color: var(--sidebar-item-active);
   cursor: pointer;
 }
 
 button:hover {
-  background-color: rgba(128, 0, 128, 0.66);
+  background-color: #e0dad4;
   transition: 0.3s;
 }
 
 .collapse-icon:hover {
-  background-color: #c09bc0;
+  background-color: var(--sidebar-item-active);
 }
 </style>

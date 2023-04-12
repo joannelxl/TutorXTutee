@@ -1,7 +1,7 @@
 <template>
   <div class="intro" v-if="dataLoaded">
     <h1 class="empty" v-if="userRequests.length == 0">
-      You do not have any request now. To add please click the + button
+      You do not have any request now. To create please click the + button
     </h1>
     <div class="requests">
       <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
@@ -26,13 +26,15 @@
             </p>
             <p v-else class="remarks">
               <strong>Remarks: </strong>{{ request[1].Remarks.substring(0, 20) }}...
-            </p>
+            </p><br>
+            <div class="buttons">
+              <button class="delete-button" @click="handleDelete(request[0])">
+                Delete
+              </button>
 
-            <button class="delete-button" @click="handleDelete(request[0])">
-              Delete
-            </button>
+              <EditRequest :requestId="request[0]" />
+            </div>
 
-            <EditRequest :requestId="request[0]" />
           </div>
 
         </div>
@@ -47,7 +49,6 @@ import { deleteDoc, getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
-  getDoc,
   query,
   where,
   doc,
@@ -124,8 +125,7 @@ export default {
   padding-top: 200px;
 }
 
-h1,
-p {
+h1, p {
   padding: 0 15px;
 }
 
@@ -136,9 +136,11 @@ p {
   text-align: left;
   width: 41.5vh;
   margin: 10px;
-  background-color: #f3ddb0;
+  /*background-color: #f3ddb0;*/
+  /* background-color: #ebdfeb; */
+  background-color: white;
   height: 380px;
-  padding: 20px 10px;
+  padding: 20px 20px;
   border-radius: 20px;
 }
 
@@ -147,11 +149,6 @@ p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.container {
-  padding-left: 0px;
-  padding: 0 30px;
 }
 
 .requests {
@@ -163,16 +160,17 @@ p {
 }
 
 .delete-button {
-  background-color: #f7a588;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 8px;
-  margin: 0 20px;
-  border: 1px solid grey;
+  margin: 0 30px;
+  /* box-shadow: 1px 1px black; */
+  border: 1px solid #2c3e50;
   font-size: large;
+  float: left;
 }
 
 .delete-button:hover {
-  background-color: #d08a6e;
+  background-color: #e0dad4;
   cursor: pointer;
 }
 

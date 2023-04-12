@@ -2,7 +2,7 @@
   <div class="page">
     <div class="heading">
         <h1>Tutor x Tutee</h1>
-        <h4>All your tutoring requests are listed here</h4>
+        <h4>All your requests are listed here.</h4>
     </div>
   </div>
   <RequestForm @added="change" />
