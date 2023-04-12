@@ -1,7 +1,7 @@
 <template>
   <div class="intro" v-if="dataLoaded">
     <h2 class="empty" v-if="userRequests.length == 0">
-      You do not have any request now. To create, please click the '+' button
+      You do not have any request now. To create, please click the '+' button.
     </h2>
     <div class="requests">
       <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
@@ -80,15 +80,16 @@ export default {
       const querySnapshot = await getDocs(q);
       console.log("displayed");
       var count = 0
+      if (querySnapshot.size == 0) {
+        this.dataLoaded = true
+      }
       querySnapshot.forEach((doc) => {
         this.userRequests.push([doc.id, doc.data()]);
         count += 1
         if (count == querySnapshot.size) {
           this.dataLoaded = true
         }
-        console.log(this.userRequests.length)
       });
-      console.log(this.userRequests.length)
     },
 
     async handleDelete(requestId) {

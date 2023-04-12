@@ -2,14 +2,14 @@
   <div id="container">
     <div class="links">
       <router-link id="router" to="/Chat">Back to
-        Chat</router-link>
+        Chat</router-link><br><br>
       <div class="toTuteeTutor" v-if="role">
         <router-link id="toMyTutees" to="/myTutees">Back to My
           Tutees</router-link>
       </div>
       <div class="toTuteeTutor" v-else>
         <router-link id="toMyTutors" to="/myTutors">Back to My
-          Tutors</router-link>
+          Tutors</router-link><br><br>
       </div>
     </div>
 
@@ -269,10 +269,6 @@ export default {
   bottom: 50px;
   padding: 10px;
   border: 1px solid grey;
-}
-
-#button:hover {
-  /* background-color: #C8B6A6; */
 }
 
 .deleteIcon {

@@ -42,6 +42,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 body {
   background: #f4f2f0;
   width: 100%;
