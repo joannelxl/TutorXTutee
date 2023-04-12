@@ -15,7 +15,7 @@
         <div class="container">
           <!-- chat[0] is name, chat[1] is latest message, chat[3] is chatid -->
           <h1 style="font-size: large">{{ chat[0] }}</h1>
-          <p style="font-size: medium">{{ chat[1] }}</p>
+          <p id = "latestMessage" style="font-size: medium">{{ chat[1] }}</p>
         </div>
       </button>
     </div>
@@ -216,5 +216,12 @@ export default {
 .wrapper{
   text-align: center;
   width: 90vw;
+}
+
+#latestMessage {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
