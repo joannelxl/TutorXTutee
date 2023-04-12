@@ -271,17 +271,16 @@ textarea {
     font-size: 16px;
 }
 
-
-
-
 #button {
   position: absolute;
   background-color: white;
-  left: 890px;
-  bottom: 50px;
+  left: 870px;
+  bottom: 40px;
   padding: 10px;
   border: 1px solid grey;
-  height: 50px
+  height: 50px;
+  width: 80px;
+  height: 60px;
 }
 
 .deleteIcon {
