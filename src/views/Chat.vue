@@ -6,9 +6,9 @@
     </div>
   </div>
   <div v-if="dataLoaded">
-    <h1 class="empty" v-if="chats.length == 0">
+    <h2 class="empty" v-if="chats.length == 0">
       You do not have any chats now.
-    </h1>
+    </h2>
 
     <div class="allChats">
       <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)" :key="chat[2]">
@@ -211,7 +211,6 @@ export default {
 .empty {
   text-align: center;
   margin-top: 200px;
-  /* width: 1200px; */
 }
 
 .wrapper{

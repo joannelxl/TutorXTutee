@@ -17,14 +17,14 @@
             <div v-if="dataLoaded">
                 <!-- if tutee -->
                 <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
-                    <h3>Your tutor has not added any progress note.</h3>
-                    <h3>Progress Notes will be displayed here once he/she writes one.</h3>
+                    <h2>Your tutor has not written any progress notes.</h2>
+                    <h2>Progress Notes will be displayed here once he/she writes one.</h2>
                 </div>
 
                 <!-- if tutor -->
                 <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
-                    <h3>You have not written any progress notes for {{ tuteeName }}. </h3>
-                    <h3>To add please click the '+'' button.</h3>
+                    <h2>You have not written any progress notes for {{ tuteeName }}. </h2>
+                    <h2>To add, please click the '+' button.</h2>
                 </div>
 
                 <div class="progress">
@@ -150,10 +150,8 @@ export default {
 
 <style scoped>
 .empty {
-    background-color: #f3ddb0;
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin-top: 2vh;
+    text-align: center;
+    margin-top: 200px;
 }
 
 .heading {
@@ -166,7 +164,7 @@ export default {
     transition: 0.3s;
     text-align: left;
     min-height: 100%;
-    background-color: #f3ddb0;
+    background-color: white;
     height: 20%;
     padding: 10px;
     border-radius: 10px;
@@ -230,32 +228,35 @@ export default {
     font-size: large;
     cursor: pointer;
     box-shadow: 2px 2px gray;
-    background-color: #efa182;
+    background-color: #F1DEC9;
     float: right;
     text-align: center;
 }
 
 .delete-button:hover {
     cursor: pointer;
-    background-color: #d08a6e;
+    background-color: #C8B6A6;
 }
 
 #show-modal {
     position: fixed;
-    right: 100px;
-    bottom: 0;
-    width: 6em;
-    height: 6em;
-    border-radius: 50%;
-    background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
-    background-position: center;
-    background-size: 50% 0.5em, 0.5em 50%;
-    background-repeat: no-repeat;
-    background-color: rgba(240, 51, 51, 0.56);
+  right: 100px;
+  bottom: 50px;
+  width: 5em;
+  height: 5em;
+  color: black;
+  border-radius: 50%;
+  background: linear-gradient(white, white), linear-gradient(white, white);
+  background-position: center;
+  background-size: 50% 0.35em, 0.35em 50%;
+  background-repeat: no-repeat;
+  background-color: #b79780;
+  border: none;
+  box-shadow: 1px 1px gray;
 }
 
 #show-modal:hover {
-    background-color: rgba(177, 36, 36, 0.56);
-    cursor: pointer;
+    background-color: #9f775a;
+  cursor: pointer;
 }
 </style>

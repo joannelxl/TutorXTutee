@@ -1,8 +1,8 @@
 <template>
   <div class="intro" v-if="dataLoaded">
-    <h1 class="empty" v-if="userRequests.length == 0">
-      You do not have any request now. To create please click the + button
-    </h1>
+    <h2 class="empty" v-if="userRequests.length == 0">
+      You do not have any request now. To create, please click the '+' button
+    </h2>
     <div class="requests">
       <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
       <div class="req" v-for="request in userRequests" :key="request[0]">
@@ -86,7 +86,9 @@ export default {
         if (count == querySnapshot.size) {
           this.dataLoaded = true
         }
+        console.log(this.userRequests.length)
       });
+      console.log(this.userRequests.length)
     },
 
     async handleDelete(requestId) {
