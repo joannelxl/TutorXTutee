@@ -250,7 +250,7 @@ export default {
   position: absolute;
   width: 700px;
   height: 510px;
-  margin-left: 23vw;
+  margin-left: 20vw;
   margin-top: 50px;
 }
 
