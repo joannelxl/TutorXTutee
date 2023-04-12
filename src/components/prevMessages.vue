@@ -248,15 +248,16 @@ export default {
   border-radius: 25px;
   text-align: center;
   position: absolute;
-  width: 700px;
-  height: 510px;
-  margin-left: 20vw;
-  margin-top: 50px;
+  width: 920px;
+  height: 600px;
+  margin-left: 15vw;
+  margin-top: 20px;
 }
 
 #inputBox {
   position: absolute;
-  width: 550px;
+  margin-top: 15vh;
+  width: 780px;
   height: 100px;
   left: 40px;
   bottom: 1px;
@@ -265,10 +266,11 @@ export default {
 #button {
   position: absolute;
   background-color: white;
-  left: 570px;
+  left: 700px;
   bottom: 50px;
   padding: 10px;
   border: 1px solid grey;
+  height: 50px
 }
 
 .deleteIcon {
@@ -301,7 +303,7 @@ export default {
   right: 0px;
   padding: 0px 20px;
   margin-top: -28px;
-  max-width: 350px;
+  max-width: 380px;
   word-break: break-word;
   font-size: medium;
 }
@@ -313,7 +315,7 @@ export default {
 
 .scrollable {
   overflow-y: scroll;
-  height: 330px;
+  height: 420px;
   display: flex;
   flex-direction: column-reverse;
 }
@@ -334,7 +336,7 @@ export default {
   /* color of the scroll thumb */
   border-radius: 20px;
   /* roundness of the scroll thumb */
-  border: 2px solid purple;
+  border: 2px solid #A99282;
   /* creates padding around scroll thumb */
 }
 

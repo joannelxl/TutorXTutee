@@ -175,6 +175,7 @@ p {
   grid-template-columns: auto auto auto;
   margin-top: 3vh;
   float: left;
-  margin-left: 12vh;
+  margin-left: 3vh;
 }
+
 </style>
