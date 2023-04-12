@@ -189,7 +189,7 @@ export default {
   margin-top: -1px;
   margin-bottom: -1px;
   background-color: white;
-  border: 1px solid grey;
+  border: 1px solid #A99282;
 }
 
 .chat:hover {
