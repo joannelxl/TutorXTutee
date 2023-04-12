@@ -259,14 +259,14 @@ export default {
   margin-top: 15vh;
   width: 780px;
   height: 100px;
-  left: 40px;
+  left: -70px;
   bottom: 1px;
 }
 
 #button {
   position: absolute;
   background-color: white;
-  left: 700px;
+  left: 890px;
   bottom: 50px;
   padding: 10px;
   border: 1px solid grey;
