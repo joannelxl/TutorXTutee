@@ -12,21 +12,28 @@
             <h1>{{ request[1].Subject }}</h1>
 
             <p><strong>Level:</strong> {{ request[1].Level }}</p>
-            <p><strong>Preferred Day:</strong> {{ request[1].PreferredDays }}</p>
-            <p><strong>Preferred Time: </strong>{{ request[1].PreferredTime }}</p>
+            <p>
+              <strong>Preferred Day:</strong> {{ request[1].PreferredDays }}
+            </p>
+            <p>
+              <strong>Preferred Time: </strong>{{ request[1].PreferredTime }}
+            </p>
             <p><strong>Location: </strong>{{ request[1].Location }}</p>
             <p v-if="request[1].Address.length < 20">
               <strong>Address: </strong>{{ request[1].Address }}
             </p>
             <p v-else>
-              <strong>Address: </strong>{{ request[1].Address.substring(0, 20) }}...
+              <strong>Address: </strong
+              >{{ request[1].Address.substring(0, 20) }}...
             </p>
             <p v-if="request[1].Remarks.length < 20" class="remarks">
               <strong>Remarks: </strong>{{ request[1].Remarks }}
             </p>
             <p v-else class="remarks">
-              <strong>Remarks: </strong>{{ request[1].Remarks.substring(0, 20) }}...
-            </p><br>
+              <strong>Remarks: </strong
+              >{{ request[1].Remarks.substring(0, 20) }}...
+            </p>
+            <br />
             <div class="buttons">
               <button class="delete-button" @click="handleDelete(request[0])">
                 Delete
@@ -34,9 +41,7 @@
 
               <EditRequest :requestId="request[0]" />
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -46,13 +51,7 @@
 <script>
 import firebaseApp from "../firebase.js";
 import { deleteDoc, getFirestore } from "firebase/firestore";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import EditRequest from "./EditRequest.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import ConfirmDialogue from "./ConfirmDialogue.vue";
@@ -79,15 +78,15 @@ export default {
       const q = query(requestsRef, where("User", "==", this.useremail));
       const querySnapshot = await getDocs(q);
       console.log("displayed");
-      var count = 0
+      var count = 0;
       if (querySnapshot.size == 0) {
-        this.dataLoaded = true
+        this.dataLoaded = true;
       }
       querySnapshot.forEach((doc) => {
         this.userRequests.push([doc.id, doc.data()]);
-        count += 1
+        count += 1;
         if (count == querySnapshot.size) {
-          this.dataLoaded = true
+          this.dataLoaded = true;
         }
       });
     },
@@ -129,7 +128,8 @@ export default {
   text-align: center;
 }
 
-h1, p {
+h1,
+p {
   padding: 0 15px;
 }
 
@@ -153,14 +153,6 @@ h1, p {
   text-overflow: ellipsis;
 }
 
-.requests {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  row-gap: 5px;
-  column-gap: 30px;
-  padding-left: 4vw;
-}
-
 .delete-button {
   padding: 10px 15px;
   border-radius: 8px;
@@ -177,5 +169,12 @@ h1, p {
 
 .buttons {
   text-align: center;
+}
+
+.req {
+  grid-template-columns: auto auto auto;
+  margin-top: 3vh;
+  float: left;
+  margin-left: 12vh;
 }
 </style>

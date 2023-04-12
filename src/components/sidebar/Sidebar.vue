@@ -132,7 +132,7 @@ button {
   padding: 15px;
   min-height: 30px;
   min-width: 120px;
-  font-size: large;
+  font-size: 16px;
   box-shadow: 1px 1px grey;
 }
 
