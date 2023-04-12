@@ -46,7 +46,7 @@ export default {
     width: 500px;
     margin-top: 5vh;
     margin-bottom: 1%;
-    margin-left: 60vh;
+    margin-left: 50vh;
 }
 
 .TutorXTutee {
@@ -57,12 +57,12 @@ export default {
     width: 700px;
     margin-top: 1%;
     margin-bottom: 0px;
-    margin-left: 50vh;
+    margin-left: 40vh;
 }
 
 img {
     max-width: 30em;
-    margin-left: 10vh
+    margin-left: 5vh
 }
 
 .image-col {
