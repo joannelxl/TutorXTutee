@@ -223,29 +223,26 @@ button:active {
 }
 
 .chatbutton {
-	/* background-color: #8CD7E8; */
   background-color: #F1DEC9;
 }
 
 .chatbutton:hover {
-	background-color: #63b4c7;
+	background-color: #C8B6A6;
 }
 
 .progressbutton {
-  /* background-color: #a3cb7b; */
   background-color: #F1DEC9;
 }
 
 .progressbutton:hover {
-	background-color: #8bae68;
+	background-color: #C8B6A6;
 }
 
 .endsessionbutton {
-  /* background-color: #efa182; */
   background-color: #F1DEC9;
 }
 
 .endsessionbutton:hover {
-	background-color: #d08a6e;
+	background-color: #C8B6A6;
 }
 </style>
