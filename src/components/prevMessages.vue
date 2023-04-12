@@ -42,7 +42,7 @@
       </div>
       <div id="inputBox">
         <form @submit.prevent="sendMessage">
-          <input type="text" style="height: 50px; width: 550px; font-size: 14px" v-model="newMessage"
+          <textarea type="text" v-model="newMessage"
             placeholder="Send a message..." />
           <button id="button" type="submit" style="font-size: 16px">Send</button>
         </form>
@@ -262,6 +262,17 @@ export default {
   left: -70px;
   bottom: 1px;
 }
+
+textarea {
+    width: 98vh;
+    height: 55px;
+    margin-left: 15vh;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+
+
 
 #button {
   position: absolute;
