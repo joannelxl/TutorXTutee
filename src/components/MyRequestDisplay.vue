@@ -123,6 +123,7 @@ export default {
 
 .empty {
   padding-top: 200px;
+  text-align: center;
 }
 
 h1, p {
@@ -136,8 +137,6 @@ h1, p {
   text-align: left;
   width: 41.5vh;
   margin: 10px;
-  /*background-color: #f3ddb0;*/
-  /* background-color: #ebdfeb; */
   background-color: white;
   height: 380px;
   padding: 20px 20px;
@@ -163,7 +162,6 @@ h1, p {
   padding: 10px 15px;
   border-radius: 8px;
   margin: 0 30px;
-  /* box-shadow: 1px 1px black; */
   border: 1px solid #2c3e50;
   font-size: large;
   float: left;

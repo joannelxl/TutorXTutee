@@ -168,9 +168,10 @@ export default {
 }
 
 .arrangement {
-  background-color: #f3ddb0;
-  border-radius: 10px;
-  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
   margin: 20px;
   width: 750px;
   display: block;
@@ -222,7 +223,8 @@ button:active {
 }
 
 .chatbutton {
-	background-color: #8CD7E8;
+	/* background-color: #8CD7E8; */
+  background-color: #F1DEC9;
 }
 
 .chatbutton:hover {
@@ -230,7 +232,8 @@ button:active {
 }
 
 .progressbutton {
-  background-color: #a3cb7b;
+  /* background-color: #a3cb7b; */
+  background-color: #F1DEC9;
 }
 
 .progressbutton:hover {
@@ -238,7 +241,8 @@ button:active {
 }
 
 .endsessionbutton {
-  background-color: #efa182;
+  /* background-color: #efa182; */
+  background-color: #F1DEC9;
 }
 
 .endsessionbutton:hover {

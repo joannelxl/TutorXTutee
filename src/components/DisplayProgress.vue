@@ -14,12 +14,6 @@
             <router-link to="/MyTutors">Back to MyTutors</router-link>
         </div> <br>
         <div class="entire-card">
-
-            <!--div class="heading">
-                <h1 style="margin-top:0px">Tutor X Tutee</h1>
-                <h4>All your written progress for {{ tuteeName }} are listed here.</h4>
-            </div-->
-
             <div v-if="dataLoaded">
                 <!-- if tutee -->
                 <div class="empty" v-if="progressNotes.length == 0 && role == 'tutee'">
@@ -160,7 +154,6 @@ export default {
     padding: 5px 10px;
     border-radius: 10px;
     margin-top: 2vh;
-
 }
 
 .heading {

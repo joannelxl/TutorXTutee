@@ -1,70 +1,53 @@
 <template>
-  <br><br>
-  <router-link
-    id="router"
-    to="/Chat"
-    style="font-family: Arial, Helvetica, sans-serif"
-    >Back to Chat</router-link
-  >
-  <div class="toTuteeTutor" v-if="role">
-    <router-link
-      id="toMyTutees"
-      to="/myTutees"
-      style="font-family: Arial, Helvetica, sans-serif"
-      >Back to My Tutees</router-link
-    >
-  </div>
-  <div class="toTuteeTutor" v-else>
-    <router-link
-      id="toMyTutors"
-      to="/myTutors"
-      style="font-family: Arial, Helvetica, sans-serif"
-      >Back to My Tutors</router-link
-    >
-  </div>
-  <div id="chat">
-    <div>
-      <img
-        class="deleteIcon"
-        src="@/assets/dustbin.png"
-        alt=""
-        @click="doDelete" />
-      <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+  <div id="container">
+    <div class="links">
+      <router-link id="router" to="/Chat">Back to
+        Chat</router-link>
+      <div class="toTuteeTutor" v-if="role">
+        <router-link id="toMyTutees" to="/myTutees">Back to My
+          Tutees</router-link>
+      </div>
+      <div class="toTuteeTutor" v-else>
+        <router-link id="toMyTutors" to="/myTutors">Back to My
+          Tutors</router-link>
+      </div>
     </div>
-    <div id="displayname">
-      <h3>{{ displayName }}</h3>
-    </div>
-    <div id="messagesOnly">
-      <!--need to display this on the left eventually-->
-      <div id="display" v-if="allMessages">
-        <div class="scrollable">
-          <div
-            id="allMessages"
-            v-for="message in allMessages.slice().reverse()"
-            :key="index">
-            <div id="senderMessages">
-              <div id="sender" v-if="message[1]">
-                <p style="font-size: 16px">{{ message[0] }}</p>
+
+
+    <div id="chat">
+      <div>
+        <img class="deleteIcon" src="@/assets/dustbin.png" alt="" @click="doDelete" />
+        <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+      </div>
+      <div id="displayname">
+        <h3>{{ displayName }}</h3>
+      </div>
+      <div id="messagesOnly">
+        <!--need to display this on the left eventually-->
+        <div id="display" v-if="allMessages">
+          <div class="scrollable">
+            <div id="allMessages" v-for="message in allMessages.slice().reverse()" :key="index">
+              <div id="senderMessages">
+                <div id="sender" v-if="message[1]">
+                  <p style="font-size: 16px">{{ message[0] }}</p>
+                </div>
               </div>
-            </div>
-            <div id="receiverMessages">
-              <div id="receiver" v-if="message[1] == false">
-                <p style="font-size: 16px">{{ message[0] }}</p>
+              <div id="receiverMessages">
+                <div id="receiver" v-if="message[1] == false">
+                  <p style="font-size: 16px">{{ message[0] }}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="inputBox">
-      <form @submit.prevent="sendMessage">
-        <input
-          type="text"
-          style="height: 50px; width: 550px; font-size: 14px"
-          v-model="newMessage"
-          placeholder="Send a message..." />
-        <button id="button" type="submit" style="font-size: 16px">Send</button>
-      </form>
+      <div id="inputBox">
+        <form @submit.prevent="sendMessage">
+          <input type="text" style="height: 50px; width: 550px; font-size: 14px" v-model="newMessage"
+            placeholder="Send a message..." />
+          <button id="button" type="submit" style="font-size: 16px">Send</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -254,17 +237,8 @@ export default {
 </script>
 
 <style scoped>
-#Heading {
-  color: black;
-  top: 10px;
-  width: 700px;
-  margin-top: 40px;
-  margin-bottom: 0px;
-  margin-left: 275px;
-}
-
 #chat {
-  background-color: #f3ddb0;
+  background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   text-align: center;
@@ -272,7 +246,6 @@ export default {
   width: 700px;
   height: 510px;
   margin-left: 20vw;
-  margin-top: 0vh;
 }
 
 #inputBox {
@@ -288,7 +261,7 @@ export default {
   background-color: rgba(128, 0, 128, 0.28);
   left: 570px;
   bottom: 50px;
-  padding:10px
+  padding: 10px
 }
 
 .deleteIcon {
@@ -314,7 +287,7 @@ export default {
 
 #sender,
 #receiver {
-  background: white;
+  background: #F1DEC9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   text-align: left;
@@ -327,7 +300,7 @@ export default {
 
 #router {
   margin-left: 0vw;
-  margin-top: -10px;
+  /* margin-top: -10px; */
 }
 
 .scrollable {
@@ -338,22 +311,27 @@ export default {
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
+  width: 12px;
+  /* width of the entire scrollbar */
 }
 
 .scrollable::-webkit-scrollbar-track {
-  background: transparent; /* color of the tracking area */
+  background: transparent;
+  /* color of the tracking area */
   border-radius: 20px;
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background-color: #EEEDED; /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 2px solid purple; /* creates padding around scroll thumb */
+  background-color: #EEEDED;
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 2px solid purple;
+  /* creates padding around scroll thumb */
 }
 
 .toTuteeTutor {
-  margin-left: 0vw;
-  margin-top: -50px;
+  /* margin-left: 0vw; */
+  /* margin-top: -50px; */
 }
 </style>

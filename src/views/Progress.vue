@@ -3,7 +3,7 @@
         <div class="heading">
             <h1>Tutor x Tutee</h1>
             <h4 v-if="dataLoaded"> 
-                All your written progress for {{ tuteeName }} are listed here 
+                All your progress notes for {{ tuteeName }} are listed here.
             </h4>
         </div>
         <DisplayProgress :key="refreshComp" :id="id" />
