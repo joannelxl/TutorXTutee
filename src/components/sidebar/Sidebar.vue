@@ -101,7 +101,6 @@ export default {
 
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 20px 0 #d3c0b2;
 }
 
 .sidebar h1 {

@@ -48,7 +48,7 @@ export default {
     font-size: medium;
     user-select: none;
 
-    padding: 20px 10px 20px 30px;
+    padding: 20px 10px 20px 10px;
 
     color: black;
     text-decoration: none;
