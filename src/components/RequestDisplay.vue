@@ -48,7 +48,7 @@
                     <div class="modal-footer">
                         <div class="buttons">
                             <button class="close-btn" type="button" @click="handleClose">Cancel</button> &nbsp &nbsp &nbsp &nbsp &nbsp
-                            <button class="update-btn" type="button" v-on:click="updateFilter"> Filter! </button><br>
+                            <button class="update-btn" type="button" v-on:click="updateFilter"> Filter </button><br>
                         </div>
                     </div>
                 </form>
@@ -159,8 +159,6 @@ export default {
 		},
         updateFilter() {
             this.display()
-            //this.handleClose()
-            //this.showModal=false;
         },
         showmodal() {
             this.showModal = true;
@@ -226,13 +224,13 @@ export default {
     text-align: left;
     width: 40vh;
     margin: 2vh;
-    background-color: #f3ddb0;
+    background-color: white;
     padding-top: 2vh;
     padding-left: 3vh;
     padding-bottom: 2.5vh;
     padding-right: 3vh;
     cursor: pointer;
-    border-color: #f3ddb0;
+    /* border-color: #f3ddb0; */
     border-radius: 10px;
     font-size: larger;
     overflow-wrap: break-word;
@@ -277,7 +275,7 @@ export default {
     width: 25%;
     margin: auto;
     padding: 50px 50px;
-    background-color: #ebdfeb;
+    background-color: white;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
@@ -285,6 +283,10 @@ export default {
 .modal-body{
     text-align: left;
     margin-left: 12vh;
+}
+
+input {
+    cursor: pointer;
 }
 .options {
     text-align: left;
@@ -295,17 +297,15 @@ export default {
     display: block;
     font-size: large;
 }
-.close-btn{
-    background-color: #b3e6df;
-}
+
 .close-btn:hover{
-    background-color: #94ddd2;
+    background-color: #e0dad4;
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
 }
-.update-btn{
-    background-color: #e5cbe5;
-}
+
 .update-btn:hover{
-    background-color: #d7aed7;
+    background-color: #e0dad4;
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
 }
 .close {
     float: right;
@@ -314,16 +314,15 @@ export default {
 }
 button {
 	border-radius: 5px;
-	padding: 5px;
+	padding: 10px;
 	width: auto;
 	text-align: left;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	border: none;
+	border: 1px solid #000000;
 	height: 40px;
 	font-size: large;
 	cursor: pointer;
-	box-shadow: 2px 2px gray;
 }
 .filterblock{
     float: right;

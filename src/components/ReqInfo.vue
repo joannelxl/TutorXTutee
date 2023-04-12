@@ -184,7 +184,7 @@ export default {
     transition: 0.3s;
     text-align: left;
     margin-top: 8vh;
-    background-color: #f3ddb0;
+    background-color: white;
     padding: 20px;
     border-color: #f3ddb0;
     border-radius: 10px;
@@ -205,10 +205,10 @@ export default {
 
 #router{
     text-align: left;
-    margin-left: 25vh;
-    margin-top: 2vh;
+    margin-left: 5vw;
+    /* margin-top: 2vh; */
     cursor: pointer;
-    font-size: large;
+    /* font-size: large; */
     float: left;
 }
 
@@ -217,13 +217,13 @@ export default {
     margin-right: 25vh;
     font-size: large;
     float: right;
-    background-color: #8CD7E8;
+    background-color: #F1DEC9;
     padding-left: 18px;
     padding-right: 18px;
 }
 
 .chatButton:hover{
-    background-color: #40a4bb;
+    background-color: #C8B6A6;
 }
 
 .page{
@@ -240,11 +240,11 @@ export default {
 .acceptRequestButton{
     text-align: center;
     margin-top: 2vh;
-    background-color: #e4ade4;
+    background-color: #F1DEC9;
 }
 
 .acceptRequestButton:hover{
-    background-color: #cd7ccd;
+    background-color: #C8B6A6;
 }
 
 button {

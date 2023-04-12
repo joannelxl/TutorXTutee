@@ -183,16 +183,6 @@ export default {
   height: 80px;
 }
 .chat {
-  /* margin-top: -1px;
-  margin-bottom: -1px;
-  cursor: pointer;
-  outline: none;
-  background-color: transparent;
-  border: none;
-  border-radius: none;
-  box-shadow: 0 9px transparent;
-  text-align: left;
-  display: block; */
   text-align: left;
   display: block;
   margin: auto;
@@ -200,7 +190,6 @@ export default {
   margin-bottom: -1px;
   background-color: white;
   border: 1px solid grey;
-  /* float: left; */
 }
 
 .chat:hover {

@@ -13,7 +13,6 @@
       </div>
     </div>
 
-
     <div id="chat">
       <div>
         <img class="deleteIcon" src="@/assets/dustbin.png" alt="" @click="doDelete" />
@@ -237,8 +236,14 @@ export default {
 </script>
 
 <style scoped>
+
+.links {
+  float: left;
+  margin-left: 5vw;
+}
+
 #chat {
-  background-color: white;
+  background-color: #F1DEC9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   text-align: center;
@@ -246,6 +251,7 @@ export default {
   width: 700px;
   height: 510px;
   margin-left: 20vw;
+  margin-top: 50px;
 }
 
 #inputBox {
@@ -258,10 +264,15 @@ export default {
 
 #button {
   position: absolute;
-  background-color: rgba(128, 0, 128, 0.28);
+  background-color: white;
   left: 570px;
   bottom: 50px;
-  padding: 10px
+  padding: 10px;
+  border: 1px solid grey;
+}
+
+#button:hover {
+  /* background-color: #C8B6A6; */
 }
 
 .deleteIcon {
@@ -287,7 +298,7 @@ export default {
 
 #sender,
 #receiver {
-  background: #F1DEC9;
+  background: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   text-align: left;
@@ -296,6 +307,7 @@ export default {
   margin-top: -25px;
   max-width: 350px;
   word-break: break-word;
+  font-size: medium;
 }
 
 #router {
@@ -331,7 +343,7 @@ export default {
 }
 
 .toTuteeTutor {
-  /* margin-left: 0vw; */
+  margin-left: 0vw;
   /* margin-top: -50px; */
 }
 </style>
