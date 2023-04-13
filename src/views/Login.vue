@@ -2,7 +2,7 @@
   <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
   <br /><br /><br />
   <div id="login">
-    <img id="logo" src="@/assets/logo.png" alt="" />
+    <img id="logo" src="@/assets/logo_transparent.png" alt="" />
     <h2>Login</h2>
     <form id="loginform" @submit="(e) => login(e)">
       <label>Email:</label>

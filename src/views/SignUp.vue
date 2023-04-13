@@ -13,7 +13,7 @@
       </div>
 
       <div id="signup">
-        <img id="logo" src="@/assets/logo.png" alt="" />
+        <img id="logo" src="@/assets/logo_transparent.png" alt="" />
         <h2>Sign Up</h2>
         <form id="signupform" @submit="(e) => signup(e)">
           <label>First Name:</label>

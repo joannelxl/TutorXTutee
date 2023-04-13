@@ -54,7 +54,7 @@ export default {
   <div class="sidebar" :style="{ width: sidebarWidth }" v-if="dataLoaded">
     <br /><br />
 
-    <img @click="redirectHomepage" alt="logo" src="src\assets\logo_transparent.png" />
+    <img @click="redirectHomepage" alt="logo" src="@/assets/logo.png" />
     <div class="links">
       <br /><br /><br /><br />
       <SidebarLink to="/Home" icon="fas fa-home"> Home</SidebarLink>
