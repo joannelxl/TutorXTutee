@@ -14,7 +14,7 @@
                             <b>&times;</b>
                         </div>
                         <div style="font-size: larger;"><b>Filter based on your preferences</b></div>
-                    </div><br>
+                    </div><br> 
                     <div class="modal-body">
                         <div class="block">
                             <b>Location Preferences: </b>
@@ -101,7 +101,6 @@ export default {
             const requestsRef = collection(db, "Requests");
             const q = query(requestsRef);
             const querySnapshot = await getDocs(q);
-            //console.log(querySnapshot.size)
             this.filteredRequests = [];
 
             // for every request in the database
@@ -131,7 +130,6 @@ export default {
                     this.selectedSubjects.includes(newSubject) &&
                     this.selectedLevels.includes(newLevel)) {
                     this.filteredRequests.push([docu.id, docu.data(), tutee.data().firstName + " " + tutee.data().lastName]);
-                    //count += 1
                 }
                 count2 += 1
                 
@@ -142,11 +140,7 @@ export default {
                     this.handleClose();
                     this.dataLoaded = true
                 }
-            }) 
-            /*if (this.showModal == true) {
-                this.showModal = false
-            }*/
-            
+            })        
         },
         redirectToInfo(documentID) {
 			this.$router.push({name: "RequestsInfo", params: {id: documentID}})
@@ -182,10 +176,8 @@ export default {
                 const q = query(requestsRef);
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach(async (docu) => {
-                    // var include = true;
                     tuteeEmail = docu.data().User;
                     var tutee = await getDoc(doc(db, "Tutees", tuteeEmail))
-                    // console.log([docu.id, docu.data(), tutee.data().firstName + " " + tutee.data().lastName])
                     this.requests.push([docu.id, docu.data(), tutee.data().firstName + " " + tutee.data().lastName]);
                     var location = docu.data().Location
                     var newLocation = location.charAt(0).toUpperCase() + location.slice(1)
@@ -224,7 +216,6 @@ export default {
     padding-bottom: 2.5vh;
     padding-right: 3vh;
     cursor: pointer;
-    /* border-color: #f3ddb0; */
     border-radius: 10px;
     font-size: larger;
     overflow-wrap: break-word;

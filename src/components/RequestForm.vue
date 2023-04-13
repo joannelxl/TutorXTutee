@@ -5,10 +5,12 @@
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
-      <button class="close-button" @click="handleClose">x</button>
-      <div class="modal-title">
-        <h2><strong>Create your request</strong></h2>
-      </div>
+      <div class="modal-header">
+        <div class="close" @click="handleClose" style="font-size: large;">
+          <b>&times;</b>
+        </div>
+        <div style="font-size:x-large"><b>Create your request</b></div>
+      </div><br>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
           <label class="required">Subject:</label>
@@ -20,11 +22,7 @@
           <br /><br />
 
           <label class="required">Preferred Day:</label>
-          <input
-            type="text"
-            placeholder="e.g. Tuesday"
-            v-model="preferredDays"
-          />
+          <input type="text" placeholder="e.g. Tuesday" v-model="preferredDays" />
           <br />
           <br />
           <label class="required">Preferred Time:</label>
@@ -43,25 +41,13 @@
           <br />
 
           <label class="required">Address:</label>
-          <textarea
-            rows="3"
-            cols="27"
-            type="text"
-            placeholder="e.g. Computing drive 117417"
-            v-model="address"
-          ></textarea>
+          <textarea rows="3" cols="27" type="text" placeholder="e.g. Computing drive 117417" v-model="address"></textarea>
           <br />
 
           <label>Remarks:</label>
-          <textarea
-            rows="5"
-            cols="27"
-            type="text"
-            id="remarks"
-            placeholder="e.g. I am having troubles writing essays"
-            v-model="remarks"
-          >
-          </textarea>
+          <textarea rows="5" cols="27" type="text" id="remarks" placeholder="e.g. I am having troubles writing essays"
+            v-model="remarks">
+            </textarea>
           <br />
 
           <div class="error" v-if="formError">{{ formError }}</div>
@@ -143,7 +129,6 @@ export default {
     },
 
     async handleClose() {
-      console.log("close??");
       this.showModal = false;
       this.handleReset();
     },
@@ -194,17 +179,10 @@ export default {
   transition: all 0.3s ease;
 }
 
-.close-button {
-  float: right;
-  font-size: 20px;
-  cursor: pointer;
-  border: 1px solid #000000;
-  border-radius: 5px;
-}
-
-.modal-title {
-  margin-top: 0;
-  text-align: center;
+.close {
+    float: right;
+    height: fit-content;
+    cursor: pointer;
 }
 
 .modal-body {
@@ -212,8 +190,10 @@ export default {
   display: inline-block;
 }
 
-input:hover, select:hover, textarea:hover {
-  box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
+input:hover,
+select:hover,
+textarea:hover {
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.24);
 }
 
 select {
@@ -265,12 +245,13 @@ input {
   font-size: medium;
 }
 
-.add-button, .cancel-button {
+.add-button,
+.cancel-button {
   text-align: center;
   border: 1px solid #000000;
   font-size: medium;
   border-radius: 5px;
-	padding: 10px;
+  padding: 10px;
   margin: 0 30px;
 }
 
@@ -282,7 +263,9 @@ input {
   float: left;
 }
 
-.add-button:hover, .cancel-button:hover, .close-button:hover {
+.add-button:hover,
+.cancel-button:hover,
+.close-button:hover {
   background-color: #e0dad4;
 }
 
@@ -319,6 +302,7 @@ input {
   background-color: #9f775a;
   cursor: pointer;
 }
+
 .modal-enter-from {
   opacity: 0;
 }

@@ -4,10 +4,12 @@
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
-      <button class="close-button" @click="handleClose">x</button>
-      <div class="modal-title">
-        <h2>Update your request</h2>
-      </div>
+      <div class="modal-header">
+        <div class="close" @click="handleClose" style="font-size: large;">
+          <b>&times;</b>
+        </div>
+        <div style="font-size:x-large"><b>Update your request</b></div>
+      </div><br>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
           <label class="required">Subject:</label>
@@ -19,19 +21,11 @@
           <br /><br />
 
           <label class="required">Preferred Day:</label>
-          <input
-            type="text"
-            :placeholder="preferredDays"
-            v-model="newPreferredDays"
-          />
+          <input type="text" :placeholder="preferredDays" v-model="newPreferredDays" />
           <br /><br />
 
           <label class="required">Preferred Time:</label>
-          <input
-            type="text"
-            :placeholder="preferredTime"
-            v-model="newPreferredTime"
-          />
+          <input type="text" :placeholder="preferredTime" v-model="newPreferredTime" />
           <br /><br />
 
           <label class="required">Location:</label>
@@ -46,25 +40,12 @@
           <br />
 
           <label class="required">Address:</label>
-          <textarea
-            type="text"
-            :placeholder="address"
-            v-model="newAddress"
-            rows="3"
-            cols="27"
-          ></textarea>
+          <textarea type="text" :placeholder="address" v-model="newAddress" rows="3" cols="27"></textarea>
           <br />
 
           <label>Remarks:</label>
-          <textarea
-            type="text"
-            id="remarks"
-            :placeholder="remarks"
-            v-model="newRemarks"
-            rows="5"
-            cols="27"
-          >
-          </textarea>
+          <textarea type="text" id="remarks" :placeholder="remarks" v-model="newRemarks" rows="5" cols="27">
+            </textarea>
           <br /><br>
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
@@ -81,7 +62,7 @@
 import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 import firebaseApp from "../firebase.js";
 import { getFirestore, updateDoc } from "firebase/firestore";
-import { getDoc, doc} from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -182,7 +163,6 @@ export default {
       this.$parent.display();
     },
     async handleClose() {
-      console.log("close??");
       this.showModal = false;
       this.handleReset();
     },
@@ -205,15 +185,16 @@ export default {
   padding: 10px 15px;
   border-radius: 8px;
   border: 1px solid #2c3e50;
-  /* border: none; */
   margin: 0 30px;
   font-size: large;
   float: right;
 }
+
 .update-button:hover {
   background-color: #e0dad4;
   cursor: pointer;
 }
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -230,24 +211,16 @@ export default {
   width: 30%;
   margin: auto;
   padding: 40px 20px;
-  /* background-color: #F1DEC9; */
   background-color: white;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
 }
 
-.close-button {
-  float: right;
-  font-size: 20px;
-  cursor: pointer;
-  border: 1px solid #000000;
-  border-radius: 5px;
-}
-
-.modal-title {
-  margin-top: 0;
-  text-align: center;
+.close {
+    float: right;
+    height: fit-content;
+    cursor: pointer;
 }
 
 .modal-body {
@@ -255,8 +228,10 @@ export default {
   display: inline-block;
 }
 
-input:hover, select:hover, textarea:hover {
-  box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
+input:hover,
+select:hover,
+textarea:hover {
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.24);
 }
 
 select {
@@ -297,13 +272,13 @@ form {
   margin: auto;
 }
 
-.edit-button, .cancel-button {
+.edit-button,
+.cancel-button {
   text-align: center;
-  /* background-color: #a3cb7b; */
   border: 1px solid #000000;
   font-size: medium;
   border-radius: 5px;
-	padding: 10px;
+  padding: 10px;
   margin: 0 30px;
 }
 
@@ -315,7 +290,9 @@ form {
   float: left;
 }
 
-.edit-button:hover, .cancel-button:hover, .close-button:hover {
+.edit-button:hover,
+.cancel-button:hover,
+.close-button:hover {
   background-color: #e0dad4;
 }
 
