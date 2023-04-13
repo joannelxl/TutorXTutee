@@ -80,8 +80,8 @@ export default {
             let userProfile = {
                 firstName: document.getElementById("firstName").value,
                 lastName: document.getElementById("lastName").value,
-                dateOfBirth: document.getElementById("dateOfBirth").value,
-                email: document.getElementById("email").value
+                dateOfBirth: this.dateOfBirth,
+                email: this.email
             }
             if (
                 userProfile.firstName == "" ||
