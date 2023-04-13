@@ -1,21 +1,27 @@
 <template>
   <div id="container">
     <div class="links">
-      <router-link id="router" to="/Chat">Back to
-        Chat</router-link><br><br>
+      <router-link id="router" to="/Chat">Back to Chat</router-link><br /><br />
       <div class="toTuteeTutor" v-if="role">
-        <router-link id="toMyTutees" to="/myTutees">Back to My
-          Tutees</router-link>
+        <router-link id="toMyTutees" to="/myTutees"
+          >Back to My Tutees</router-link
+        >
       </div>
       <div class="toTuteeTutor" v-else>
-        <router-link id="toMyTutors" to="/myTutors">Back to My
-          Tutors</router-link><br><br>
+        <router-link id="toMyTutors" to="/myTutors"
+          >Back to My Tutors</router-link
+        ><br /><br />
       </div>
     </div>
 
     <div id="chat">
       <div>
-        <img class="deleteIcon" src="@/assets/dustbin.png" alt="" @click="doDelete" />
+        <img
+          class="deleteIcon"
+          src="@/assets/dustbin.png"
+          alt=""
+          @click="doDelete"
+        />
         <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
       </div>
       <div id="displayname">
@@ -24,7 +30,11 @@
       <div id="messagesOnly">
         <div id="display" v-if="allMessages">
           <div class="scrollable">
-            <div id="allMessages" v-for="message in allMessages.slice().reverse()" :key="index">
+            <div
+              id="allMessages"
+              v-for="message in allMessages.slice().reverse()"
+              :key="index"
+            >
               <div id="senderMessages">
                 <div id="sender" v-if="message[1]">
                   <p style="font-size: 16px">{{ message[0] }}</p>
@@ -41,9 +51,10 @@
       </div>
       <div id="inputBox">
         <form @submit.prevent="sendMessage">
-          <textarea v-model="newMessage"
-            placeholder="Send a message..." />
-          <button id="button" type="submit" style="font-size: 16px">Send</button>
+          <textarea v-model="newMessage" placeholder="Send a message..." />
+          <button id="button" type="submit" style="font-size: 16px">
+            Send
+          </button>
         </form>
       </div>
     </div>
@@ -208,7 +219,6 @@ export default {
 </script>
 
 <style scoped>
-
 .links {
   float: left;
   margin-left: 5vw;
@@ -236,12 +246,12 @@ export default {
 }
 
 textarea {
-    width: 98vh;
-    height: 55px;
-    margin-left: 15vh;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    resize: none;
+  width: 90vh;
+  height: 55px;
+  margin-left: 15vh;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  resize: none;
 }
 
 #button {
@@ -315,11 +325,11 @@ textarea {
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background-color: #EEEDED;
+  background-color: #eeeded;
   /* color of the scroll thumb */
   border-radius: 20px;
   /* roundness of the scroll thumb */
-  border: 2px solid #A99282;
+  border: 2px solid #a99282;
   /* creates padding around scroll thumb */
 }
 
