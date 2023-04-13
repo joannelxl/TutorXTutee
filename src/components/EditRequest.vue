@@ -185,10 +185,11 @@ export default {
   margin: 0 30px;
   font-size: large;
   float: right;
+  background-color: #F1DEC9;
 }
 
 .update-button:hover {
-  background-color: #e0dad4;
+  background-color: #C8B6A6;
   cursor: pointer;
 }
 
@@ -277,6 +278,7 @@ form {
   border-radius: 5px;
   padding: 10px;
   margin: 0 30px;
+  background-color: #F1DEC9;
 }
 
 .edit-button {
@@ -289,7 +291,7 @@ form {
 
 .edit-button:hover,
 .cancel-button:hover {
-  background-color: #e0dad4;
+  background-color: #C8B6A6;
 }
 
 textarea {

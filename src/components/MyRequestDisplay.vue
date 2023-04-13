@@ -158,10 +158,11 @@ p {
   border: 1px solid #2c3e50;
   font-size: large;
   float: left;
+  background-color: #F1DEC9;
 }
 
 .delete-button:hover {
-  background-color: #e0dad4;
+  background-color: #C8B6A6;
   cursor: pointer;
 }
 

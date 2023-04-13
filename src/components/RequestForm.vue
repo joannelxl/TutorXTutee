@@ -252,6 +252,7 @@ input {
   border-radius: 5px;
   padding: 10px;
   margin: 0 30px;
+  background-color: #F1DEC9;
 }
 
 .add-button {
@@ -263,9 +264,8 @@ input {
 }
 
 .add-button:hover,
-.cancel-button:hover,
-.close-button:hover {
-  background-color: #e0dad4;
+.cancel-button:hover {
+  background-color: #C8B6A6;
 }
 
 .required:after {

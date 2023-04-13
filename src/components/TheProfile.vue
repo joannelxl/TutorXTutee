@@ -173,9 +173,10 @@ label {
     font-size: large;
     cursor: pointer;
     padding: 10px 15px;
+    background-color: #F1DEC9;
 }
 
 .button-button:hover {
-    background-color: #e0dad4;
+    background-color: #C8B6A6;
 }
 </style>

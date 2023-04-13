@@ -225,10 +225,6 @@ export default {
     box-shadow: 7px 7px 3px rgba(0,0,0,0.24);
 }
 
-.button{
-    display: inline-block;
-}
-
 .requests{
     display: inline-block;
     grid-template-columns: auto auto auto;
@@ -294,14 +290,10 @@ input {
     font-size: large;
 }
 
-.close-btn:hover{
+.close-btn:hover, .update-btn:hover {
     background-color: #e0dad4;
     box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
-}
-
-.update-btn:hover{
-    background-color: #e0dad4;
-    box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
+    background-color: #C8B6A6;
 }
 
 .close {
@@ -321,6 +313,7 @@ button {
 	height: 40px;
 	font-size: large;
 	cursor: pointer;
+    background-color: #F1DEC9;
 }
 .filterblock{
     float: right;
