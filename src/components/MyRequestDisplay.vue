@@ -1,12 +1,11 @@
 <template>
   <div class="intro" v-if="dataLoaded">
     <h2 class="empty" v-if="userRequests.length == 0">
-      You do not have any request now. To create, please click the '+' button.
+      You do not have any request now. To create, please click the + button.
     </h2>
     <div class="requests">
       <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
       <div class="req" v-for="request in userRequests" :key="request[0]">
-        <!-- <h2>{{ index }}{{ request[1] }}</h2> -->
         <div class="card">
           <div class="container">
             <h1>{{ request[1].Subject }}</h1>

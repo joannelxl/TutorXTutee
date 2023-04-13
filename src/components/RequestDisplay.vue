@@ -4,22 +4,16 @@
         You do not have any request now. To add please click the + button
         </h1>
         <div class="filterblock" @click="showmodal">
-            <b>Filter! <i class='fa fa-filter' style='color: lightsteelblue'></i></b>
-            <!--button type="button" class="filter" @click="showmodal">
-                Filter! <i class='fa fa-filter' style='color: lightcyan'></i>
-            </button-->
-            
+            <b>Filter <i class='fa fa-filter' style='color: lightsteelblue'></i></b>
         </div>
-        
         <div class="modal-mask" v-if="showModal">
             <div class="modal-container">
             <form @submit.prevent="">
                     <div class="modal-header">
                         <div class="close" @click="handleClose" style="font-size: large;">
                             <b>&times;</b>
-                            <!--button type="button" @click="handleClose" class="closepopup">&times;</button-->
                         </div>
-                        <div style="font-size: larger;"><b>Filter based on your preferences!</b></div>
+                        <div style="font-size: larger;"><b>Filter based on your preferences</b></div>
                     </div><br>
                     <div class="modal-body">
                         <div class="block">

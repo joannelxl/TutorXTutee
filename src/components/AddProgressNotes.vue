@@ -26,7 +26,7 @@
                         <div class="error" v-if="formError">{{ formError }}</div>
                         <br />
 
-                        <button class="add-button" @click="handleSubmit">Add Progress Note!</button>
+                        <button class="add-button" @click="handleSubmit">Create progress note</button>
 
                     </div>
                 </form>
@@ -157,7 +157,7 @@ export default {
     width: 100%;
     margin: auto;
     padding: 20px 50px 50px 50px;
-    background-color: #F3DDB0;
+    background-color: #F1DEC9;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
@@ -184,6 +184,7 @@ input[type=date],
 textarea {
     border-radius: 2px;
     background-color: rgba(138, 121, 121, 0.26);
+    /* background-color: #e8c9a6; */
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -218,24 +219,23 @@ input {
 
 .add-button {
     border-radius: 5px;
-    padding: 5px;
-    width: 170px;
     text-align: left;
     margin-top: 5px;
     margin-bottom: 5px;
     border: none;
-    height: 40px;
     font-size: large;
     cursor: pointer;
     box-shadow: 2px 2px gray;
-    background-color: #a3cb7b;
+    /* background-color: white; */
+    /* background-color: #F1DEC9; */
     float: right;
     text-align: center;
+    padding: 10px;
 }
 
 .add-button:hover {
     cursor: pointer;
-    background-color: #8bae68;
+    background-color: white;
 }
 
 .cancel-button {

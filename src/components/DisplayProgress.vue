@@ -24,7 +24,7 @@
                 <!-- if tutor -->
                 <div class="empty" v-if="progressNotes.length == 0 && role == 'tutor'">
                     <h2>You have not written any progress notes for {{ tuteeName }}. </h2>
-                    <h2>To add, please click the '+' button.</h2>
+                    <h2>To add, please click the + button.</h2>
                 </div>
 
                 <div class="progress">
@@ -109,8 +109,8 @@ export default {
                 title: "Delete Progress Note",
                 message:
                     "Are you sure you want to delete this Progress Note? This action cannot be undone.",
-                okButton: "Confirm deletion",
-                cancelButton: "Go Back",
+                okButton: "Delete",
+                cancelButton: "Cancel"
             });
             if (ok) {
                 await deleteDoc(doc(db, "ProgressNotes", requestId));
