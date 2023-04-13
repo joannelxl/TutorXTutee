@@ -135,6 +135,10 @@ button {
   box-shadow: 1px 1px grey;
 }
 
+img{
+  padding: 10px 20px;
+}
+
 img:hover {
   background-color: var(--sidebar-item-active);
   cursor: pointer;

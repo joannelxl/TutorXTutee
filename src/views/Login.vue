@@ -2,7 +2,7 @@
   <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
   <br /><br /><br />
   <div id="login">
-    <img id="logo" src="@/assets/logo_transparent.png" alt="" />
+    <img id="logo" src="@/assets/logo.png" alt="" />
     <h2>Login</h2>
     <form id="loginform" @submit="(e) => login(e)">
       <label>Email:</label>
@@ -101,7 +101,8 @@ export default {
 }
 
 #logo {
-  width: 280px;
+  width: 260px;
+  padding: 10px;
 }
 
 form {
