@@ -225,7 +225,7 @@ export default {
 }
 
 #chat {
-  background-color: #eadeba;
+  background-color: #f1dec9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   text-align: center;
