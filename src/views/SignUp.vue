@@ -220,11 +220,15 @@ button {
   height: 40px;
   border-radius: 4px;
   border: 1px solid gray;
-  font-size: 0.9em;
+  font-size: 1em;
   font-family: Arial, Helvetica, sans-serif;
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
+}
+
+button:hover{
+  background-color: #e0dad4;
 }
 
 #password-div {

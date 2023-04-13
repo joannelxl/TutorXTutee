@@ -140,6 +140,10 @@ button {
   transform: translateX(-50%);
 }
 
+button:hover {
+  background-color: #e0dad4;
+}
+
 #password-div {
   position: relative;
 }
