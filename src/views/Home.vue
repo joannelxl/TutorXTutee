@@ -8,7 +8,7 @@
         <br><br>
         <div class="aboutUs">
             <div class="image-col">
-                <img alt="TxT logo" src="@/assets/homepagePic.jpg" />
+                <img alt="TxT logo" src="@/assets/homepagepic.png.webp" />
             </div>
             <div class="text-col">
                 <h3>About Us</h3>
@@ -61,8 +61,9 @@ export default {
 }
 
 img {
-    max-width: 30em;
-    margin-left: 5vh
+  max-width: 35em;
+  margin-left: 0vh;
+  padding-right: 5vh;
 }
 
 .image-col {
