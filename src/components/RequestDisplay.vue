@@ -4,7 +4,7 @@
         You do not have any request now. To add please click the + button
         </h1>
         <div class="filterblock" @click="showmodal">
-            <b>Filter <i class='fa fa-filter' style='color: lightsteelblue'></i></b>
+            <b>Filter <i class='fa fa-filter' style='color: lightsteelblue;'></i></b>
         </div>
         <div class="modal-mask" v-if="showModal">
             <div class="modal-container">
@@ -220,12 +220,15 @@ export default {
     font-size: larger;
     overflow-wrap: break-word;
 }
+
 .cards:hover{
     box-shadow: 7px 7px 3px rgba(0,0,0,0.24);
 }
+
 .button{
     display: inline-block;
 }
+
 .requests{
     display: inline-block;
     grid-template-columns: auto auto auto;
@@ -233,18 +236,22 @@ export default {
     margin-top: 3vh;
     align-items: center;
 }
+
 .req-con{
     margin-left: 10vh;
     display: grid;
     grid-template-columns: auto auto auto;
 }
+
 .container{
     text-align: center;
     width: 90vw;
 }
+
 .filterFunction{
     resize: both;
 }
+
 .modal-mask{
     position: fixed;
     z-index: 9998;
@@ -256,6 +263,7 @@ export default {
     display: flex;
     transition: opacity 0.3s ease;
 }
+
 .modal-container {
     width: 25%;
     margin: auto;
@@ -265,6 +273,7 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
 }
+
 .modal-body{
     text-align: left;
     margin-left: 12vh;
@@ -273,10 +282,12 @@ export default {
 input {
     cursor: pointer;
 }
+
 .options {
     text-align: left;
     padding-left: 3vh;
 }
+
 .buttons{
     text-align: center;
     display: block;
@@ -292,11 +303,13 @@ input {
     background-color: #e0dad4;
     box-shadow: 3px 3px 7px rgba(0,0,0,0.24);
 }
+
 .close {
     float: right;
     height: fit-content;
     cursor: pointer;
 }
+
 button {
 	border-radius: 5px;
 	padding: 10px;

@@ -125,7 +125,6 @@ export default {
                     const account = await getDoc(doc(db, "Tutees", docSnap.data().tuteeEmail))
                     this.tuteeName = account.data().firstName + " " + account.data().lastName
                 } catch (error) {
-                    console.log(error)
                 }
                 this.dataLoaded = true
 
@@ -184,7 +183,6 @@ input[type=date],
 textarea {
     border-radius: 2px;
     background-color: rgba(138, 121, 121, 0.26);
-    /* background-color: #e8c9a6; */
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -226,8 +224,6 @@ input {
     font-size: large;
     cursor: pointer;
     box-shadow: 2px 2px gray;
-    /* background-color: white; */
-    /* background-color: #F1DEC9; */
     float: right;
     text-align: center;
     padding: 10px;

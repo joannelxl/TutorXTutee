@@ -7,9 +7,6 @@
         <router-link id="router" to="/Requests" style="font-family: Arial, Helvetica, sans-serif">
             Back to Requests
         </router-link>
-        <!--div class="backButton" @click="this.$router.go(-1)">
-            <b>&lt; Return to Requests</b>
-        </div-->
         
         <div class="card-container">
             <div class="card">
@@ -62,38 +59,15 @@ export default {
         const db = getFirestore(firebaseApp);
         onAuthStateChanged(auth, async (user) => {
             if (user) { // this user must be a tutor to access the Requests page
-                //console.log(user.email);
                 this.user = user
                 const q = await getDoc(doc(db, "Requests", this.id))
                 this.req = q.data();
                 var request = q.data();
                 this.req.tuteeEmail = this.req.User;
                 
-                
                 const q2 = await getDoc(doc(db, "Tutees", this.req.tuteeEmail));
                 this.req.name = q2.data().firstName + " " + q2.data().lastName;
                 this.dataLoaded = true;
-                /*
-                // if chat exists
-                //const q3 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
-                const q3 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.userEmail), where("TutorEmail", "==", user.email));
-                // , where("TuteeEmail", "==", this.userEmail), where("TutorEmail", "==", user.email)
-                
-                if ((await getDocs(q3)).empty) {
-                    console.log("here")
-                    const docRef = await addDoc(collection(db, "Chats"), {
-                        TuteeEmail: this.userEmail,
-                        TutorEmail: user.email,
-                    });
-                    console.log("Document written with ID: ", docRef.id);
-                    this.chatID = docRef.id;
-                } else {
-                    (await getDocs(q3)).forEach((doc) => {
-                        var chat = doc.data();
-                        chat.id = doc.id;
-                        this.chatID = chat.id;
-                    })
-                }*/
             }
         })
 	},
@@ -103,21 +77,16 @@ export default {
             const db = getFirestore(firebaseApp);
             
             const tutorRef = await getDoc(doc(db, "Tutors", this.user.email))
-            console.log(tutorRef.data())
             if (tutorRef) {
                 // this user must be a tutor to access the Requests page
                 // if chat exists
-                //const q3 = query(collection(db, "Chats"), where("TutorEmail", "==", this.user.email), where("TuteeEmail", "==", document.data().tuteeEmail));
                 const q3 = query(collection(db, "Chats"), where("TuteeEmail", "==", this.req.tuteeEmail), where("TutorEmail", "==", this.user.email));
-                // , where("TuteeEmail", "==", this.userEmail), where("TutorEmail", "==", user.email)
                 // if chat doesnt exist:
                 if ((await getDocs(q3)).empty) {
-                    console.log("here")
                     const docRef = await addDoc(collection(db, "Chats"), {
                         TuteeEmail: this.req.tuteeEmail,
                         TutorEmail: this.user.email,
                     });
-                    console.log("Document written with ID: ", docRef.id);
                     this.chatID = docRef.id;
                     this.$router.push({name: "InChat", params: {id: this.chatID}})
                 } else {
@@ -128,8 +97,6 @@ export default {
                     })
                     this.$router.push({name: "InChat", params: {id: this.chatID}})
                 }
-            } else {
-                console.log("not logged in")
             }
         },
 
@@ -138,7 +105,6 @@ export default {
         },
 
         async acceptRequest(req) {
-            console.log("within acceptRequest function")
             const confirm = await (this.$refs.confirmDialogue).show({
                 title: "Accept Request",
                 message: "Are you sure you want to accept this request?",
@@ -150,7 +116,6 @@ export default {
                 const auth = getAuth();
                 const db = getFirestore(firebaseApp);
                 const tutorRef = await getDoc(doc(db, "Tutors", this.user.email))
-                console.log(tutorRef.data())
                 if (tutorRef) {
                     // to add this request into TutoringArrangements collection
                     const tutArrRef = await addDoc(collection(db, "TutoringArrangements"), {
@@ -164,7 +129,6 @@ export default {
                         tutorEmail: this.user.email,
                         
                     });
-                    console.log("Document written with URGH ID: ", tutArrRef.id);
                     // to remove this request from Requests collection
                     await deleteDoc(doc(db, "Requests", this.id));
                 }
@@ -206,9 +170,7 @@ export default {
 #router{
     text-align: left;
     margin-left: 5vw;
-    /* margin-top: 2vh; */
     cursor: pointer;
-    /* font-size: large; */
     float: left;
 }
 
@@ -260,6 +222,4 @@ button {
 	cursor: pointer;
 	box-shadow: 2px 2px gray;
 }
-
-
 </style>

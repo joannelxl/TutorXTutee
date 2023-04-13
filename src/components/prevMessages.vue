@@ -22,7 +22,6 @@
         <h3>{{ displayName }}</h3>
       </div>
       <div id="messagesOnly">
-        <!--need to display this on the left eventually-->
         <div id="display" v-if="allMessages">
           <div class="scrollable">
             <div id="allMessages" v-for="message in allMessages.slice().reverse()" :key="index">
@@ -102,7 +101,6 @@ export default {
   methods: {
     async display() {
       this.allMessages = [];
-      console.log("chat id is: " + this.chatId);
       var receiverEmail;
 
       //get the document that corresponds to the chatId
@@ -122,30 +120,13 @@ export default {
         this.role = false;
         receiverEmail = docSnap.data().TutorEmail;
       }
-      console.log("current user is: " + this.userEmail);
-      console.log("receiver's email is: " + receiverEmail);
 
       const msgRef = collection(db, "UserMessages");
-      console.log(this.chatId);
       const querySnapshot = query(
         msgRef,
         where("chatId", "==", this.chatId),
         orderBy("sentAt")
       );
-
-      //const querySnapshot = await getDocs(collection(db, "UserMessages"));
-      /*querySnapshot.forEach((doc) => {
-        if (doc.data().chatId == this.chatId) {
-          //checking if the message it sent by current user
-          //if it is, 1st index is true
-          //allMessages[1] = true will be displayed on the right
-          if (doc.data().sender == this.userEmail) {
-            this.allMessages.push([doc.data().message, true]);
-          } else {
-            this.allMessages.push([doc.data().message, false]);
-          }
-        }
-      });*/
 
       onSnapshot(querySnapshot, (snapShot) => {
         this.allMessages = [];
@@ -154,7 +135,6 @@ export default {
             this.allMessages.push([doc.data().message, true]);
           } else {
             this.allMessages.push([doc.data().message, false]);
-            console.log(snapShot.message);
           }
         });
       });
@@ -172,7 +152,6 @@ export default {
         var name = docSnap.data().firstName + " " + docSnap.data().lastName;
         this.displayName = name;
       }
-      //this.displayName = receiverEmail.split("@");
       //get all documents that correspond to the chat id and sender = email of the receiver
       //sort all these documents according to date and time, then push the messages into receiverMessages array
     },
@@ -182,10 +161,6 @@ export default {
         this.allMessages.push([this.newMessage, true]);
         const messageCollection = collection(db, "UserMessages");
 
-        //var today = new Date();
-        //var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        //var sendDate = today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
-
         const messagesObj = {
           chatId: this.chatId,
           message: this.newMessage,
@@ -194,7 +169,6 @@ export default {
         };
 
         addDoc(messageCollection, messagesObj);
-        console.log("a new UserMessage document has been added");
         this.newMessage = "";
       }
 
@@ -215,7 +189,6 @@ export default {
 
         const docRef = doc(db, "Chats", this.chatId);
         deleteDoc(docRef);
-        console.log("successfully deleted chats doc");
 
         const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
 
@@ -223,7 +196,6 @@ export default {
           if (document.data().chatId == this.chatId) {
             const docRef2 = doc(db, "UserMessages", document.id);
             deleteDoc(docRef2);
-            console.log("successfully deleted userMessage doc");
           }
         });
         this.$router.push("/Chat");
@@ -352,6 +324,5 @@ textarea {
 
 .toTuteeTutor {
   margin-left: 0vw;
-  /* margin-top: -50px; */
 }
 </style>

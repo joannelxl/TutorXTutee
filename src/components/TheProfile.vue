@@ -13,11 +13,9 @@
 
                 <label for="dateOfBirth"> <b>Date of Birth:</b> </label>
                 <text>{{ dateOfBirth }}</text>
-                <!--input id="dateOfBirth" v-model.lazy="dateOfBirth" disabled--><br><br>
 
                 <label for="email"> <b>Email:</b> </label>
                 <text>{{ email }}</text>
-                <!--input id="email" v-model.lazy="email" disabled-->
                 <div class="buttons">
                     <button class="button-button" id="updateButton" type="button" v-on:click="updateProfile"> Update
                         Particulars </button>
@@ -100,9 +98,6 @@ export default {
                         dateOfBirth: userProfile.dateOfBirth,
                         email: userProfile.email
                     });
-                    console.log(docRef);
-                    console.log("profile updated successfully");
-                    // alert("Particulars successfully updated");
                     this.$emit("updated");
                     const acknowledge = await (this.$refs.acknowledgeDialogue).show({
                         message: "Particulars Successfully Updated"
@@ -120,11 +115,6 @@ export default {
 
 <style scoped>
 .container {
-    /* width: 700px; */
-    /* padding-bottom: 5vh; */
-    /* margin-top: 2.5vh; */
-    /* margin-left: 30vw; */
-    /* margin-right: 30vw; */
     padding: 20px;
     text-align: center;
     display: inline-block;

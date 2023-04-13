@@ -64,7 +64,6 @@ export default {
   methods: {
     async display() {
       this.chats = [];
-      //const auth = getAuth();
       const usersRef = doc(db, "VerifiedUsers", this.userEmail);
       const docSnap = await getDoc(usersRef);
       //get the role
@@ -199,9 +198,6 @@ export default {
 .allChats {
   margin-top: 80px;
   text-align: center;
-  /* width: 90vw; */
-  /* display: inline; */
-  /* margin-left: 2.8vw; */
 }
 
 .intro {

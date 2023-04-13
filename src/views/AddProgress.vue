@@ -47,10 +47,8 @@ export default {
                     this.tuteeName = account.data().firstName + " " + account.data().lastName
                     this.dataLoaded = true
                 } catch (error) {
-                    console.log(error)
                 }
             }
-            console.log("tuteeName: " + this.tuteeName)
         })
     },
 };

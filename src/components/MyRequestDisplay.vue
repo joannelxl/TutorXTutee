@@ -76,7 +76,6 @@ export default {
       const requestsRef = collection(db, "Requests");
       const q = query(requestsRef, where("User", "==", this.useremail));
       const querySnapshot = await getDocs(q);
-      console.log("displayed");
       var count = 0;
       if (querySnapshot.size == 0) {
         this.dataLoaded = true;

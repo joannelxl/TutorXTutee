@@ -71,7 +71,6 @@ export default {
           this.$router.push({ path: "/Home" });
         })
         .catch(async (error) => {
-          console.log(error.message);
           await this.$refs.acknowledgeDialogue.show({
             message: "Invalid email/password. Please try again.",
           });

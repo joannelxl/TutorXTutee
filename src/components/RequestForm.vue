@@ -91,7 +91,6 @@ export default {
 
   methods: {
     async handleSubmit() {
-      console.log(this.subject);
       //check if location is chosen
       if (
         this.subject.length == 0 ||

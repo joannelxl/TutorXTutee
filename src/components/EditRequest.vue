@@ -92,7 +92,6 @@ export default {
   methods: {
     async getData() {
       this.showModal = true;
-      console.log(this.requestId);
       const docRef = doc(db, "Requests", this.requestId);
       const docSnap = await getDoc(docRef);
 
@@ -116,8 +115,6 @@ export default {
     async handleEdit() {
       //update the doc if there is any field filled in
       const docRef = doc(db, "Requests", this.requestId);
-      console.log(this.requestId);
-      console.log((await getDoc(docRef)).data());
       if (this.newSubject) {
         await updateDoc(docRef, {
           Subject: this.newSubject,
@@ -291,8 +288,7 @@ form {
 }
 
 .edit-button:hover,
-.cancel-button:hover,
-.close-button:hover {
+.cancel-button:hover {
   background-color: #e0dad4;
 }
 
