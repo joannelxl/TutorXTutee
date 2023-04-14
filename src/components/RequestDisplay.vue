@@ -62,7 +62,7 @@
             </div>
         </div><br>
         <div class="message" v-if="filteredRequests.length == 0">
-            <h2>There are no such listings with your preference. You can consider widening your range!</h2>
+            <h2>There are no such requests with your preference. You can consider widening your range!</h2>
         </div>
     </div>
 </template>
@@ -330,4 +330,5 @@ button {
 .message {
     text-align: center;
     margin-top: 200px;
-}</style>
+}
+</style>
