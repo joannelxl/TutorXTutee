@@ -2,6 +2,7 @@
     <div class="profile">
         <div class="heading">
             <h1>Tutor x Tutee</h1>
+            <h4>You can edit your profile here.</h4>
         </div>
         <TheProfile />
     </div>

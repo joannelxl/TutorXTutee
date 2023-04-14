@@ -5,10 +5,12 @@
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
-      <button class="close-button" @click="handleClose">x</button>
-      <div class="modal-title">
-        <h1><strong>Fill in your request here!</strong></h1>
-      </div>
+      <div class="modal-header">
+        <div class="close" @click="handleClose" style="font-size: large;">
+          <b>&times;</b>
+        </div>
+        <div style="font-size:x-large"><b>Create your request</b></div>
+      </div><br>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
           <label class="required">Subject:</label>
@@ -20,11 +22,7 @@
           <br /><br />
 
           <label class="required">Preferred Day:</label>
-          <input
-            type="text"
-            placeholder="e.g. Tuesday"
-            v-model="preferredDays"
-          />
+          <input type="text" placeholder="e.g. Tuesday" v-model="preferredDays" />
           <br />
           <br />
           <label class="required">Preferred Time:</label>
@@ -40,35 +38,23 @@
             <option value="Central">Central</option>
             <option value="Virtual">Virtual</option>
           </select>
-          <br /><br />
+          <br />
 
           <label class="required">Address:</label>
-          <textarea
-            rows="3"
-            cols="27"
-            type="text"
-            placeholder="e.g. Computing drive 117417"
-            v-model="address"
-          ></textarea>
-          <br /><br />
+          <textarea rows="3" cols="27" type="text" placeholder="e.g. Computing drive 117417" v-model="address"></textarea>
+          <br />
 
           <label>Remarks:</label>
-          <textarea
-            rows="5"
-            cols="27"
-            type="text"
-            id="remarks"
-            placeholder="e.g. I am having troubles writing essays"
-            v-model="remarks"
-          >
-          </textarea>
-          <br /><br />
+          <textarea rows="5" cols="27" type="text" id="remarks" placeholder="e.g. I am having troubles writing essays"
+            v-model="remarks">
+            </textarea>
+          <br />
 
           <div class="error" v-if="formError">{{ formError }}</div>
-          <br /><br />
+          <br />
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
-          <button class="add-button" @click="handleSubmit">Add Request!</button>
+          <button class="add-button" @click="handleSubmit">Create request</button>
         </div>
       </form>
     </div>
@@ -105,7 +91,6 @@ export default {
 
   methods: {
     async handleSubmit() {
-      console.log(this.subject);
       //check if location is chosen
       if (
         this.subject.length == 0 ||
@@ -143,7 +128,6 @@ export default {
     },
 
     async handleClose() {
-      console.log("close??");
       this.showModal = false;
       this.handleReset();
     },
@@ -187,24 +171,17 @@ export default {
 .modal-container {
   width: 30%;
   margin: auto;
-  padding: 50px 50px;
-  background-color: #ebdfeb;
+  padding: 30px 20px;
+  background-color: white;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
 }
 
-.close-button {
-  float: right;
-  margin-top: -30px;
-  margin-right: -30px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.modal-title {
-  margin-top: 0;
-  text-align: center;
+.close {
+    float: right;
+    height: fit-content;
+    cursor: pointer;
 }
 
 .modal-body {
@@ -212,8 +189,20 @@ export default {
   display: inline-block;
 }
 
+input:hover,
+select:hover,
+textarea:hover {
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.24);
+}
+
 select {
-  width: 58%;
+  height: 30px;
+  width: 212px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
+  font-size: medium;
 }
 
 form {
@@ -225,32 +214,58 @@ form {
 textarea {
   resize: none;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
+  font-size: medium;
 }
 
 label {
+  padding: 5px;
   float: left;
   margin-right: 30px;
+  height: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: medium;
 }
 
 input {
   float: right;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
   height: 15px;
-  width: 180px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: medium;
 }
-.add-button {
+
+.add-button,
+.cancel-button {
   text-align: center;
-  background: #e7e5aa;
   border: 1px solid #000000;
-  font-size: 20px;
+  font-size: medium;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 30px;
+  background-color: #F1DEC9;
+}
+
+.add-button {
   float: right;
 }
 
 .cancel-button {
-  text-align: center;
-  background: #d9d9d9;
-  border: 1px solid #000000;
-  font-size: 20px;
   float: left;
+}
+
+.add-button:hover,
+.cancel-button:hover {
+  background-color: #C8B6A6;
 }
 
 .required:after {
@@ -262,28 +277,31 @@ input {
   color: red;
   text-align: center;
   padding-bottom: 10px;
+  font-size: medium;
 }
 
 #show-modal {
   position: fixed;
   right: 100px;
   bottom: 50px;
-  width: 6em;
-  height: 6em;
+  width: 5em;
+  height: 5em;
+  color: black;
   border-radius: 50%;
-  background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
+  background: linear-gradient(white, white), linear-gradient(white, white);
   background-position: center;
-  background-size: 50% 0.5em, 0.5em 50%;
+  background-size: 50% 0.35em, 0.35em 50%;
   background-repeat: no-repeat;
-  background-color: rgba(240, 51, 51, 0.56);
+  background-color: #b79780;
   border: none;
-  border: solid 0.5px;
+  box-shadow: 1px 1px gray;
 }
 
 #show-modal:hover {
-  background-color: rgba(177, 36, 36, 0.56);
+  background-color: #9f775a;
   cursor: pointer;
 }
+
 .modal-enter-from {
   opacity: 0;
 }

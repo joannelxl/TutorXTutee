@@ -6,19 +6,17 @@
     </div>
   </div>
   <div v-if="dataLoaded">
-    <h1 class="empty" v-if="chats.length == 0">
+    <h2 class="empty" v-if="chats.length == 0">
       You do not have any chats now.
-    </h1>
+    </h2>
 
     <div class="allChats">
       <button class="chat" v-for="chat in chats" v-on:click="toMessages(chat)" :key="chat[2]">
         <div class="container">
           <!-- chat[0] is name, chat[1] is latest message, chat[3] is chatid -->
-          <h1 style="font-size: 19px">{{ chat[0] }}</h1>
-          <p style="font-size: 14px">{{ chat[1] }}</p>
-          <!--<h2>{{ chat[1] }}</h2>-->
+          <h1 style="font-size: large">{{ chat[0] }}</h1>
+          <p id = "latestMessage" style="font-size: medium">{{ chat[1] }}</p>
         </div>
-        <!--<prevMessages :receiverEmail="chat[0]"/>-->
       </button>
     </div>
   </div>
@@ -27,7 +25,7 @@
 
 <script>
 import firebaseApp from "../firebase.js";
-import { deleteDoc, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -66,7 +64,6 @@ export default {
   methods: {
     async display() {
       this.chats = [];
-      //const auth = getAuth();
       const usersRef = doc(db, "VerifiedUsers", this.userEmail);
       const docSnap = await getDoc(usersRef);
       //get the role
@@ -169,15 +166,9 @@ export default {
           }
         });
       }
-      //trying to get the latest message for each receiver
-      //const msgRef = collection(db, "UserMessages");
-      //const querySnapshot2 = query(msgRef,where("chatId", "==", chatId),orderBy("sentAt"));
-
-      //console.log(type(querySnapshot2))
     },
 
     toMessages(chat) {
-      //console.log(chat[2]);
       this.$router.push({ name: "InChat", params: { id: chat[2] } });
     },
   },
@@ -186,31 +177,27 @@ export default {
 
 <style scoped>
 .container {
-  background-color: #f3ddb0;
-  border: 1px solid grey;
   padding: 10px 70px;
   width: 500px;
   height: 80px;
-  margin-left: 280px;
 }
 .chat {
+  text-align: left;
+  display: block;
+  margin: auto;
   margin-top: -1px;
   margin-bottom: -1px;
-  cursor: pointer;
-  outline: none;
-  background-color: transparent;
-  border: none;
-  border-radius: none;
-  box-shadow: 0 9px transparent;
-  text-align: left;
+  background-color: white;
+  border: 1px solid #A99282;
 }
-.chat:active {
-  transform: translateY(3px);
+
+.chat:hover {
+  background-color: #e0dad4;
 }
+
 .allChats {
-  margin-top: 100px;
+  margin-top: 80px;
   text-align: center;
-  margin-left: 2.8vw;
 }
 
 .intro {
@@ -220,11 +207,17 @@ export default {
 .empty {
   text-align: center;
   margin-top: 200px;
-  width: 1200px;
 }
 
 .wrapper{
   text-align: center;
   width: 90vw;
+}
+
+#latestMessage {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -1,70 +1,62 @@
 <template>
-  <br><br>
-  <router-link
-    id="router"
-    to="/Chat"
-    style="font-family: Arial, Helvetica, sans-serif"
-    >Back to Chat</router-link
-  >
-  <div class="toTuteeTutor" v-if="role">
-    <router-link
-      id="toMyTutees"
-      to="/myTutees"
-      style="font-family: Arial, Helvetica, sans-serif"
-      >Back to My Tutees</router-link
-    >
-  </div>
-  <div class="toTuteeTutor" v-else>
-    <router-link
-      id="toMyTutors"
-      to="/myTutors"
-      style="font-family: Arial, Helvetica, sans-serif"
-      >Back to My Tutors</router-link
-    >
-  </div>
-  <div id="chat">
-    <div>
-      <img
-        class="deleteIcon"
-        src="@/assets/dustbin.png"
-        alt=""
-        @click="doDelete" />
-      <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+  <div id="container">
+    <div class="links">
+      <router-link id="router" to="/Chat">Back to Chat</router-link><br /><br />
+      <div class="toTuteeTutor" v-if="role">
+        <router-link id="toMyTutees" to="/myTutees"
+          >Back to My Tutees</router-link
+        >
+      </div>
+      <div class="toTuteeTutor" v-else>
+        <router-link id="toMyTutors" to="/myTutors"
+          >Back to My Tutors</router-link
+        ><br /><br />
+      </div>
     </div>
-    <div id="displayname">
-      <h3>{{ displayName }}</h3>
-    </div>
-    <div id="messagesOnly">
-      <!--need to display this on the left eventually-->
-      <div id="display" v-if="allMessages">
-        <div class="scrollable">
-          <div
-            id="allMessages"
-            v-for="message in allMessages.slice().reverse()"
-            :key="index">
-            <div id="senderMessages">
-              <div id="sender" v-if="message[1]">
-                <p style="font-size: 16px">{{ message[0] }}</p>
+
+    <div id="chat">
+      <div>
+        <img
+          class="deleteIcon"
+          src="@/assets/dustbin.png"
+          alt=""
+          @click="doDelete"
+        />
+        <confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
+      </div>
+      <div id="displayname">
+        <h3>{{ displayName }}</h3>
+      </div>
+      <div id="messagesOnly">
+        <div id="display" v-if="allMessages">
+          <div class="scrollable">
+            <div
+              id="allMessages"
+              v-for="message in allMessages.slice().reverse()"
+              :key="index"
+            >
+              <div id="senderMessages">
+                <div id="sender" v-if="message[1]">
+                  <p style="font-size: 16px">{{ message[0] }}</p>
+                </div>
               </div>
-            </div>
-            <div id="receiverMessages">
-              <div id="receiver" v-if="message[1] == false">
-                <p style="font-size: 16px">{{ message[0] }}</p>
+              <div id="receiverMessages">
+                <div id="receiver" v-if="message[1] == false">
+                  <p style="font-size: 16px">{{ message[0] }}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="inputBox">
-      <form @submit.prevent="sendMessage">
-        <input
-          type="text"
-          style="height: 50px; width: 550px; font-size: 14px"
-          v-model="newMessage"
-          placeholder="Send a message..." />
-        <button id="button" type="submit" style="font-size: 16px">Send</button>
-      </form>
+      <div id="inputBox">
+        <form @submit.prevent="sendMessage">
+          <textarea v-model="newMessage" placeholder="Send a message..." />
+          <button id="button" type="submit" style="font-size: 16px">
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -120,7 +112,6 @@ export default {
   methods: {
     async display() {
       this.allMessages = [];
-      console.log("chat id is: " + this.chatId);
       var receiverEmail;
 
       //get the document that corresponds to the chatId
@@ -140,30 +131,13 @@ export default {
         this.role = false;
         receiverEmail = docSnap.data().TutorEmail;
       }
-      console.log("current user is: " + this.userEmail);
-      console.log("receiver's email is: " + receiverEmail);
 
       const msgRef = collection(db, "UserMessages");
-      console.log(this.chatId);
       const querySnapshot = query(
         msgRef,
         where("chatId", "==", this.chatId),
         orderBy("sentAt")
       );
-
-      //const querySnapshot = await getDocs(collection(db, "UserMessages"));
-      /*querySnapshot.forEach((doc) => {
-        if (doc.data().chatId == this.chatId) {
-          //checking if the message it sent by current user
-          //if it is, 1st index is true
-          //allMessages[1] = true will be displayed on the right
-          if (doc.data().sender == this.userEmail) {
-            this.allMessages.push([doc.data().message, true]);
-          } else {
-            this.allMessages.push([doc.data().message, false]);
-          }
-        }
-      });*/
 
       onSnapshot(querySnapshot, (snapShot) => {
         this.allMessages = [];
@@ -172,7 +146,6 @@ export default {
             this.allMessages.push([doc.data().message, true]);
           } else {
             this.allMessages.push([doc.data().message, false]);
-            console.log(snapShot.message);
           }
         });
       });
@@ -190,7 +163,6 @@ export default {
         var name = docSnap.data().firstName + " " + docSnap.data().lastName;
         this.displayName = name;
       }
-      //this.displayName = receiverEmail.split("@");
       //get all documents that correspond to the chat id and sender = email of the receiver
       //sort all these documents according to date and time, then push the messages into receiverMessages array
     },
@@ -200,10 +172,6 @@ export default {
         this.allMessages.push([this.newMessage, true]);
         const messageCollection = collection(db, "UserMessages");
 
-        //var today = new Date();
-        //var sendTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        //var sendDate = today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear();
-
         const messagesObj = {
           chatId: this.chatId,
           message: this.newMessage,
@@ -212,7 +180,6 @@ export default {
         };
 
         addDoc(messageCollection, messagesObj);
-        console.log("a new UserMessage document has been added");
         this.newMessage = "";
       }
 
@@ -233,7 +200,6 @@ export default {
 
         const docRef = doc(db, "Chats", this.chatId);
         deleteDoc(docRef);
-        console.log("successfully deleted chats doc");
 
         const querySnapshot2 = await getDocs(collection(db, "UserMessages"));
 
@@ -241,7 +207,6 @@ export default {
           if (document.data().chatId == this.chatId) {
             const docRef2 = doc(db, "UserMessages", document.id);
             deleteDoc(docRef2);
-            console.log("successfully deleted userMessage doc");
           }
         });
         this.$router.push("/Chat");
@@ -254,41 +219,51 @@ export default {
 </script>
 
 <style scoped>
-#Heading {
-  color: black;
-  top: 10px;
-  width: 700px;
-  margin-top: 40px;
-  margin-bottom: 0px;
-  margin-left: 275px;
+.links {
+  float: left;
+  margin-left: 5vw;
 }
 
 #chat {
-  background-color: #f3ddb0;
+  background-color: #f1dec9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   text-align: center;
   position: absolute;
-  width: 700px;
-  height: 510px;
-  margin-left: 20vw;
-  margin-top: 0vh;
+  width: 920px;
+  height: 600px;
+  margin-left: 15vw;
+  margin-top: 10px;
 }
 
 #inputBox {
   position: absolute;
-  width: 550px;
+  margin-top: 15vh;
+  width: 780px;
   height: 100px;
-  left: 40px;
+  left: -70px;
   bottom: 1px;
+}
+
+textarea {
+  width: 90vh;
+  height: 55px;
+  margin-left: 15vh;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  resize: none;
 }
 
 #button {
   position: absolute;
-  background-color: rgba(128, 0, 128, 0.28);
-  left: 570px;
-  bottom: 50px;
-  padding:10px
+  background-color: white;
+  left: 870px;
+  bottom: 40px;
+  padding: 10px;
+  border: 1px solid grey;
+  height: 50px;
+  width: 80px;
+  height: 60px;
 }
 
 .deleteIcon {
@@ -320,40 +295,45 @@ export default {
   text-align: left;
   right: 0px;
   padding: 0px 20px;
-  margin-top: -25px;
-  max-width: 350px;
+  margin-top: -28px;
+  max-width: 380px;
   word-break: break-word;
+  font-size: medium;
 }
 
 #router {
   margin-left: 0vw;
-  margin-top: -10px;
+  /* margin-top: -10px; */
 }
 
 .scrollable {
   overflow-y: scroll;
-  height: 330px;
+  height: 420px;
   display: flex;
   flex-direction: column-reverse;
 }
 
 .scrollable::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
+  width: 12px;
+  /* width of the entire scrollbar */
 }
 
 .scrollable::-webkit-scrollbar-track {
-  background: transparent; /* color of the tracking area */
+  background: transparent;
+  /* color of the tracking area */
   border-radius: 20px;
 }
 
 .scrollable::-webkit-scrollbar-thumb {
-  background-color: #EEEDED; /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 2px solid purple; /* creates padding around scroll thumb */
+  background-color: #eeeded;
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 2px solid #a99282;
+  /* creates padding around scroll thumb */
 }
 
 .toTuteeTutor {
   margin-left: 0vw;
-  margin-top: -50px;
 }
 </style>

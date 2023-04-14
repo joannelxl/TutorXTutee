@@ -5,7 +5,6 @@
             <h4> Please click on the listings to find out more about each student.</h4>
         </div>
         <RequestDisplay/>
-        <!--RequestDisplay :key="refreshComp" @added="change"/-->
     </div>
 </template>
 

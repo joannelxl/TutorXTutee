@@ -8,7 +8,7 @@
         <br><br>
         <div class="aboutUs">
             <div class="image-col">
-                <img alt="TxT logo" src="@/assets/homepagePic.jpg" />
+                <img alt="TxT logo" src="@/assets/homepagepic.png.webp" />
             </div>
             <div class="text-col">
                 <h3>About Us</h3>
@@ -36,42 +36,46 @@ export default {
 <style scoped>
 .homepage {
     max-width: 1140px;
+    /* max-width: 80%; */
 }
 
 .welcomeTo {
-    color: rgba(128, 0, 128, 0.66);
+    color: #554a3e;
     font-size: 4.5em;
     font-weight: 400px;
     width: 500px;
-    margin-top: 0px;
+    margin-top: 5vh;
     margin-bottom: 1%;
-
+    margin-left: 50vh;
 }
 
 .TutorXTutee {
-    color: rgba(128, 0, 128, 0.66);
+    color: #554a3e;
     font-size: 6em;
     font-weight: 400px;
     top: 10px;
     width: 700px;
     margin-top: 1%;
     margin-bottom: 0px;
-    margin-left: 400px;
+    margin-left: 40vh;
 }
 
 img {
-    max-width: 30em;
+  max-width: 35em;
+  margin-left: 0vh;
+  padding-right: 5vh;
 }
 
 .image-col {
     flex-basis: 40%;
-    margin-left: 200px;
+    margin-left: 100px;
 }
 
 .aboutUs {
     display: flex;
     align-items: center;
     justify-content: center;
+    float: left;
 }
 
 .text-col {

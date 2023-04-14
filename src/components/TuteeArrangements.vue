@@ -120,8 +120,8 @@ export default {
 	<confirm-dialogue ref="confirmDialogue"></confirm-dialogue>
 	<div id="tuteearrangements" v-if="dataLoaded">
 		<div id="noarrangements" v-if="arrangements.length == 0">
-			<h3>You do not have any tutees currently.</h3>
-			<h3>Go and accept a request!</h3>
+			<h2>You do not have any tutees currently.</h2>
+			<h2>Go and accept a request!</h2>
 		</div>
 		<div id="arrangements">
 			<div v-for="arrangement in arrangements" :key="arrangement.tuteeEmail" class="arrangement">
@@ -157,19 +157,18 @@ export default {
 }
 
 #noarrangements {
-	text-align: left;
-	background-color: #f3ddb0;
-	padding: 5px 10px;
-	border-radius: 10px;
+  text-align: center;
+  margin-top: 200px;
 }
 
 .arrangement {
-	background-color: #f3ddb0;
-	border-radius: 10px;
-	padding: 10px;
-	margin: 20px;
-	width: 750px;
-	display: block;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  width: 750px;
+  display: block;
 }
 
 .information {
@@ -218,26 +217,26 @@ button:active {
 }
 
 .chatbutton {
-	background-color: #8CD7E8;
+  background-color: #F1DEC9;
 }
 
 .chatbutton:hover {
-	background-color: #63b4c7;
+	background-color: #C8B6A6;
 }
 
 .progressbutton {
-	background-color: #a3cb7b;
+  background-color: #F1DEC9;
 }
 
 .progressbutton:hover {
-	background-color: #8bae68;
+	background-color: #C8B6A6;
 }
 
 .endsessionbutton {
-	background-color: #efa182;
+  background-color: #F1DEC9;
 }
 
 .endsessionbutton:hover {
-	background-color: #d08a6e;
+	background-color: #C8B6A6;
 }
 </style>

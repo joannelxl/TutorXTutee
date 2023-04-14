@@ -39,18 +39,16 @@ export default {
 }
 
 .link {
-    display: flex;
+    display: block;
     align-items: center;
+    text-align: left;
 
     cursor: pointer;
     position: relative;
-    font-weight: 400;
+    font-size: medium;
     user-select: none;
 
-    margin: 0.1em 0;
-    padding: 0.4em;
-    border-radius: 0.25em;
-    height: 1.5em;
+    padding: 20px 10px 20px 5px;
 
     color: black;
     text-decoration: none;
@@ -67,6 +65,5 @@ export default {
 .link .icon {
     flex-shrink: 0;
     width: 25px;
-    margin-right: 10px;
 }
 </style>

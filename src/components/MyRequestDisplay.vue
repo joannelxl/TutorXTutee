@@ -1,38 +1,45 @@
 <template>
   <div class="intro" v-if="dataLoaded">
-    <h1 class="empty" v-if="userRequests.length == 0">
-      You do not have any request now. To add please click the + button
-    </h1>
+    <h2 class="empty" v-if="userRequests.length == 0">
+      You do not have any request now. To create, please click the + button.
+    </h2>
     <div class="requests">
       <ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
       <div class="req" v-for="request in userRequests" :key="request[0]">
-        <!-- <h2>{{ index }}{{ request[1] }}</h2> -->
         <div class="card">
           <div class="container">
             <h1>{{ request[1].Subject }}</h1>
 
             <p><strong>Level:</strong> {{ request[1].Level }}</p>
-            <p><strong>Preferred Day:</strong> {{ request[1].PreferredDays }}</p>
-            <p><strong>Preferred Time: </strong>{{ request[1].PreferredTime }}</p>
+            <p>
+              <strong>Preferred Day:</strong> {{ request[1].PreferredDays }}
+            </p>
+            <p>
+              <strong>Preferred Time: </strong>{{ request[1].PreferredTime }}
+            </p>
             <p><strong>Location: </strong>{{ request[1].Location }}</p>
             <p v-if="request[1].Address.length < 20">
               <strong>Address: </strong>{{ request[1].Address }}
             </p>
             <p v-else>
-              <strong>Address: </strong>{{ request[1].Address.substring(0, 20) }}...
+              <strong>Address: </strong
+              >{{ request[1].Address.substring(0, 20) }}...
             </p>
             <p v-if="request[1].Remarks.length < 20" class="remarks">
               <strong>Remarks: </strong>{{ request[1].Remarks }}
             </p>
             <p v-else class="remarks">
-              <strong>Remarks: </strong>{{ request[1].Remarks.substring(0, 20) }}...
+              <strong>Remarks: </strong
+              >{{ request[1].Remarks.substring(0, 20) }}...
             </p>
+            <br />
+            <div class="buttons">
+              <button class="delete-button" @click="handleDelete(request[0])">
+                Delete
+              </button>
 
-            <button class="delete-button" @click="handleDelete(request[0])">
-              Delete Request
-            </button>
-
-            <EditRequest :requestId="request[0]" />
+              <EditRequest :requestId="request[0]" />
+            </div>
           </div>
         </div>
       </div>
@@ -43,14 +50,7 @@
 <script>
 import firebaseApp from "../firebase.js";
 import { deleteDoc, getFirestore } from "firebase/firestore";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import EditRequest from "./EditRequest.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import ConfirmDialogue from "./ConfirmDialogue.vue";
@@ -76,13 +76,15 @@ export default {
       const requestsRef = collection(db, "Requests");
       const q = query(requestsRef, where("User", "==", this.useremail));
       const querySnapshot = await getDocs(q);
-      console.log("displayed");
-      var count = 0
+      var count = 0;
+      if (querySnapshot.size == 0) {
+        this.dataLoaded = true;
+      }
       querySnapshot.forEach((doc) => {
         this.userRequests.push([doc.id, doc.data()]);
-        count += 1
+        count += 1;
         if (count == querySnapshot.size) {
-          this.dataLoaded = true
+          this.dataLoaded = true;
         }
       });
     },
@@ -92,8 +94,8 @@ export default {
         title: "Delete Request",
         message:
           "Are you sure you want to delete this request? This action cannot be undone.",
-        okButton: "Confirm deletion",
-        cancelButton: "Go Back",
+        okButton: "Delete",
+        cancelButton: "Cancel",
       });
       if (ok) {
         await deleteDoc(doc(db, "Requests", requestId));
@@ -121,6 +123,12 @@ export default {
 
 .empty {
   padding-top: 200px;
+  text-align: center;
+}
+
+h1,
+p {
+  padding: 0 15px;
 }
 
 .card {
@@ -129,10 +137,11 @@ export default {
   transition: 0.3s;
   text-align: left;
   width: 41.5vh;
-  margin: 20px;
-  background-color: #f3ddb0;
-  height: 420px;
-  padding-top: 30px;
+  margin: 10px;
+  background-color: white;
+  height: 380px;
+  padding: 20px 20px;
+  border-radius: 20px;
 }
 
 .remarks {
@@ -142,32 +151,30 @@ export default {
   text-overflow: ellipsis;
 }
 
-.container {
-  padding-left: 30px;
-}
-
-.requests {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  row-gap: 5px;
-  column-gap: 30px;
-  padding-left: 4vw;
-}
-
 .delete-button {
-  background-color: #f7a588;
-  padding: 10px 10px;
-  border-radius: 4px;
-  font-size: medium;
-  margin-left: -13px;
-  margin-right: 5px;
-  margin-top: 10px;
-  border: none;
-  border: solid 0.5px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 0 30px;
+  border: 1px solid #2c3e50;
+  font-size: large;
+  float: left;
+  background-color: #F1DEC9;
 }
 
 .delete-button:hover {
-  background-color: #d08a6e;
+  background-color: #C8B6A6;
   cursor: pointer;
 }
+
+.buttons {
+  text-align: center;
+}
+
+.req {
+  grid-template-columns: auto auto auto;
+  margin-top: 3vh;
+  float: left;
+  margin-left: 3vh;
+}
+
 </style>

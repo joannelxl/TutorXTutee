@@ -1,13 +1,15 @@
 <template>
   <acknowledge-dialogue ref="acknowledgeDialogue"></acknowledge-dialogue>
-  <button class="update-button" @click="getData">Update Request</button>
+  <button class="update-button" @click="getData">Update</button>
 
   <div v-if="showModal" class="modal-mask">
     <div class="modal-container">
-      <button class="close-button" @click="handleClose">x</button>
-      <div class="modal-title">
-        <h1>Update your request</h1>
-      </div>
+      <div class="modal-header">
+        <div class="close" @click="handleClose" style="font-size: large;">
+          <b>&times;</b>
+        </div>
+        <div style="font-size:x-large"><b>Update your request</b></div>
+      </div><br>
       <form id="requestform" @submit.prevent="">
         <div class="modal-body">
           <label class="required">Subject:</label>
@@ -19,19 +21,11 @@
           <br /><br />
 
           <label class="required">Preferred Day:</label>
-          <input
-            type="text"
-            :placeholder="preferredDays"
-            v-model="newPreferredDays"
-          />
+          <input type="text" :placeholder="preferredDays" v-model="newPreferredDays" />
           <br /><br />
 
           <label class="required">Preferred Time:</label>
-          <input
-            type="text"
-            :placeholder="preferredTime"
-            v-model="newPreferredTime"
-          />
+          <input type="text" :placeholder="preferredTime" v-model="newPreferredTime" />
           <br /><br />
 
           <label class="required">Location:</label>
@@ -43,33 +37,20 @@
             <option value="Central">Central</option>
             <option value="Virtual">Virtual</option>
           </select>
-          <br /><br />
+          <br />
 
           <label class="required">Address:</label>
-          <textarea
-            type="text"
-            :placeholder="address"
-            v-model="newAddress"
-            rows="3"
-            cols="27"
-          ></textarea>
-          <br /><br />
+          <textarea type="text" :placeholder="address" v-model="newAddress" rows="3" cols="27"></textarea>
+          <br />
 
           <label>Remarks:</label>
-          <textarea
-            type="text"
-            id="remarks"
-            :placeholder="remarks"
-            v-model="newRemarks"
-            rows="5"
-            cols="27"
-          >
-          </textarea>
-          <br /><br />
+          <textarea type="text" id="remarks" :placeholder="remarks" v-model="newRemarks" rows="5" cols="27">
+            </textarea>
+          <br /><br>
 
           <button class="cancel-button" @click="handleClose">Cancel</button>
           <button class="edit-button" @click="handleEdit">
-            Update Request!
+            Update request
           </button>
         </div>
       </form>
@@ -80,15 +61,8 @@
 <script>
 import AcknowledgeDialogue from "./AcknowledgeDialogue.vue";
 import firebaseApp from "../firebase.js";
-import { deleteDoc, getFirestore, updateDoc } from "firebase/firestore";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
+import { getFirestore, updateDoc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 
 export default {
@@ -118,7 +92,6 @@ export default {
   methods: {
     async getData() {
       this.showModal = true;
-      console.log(this.requestId);
       const docRef = doc(db, "Requests", this.requestId);
       const docSnap = await getDoc(docRef);
 
@@ -142,8 +115,6 @@ export default {
     async handleEdit() {
       //update the doc if there is any field filled in
       const docRef = doc(db, "Requests", this.requestId);
-      console.log(this.requestId);
-      console.log((await getDoc(docRef)).data());
       if (this.newSubject) {
         await updateDoc(docRef, {
           Subject: this.newSubject,
@@ -189,7 +160,6 @@ export default {
       this.$parent.display();
     },
     async handleClose() {
-      console.log("close??");
       this.showModal = false;
       this.handleReset();
     },
@@ -209,17 +179,20 @@ export default {
 
 <style scoped>
 .update-button {
-  background-color: #d9d9d9;
-  padding: 10px 10px;
-  border-radius: 4px;
-  font-size: medium;
-  border: none;
-  border: solid 0.5px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #2c3e50;
+  margin: 0 30px;
+  font-size: large;
+  float: right;
+  background-color: #F1DEC9;
 }
+
 .update-button:hover {
-  background-color: #a7a5a5;
+  background-color: #C8B6A6;
   cursor: pointer;
 }
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -235,24 +208,17 @@ export default {
 .modal-container {
   width: 30%;
   margin: auto;
-  padding: 50px 50px;
-  background-color: #ebdfeb;
+  padding: 40px 20px;
+  background-color: white;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
 }
 
-.close-button {
-  float: right;
-  margin-top: -30px;
-  margin-right: -30px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.modal-title {
-  margin-top: 0;
-  text-align: center;
+.close {
+    float: right;
+    height: fit-content;
+    cursor: pointer;
 }
 
 .modal-body {
@@ -260,19 +226,42 @@ export default {
   display: inline-block;
 }
 
+input:hover,
+select:hover,
+textarea:hover {
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.24);
+}
+
 select {
-  width: 58%;
+  height: 30px;
+  width: 212px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
+  font-size: medium;
 }
 
 label {
+  padding: 5px;
   float: left;
   margin-right: 30px;
+  height: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: medium;
 }
 
 input {
   float: right;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
   height: 15px;
-  width: 180px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: medium;
 }
 
 form {
@@ -281,25 +270,38 @@ form {
   margin: auto;
 }
 
-.edit-button {
+.edit-button,
+.cancel-button {
   text-align: center;
-  background: #e7e5aa;
   border: 1px solid #000000;
-  font-size: 20px;
-  margin-left: 50px;
+  font-size: medium;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 30px;
+  background-color: #F1DEC9;
+}
+
+.edit-button {
   float: right;
 }
 
 .cancel-button {
-  text-align: center;
-  background: #d9d9d9;
-  border: 1px solid #000000;
-  font-size: 20px;
   float: left;
+}
+
+.edit-button:hover,
+.cancel-button:hover {
+  background-color: #C8B6A6;
 }
 
 textarea {
   resize: none;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  margin: 5px 0px;
+  font-size: medium;
 }
 </style>
