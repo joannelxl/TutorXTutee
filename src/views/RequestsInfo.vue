@@ -2,7 +2,7 @@
     <div class="page">
         <div class="heading">
             <h1>Tutor x Tutee</h1>
-            <h4> You can use the chat function to clarify doubts that you might have or accept the request </h4>
+            <h4> You can use the chat function to clarify doubts that you might have or accept the request.</h4>
             <br>
         </div>
         <ReqInfo :key="refreshComp" @accepted="change"/>
